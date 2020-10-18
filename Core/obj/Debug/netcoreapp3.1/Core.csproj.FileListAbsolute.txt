@@ -1,0 +1,12 @@
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.csprojAssemblyReference.cache
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+D:\DEV\Polsl\Inz\Api\WebApi\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+D:\DEV\Polsl\Inz\Api\WebApi\Core\bin\Debug\netcoreapp3.1\Core.dll
+D:\DEV\Polsl\Inz\Api\WebApi\Core\bin\Debug\netcoreapp3.1\Core.pdb
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.dll
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.pdb
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.csproj.CopyComplete
+D:\DEV\Polsl\Inz\Api\WebApi\Core\bin\Debug\netcoreapp3.1\Persistence.dll
+D:\DEV\Polsl\Inz\Api\WebApi\Core\bin\Debug\netcoreapp3.1\Persistence.pdb
+D:\DEV\Polsl\Inz\Api\WebApi\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
