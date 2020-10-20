@@ -46,9 +46,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "Mapster": {
+            "AutoMapper": {
               "target": "Package",
-              "version": "[6.5.0, )"
+              "version": "[10.1.1, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

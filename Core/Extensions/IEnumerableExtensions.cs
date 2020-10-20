@@ -1,6 +1,6 @@
 ﻿using Core.Interfaces.Collections;
 using Core.Models.Operations;
-using Mapster;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Core.Models.Collections;
 using System;
@@ -29,7 +29,7 @@ namespace Core.Extensions
         public static Task<CollectionResult<V>> ToCollectionResultAsync<T, V>(this IEnumerable<T> source, CancellationToken cancellationToken) where T : class where V : class
         {
             cancellationToken.ThrowIfCancellationRequested();
-            CollectionResult<V> destination = source.Adapt<CollectionResult<V>>();
+            CollectionResult<V> destination = null;//source.<CollectionResult<V>>();
             return Task.FromResult(destination);
         }
 
@@ -46,7 +46,7 @@ namespace Core.Extensions
         public static Task<CollectionResult<V>> ToCollectionResultAsync<T, V>(this ICollectionResult<T> source, CancellationToken cancellationToken) where T : class where V : class
         {
             cancellationToken.ThrowIfCancellationRequested();
-            CollectionResult<V> destination = source.Adapt<CollectionResult<V>>();
+            CollectionResult<V> destination = null;//source.Adapt<CollectionResult<V>>();
             destination.TotalCount = source.TotalCount;
             destination.PagesCount = source.PagesCount;
             destination.CurrentPage = source.CurrentPage;
