@@ -4,7 +4,7 @@
     using Persistence;
     using Persistence.Models;
 
-    public class PresentationRepository : GenericRepository<Presentation>, IPresentationSpeakerRepository
+    public class PresentationRepository : GenericRepository<Presentation>, IPresentationRepository
     {
         public PresentationRepository(ApiDbContext context) : base(context) { }
     }

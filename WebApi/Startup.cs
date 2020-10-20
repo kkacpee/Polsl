@@ -32,7 +32,7 @@ namespace WebApi
 
             var mappingConfiguration = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new Configuration());
+                mc.AddMaps(typeof(PresentationMapping).Assembly);
             });
 
             IMapper mapper = mappingConfiguration.CreateMapper();

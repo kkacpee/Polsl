@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using Core.Models;
 using Persistence.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.MappingConfiguration
 {
-    public class Configuration : Profile
+    public class ConferenceMapping : Profile
     {
-        public Configuration()
+        public ConferenceMapping()
         {
             CreateMap<Presentation, PresentationModel>().ReverseMap();
             CreateMap<Accommodation, AccommodationModel>().ReverseMap();

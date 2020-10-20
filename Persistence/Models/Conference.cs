@@ -22,6 +22,6 @@ namespace Persistence.Models
         public virtual ICollection<ConferenceEmergencyNumber> ConferenceEmergencyNumbers { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Presentation> Presentations { get; set; }
-        public virtual ICollection<Conference> ConferenceOrganizers { get; set; }
+        public virtual ICollection<ConferenceOrganizer> ConferenceOrganizers { get; set; }
     }
 }

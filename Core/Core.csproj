@@ -5,6 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <None Remove="NewFolder1\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Persistence\Persistence.csproj" />
 	</ItemGroup>
@@ -12,5 +18,9 @@
 	<ItemGroup>
 	  <PackageReference Include="AutoMapper" Version="10.1.1" />
 	  <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="DTO\" />
 	</ItemGroup>
 </Project>

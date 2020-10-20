@@ -12,10 +12,10 @@ namespace Core.Services
 {
     public class PresentationService : IPresentationService
     {
-        private readonly IPresentationSpeakerRepository _presentationRepository;
+        private readonly IPresentationRepository _presentationRepository;
         private readonly IMapper _mapper;
 
-        public PresentationService(IPresentationSpeakerRepository presentationRepository, IMapper mapper)
+        public PresentationService(IPresentationRepository presentationRepository, IMapper mapper)
         {
             _presentationRepository = presentationRepository;
             _mapper = mapper;

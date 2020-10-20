@@ -4,9 +4,9 @@ using Persistence.Models;
 
 namespace Persistence.Persistence.EntityConfiguration
 {
-    public class ConferenceOrganizerConfiguration : IEntityTypeConfiguration<Conference>
+    public class ConferenceOrganizerConfiguration : IEntityTypeConfiguration<ConferenceOrganizer>
     {
-        public void Configure(EntityTypeBuilder<Conference> builder)
+        public void Configure(EntityTypeBuilder<ConferenceOrganizer> builder)
         {
             builder.HasKey(x => x.ID);
             builder.HasOne(x => x.Conference)
