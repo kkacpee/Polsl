@@ -11,7 +11,7 @@ namespace Persistence.Models
         public string Company { get; set; }
         public string Contact { get; set; }
 
-        public virtual ICollection<ConferenceOrganizer> ConferenceOrganizers { get; set; }
+        public virtual ICollection<Conference> ConferenceOrganizers { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
-﻿using Persistence.Models;
-
-namespace Core.Interfaces.Repositories.Conference
+﻿namespace Core.Interfaces.Repositories.Conference
 {
+    using Persistence.Models;
+
     public interface IConferenceOrganizerRepository : IGenericRepository<ConferenceOrganizer> { }
 }
