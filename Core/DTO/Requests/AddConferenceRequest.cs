@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Core.Models
+namespace Core.DTO.Requests
 {
-    public class ConferenceModel
+    public class AddConferenceRequest
     {
-        public int ID { get; set; }
         public string Address { get; set; }
         public string Country { get; set; }
         public string Description { get; set; }

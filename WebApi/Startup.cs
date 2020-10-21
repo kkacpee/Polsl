@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.Extensions;
 using Core.MappingConfiguration;
 using Core.Repositories.Presentation;
 using Core.Services;
@@ -29,7 +30,7 @@ namespace WebApi
             services.RegisterAssemblyPublicNonGenericClasses(typeof(PresentationRepository).Assembly).Where(x => x.Name.EndsWith("Repository")).AsPublicImplementedInterfaces();
 
             services.AddDbContext<ApiDbContext>();
-
+            services.AddControllers().AddAndConfigureFluentValidation();
             var mappingConfiguration = new MapperConfiguration(mc =>
             {
                 mc.AddMaps(typeof(PresentationMapping).Assembly);

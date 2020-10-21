@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Core.Models;
+using Persistence.Models;
 
 namespace Core.MappingConfiguration
 {
@@ -6,7 +8,8 @@ namespace Core.MappingConfiguration
     {
         public PresentationMapping()
         {
-
+            CreateMap<Presentation, PresentationModel>().ReverseMap();
+            CreateMap<Accommodation, AccommodationModel>().ReverseMap();
         }
     }
 }

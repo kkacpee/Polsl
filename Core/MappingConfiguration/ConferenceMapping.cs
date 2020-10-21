@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Models;
+using Core.DTO.Requests;
 using Persistence.Models;
 
 namespace Core.MappingConfiguration
@@ -8,8 +9,8 @@ namespace Core.MappingConfiguration
     {
         public ConferenceMapping()
         {
-            CreateMap<Presentation, PresentationModel>().ReverseMap();
-            CreateMap<Accommodation, AccommodationModel>().ReverseMap();
+            CreateMap<Conference, ConferenceModel>().ReverseMap();
+            CreateMap<Conference, AddConferenceRequest>().ReverseMap();
         }
     }
 }
