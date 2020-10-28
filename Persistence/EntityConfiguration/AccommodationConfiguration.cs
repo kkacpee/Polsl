@@ -15,6 +15,8 @@ namespace Persistence.Persistence.EntityConfiguration
                    .HasMaxLength(32);
             builder.Property(x => x.Number)
                    .HasMaxLength(32);
+            builder.Property(x => x.Website)
+                    .HasMaxLength(128);
         }
     }
 }

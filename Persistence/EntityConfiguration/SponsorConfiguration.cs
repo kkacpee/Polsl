@@ -9,8 +9,6 @@ namespace Persistence.Persistence.EntityConfiguration
         public void Configure(EntityTypeBuilder<Sponsor> builder)
         {
             builder.HasKey(x => x.ID);
-            builder.Property(x => x.Address)
-                .HasMaxLength(128);
             builder.Property(x => x.Country)
                 .HasMaxLength(32);
             builder.Property(x => x.Description)
@@ -19,8 +17,6 @@ namespace Persistence.Persistence.EntityConfiguration
                 .HasMaxLength(256);
             builder.Property(x => x.Name)
                 .HasMaxLength(32);
-            builder.Property(x => x.Number)
-                .HasMaxLength(16);
             builder.Property(x => x.Website)
                 .HasMaxLength(256);
         }

@@ -10,7 +10,7 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20201018165055_Initial")]
+    [Migration("20201024150832_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,10 @@ namespace Persistence.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("character varying(32)")
                         .HasMaxLength(32);
+
+                    b.Property<string>("Website")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
 
                     b.HasKey("ID");
 
@@ -96,16 +100,16 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("SocialMedia")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
-
-                    b.Property<string>("YouTubeLink")
-                        .HasColumnType("character varying(128)")
-                        .HasMaxLength(128);
 
                     b.HasKey("ID");
 
@@ -154,6 +158,28 @@ namespace Persistence.Migrations
                     b.HasIndex("EmergencyNumberID");
 
                     b.ToTable("ConferenceEmergencyNumbers");
+                });
+
+            modelBuilder.Entity("Persistence.Models.ConferenceOrganizer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ConferenceID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrganizerID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ConferenceID");
+
+                    b.HasIndex("OrganizerID");
+
+                    b.ToTable("ConferenceOrganizer");
                 });
 
             modelBuilder.Entity("Persistence.Models.ConferencePointOfInterest", b =>
@@ -220,6 +246,95 @@ namespace Persistence.Migrations
                     b.ToTable("EmergencyNumbers");
                 });
 
+            modelBuilder.Entity("Persistence.Models.Organizer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Affiliation")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Company")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Contact")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("character varying(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("character varying(64)")
+                        .HasMaxLength(64);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Organizer");
+                });
+
+            modelBuilder.Entity("Persistence.Models.Participant", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Affiliation")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Company")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Country")
+                        .HasColumnType("character varying(32)")
+                        .HasMaxLength(32);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("character varying(32)")
+                        .HasMaxLength(32);
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("character varying(32)")
+                        .HasMaxLength(32);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Participants");
+                });
+
+            modelBuilder.Entity("Persistence.Models.ParticipantPhoto", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ParticipantID")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ParticipantID");
+
+                    b.ToTable("ParticipantPhotos");
+                });
+
             modelBuilder.Entity("Persistence.Models.PointOfInterest", b =>
                 {
                     b.Property<int>("ID")
@@ -234,6 +349,10 @@ namespace Persistence.Migrations
                     b.Property<string>("Contact")
                         .HasColumnType("character varying(32)")
                         .HasMaxLength(32);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying(512)")
+                        .HasMaxLength(512);
 
                     b.Property<string>("Name")
                         .HasColumnType("character varying(32)")
@@ -272,6 +391,10 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Authors")
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
                     b.Property<int>("ConferenceID")
                         .HasColumnType("integer");
 
@@ -305,26 +428,26 @@ namespace Persistence.Migrations
                     b.ToTable("Presentations");
                 });
 
-            modelBuilder.Entity("Persistence.Models.PresentationSpeaker", b =>
+            modelBuilder.Entity("Persistence.Models.PresentationParticipant", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("PresentationID")
+                    b.Property<int>("ParticipantID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SpeakerID")
+                    b.Property<int>("PresentationID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ParticipantID");
+
                     b.HasIndex("PresentationID");
 
-                    b.HasIndex("SpeakerID");
-
-                    b.ToTable("PresentationSpeakers");
+                    b.ToTable("PresentationParticipants");
                 });
 
             modelBuilder.Entity("Persistence.Models.PresentationType", b =>
@@ -354,14 +477,14 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("ConferenceID")
+                    b.Property<int?>("ConferenceID")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
-                    b.Property<int>("PresentationID")
+                    b.Property<int?>("PresentationID")
                         .HasColumnType("integer");
 
                     b.Property<int>("RateCriterionID")
@@ -444,69 +567,12 @@ namespace Persistence.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Persistence.Models.Speaker", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Company")
-                        .HasColumnType("character varying(128)")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Country")
-                        .HasColumnType("character varying(32)")
-                        .HasMaxLength(32);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("character varying(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("character varying(32)")
-                        .HasMaxLength(32);
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("character varying(32)")
-                        .HasMaxLength(32);
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Speakers");
-                });
-
-            modelBuilder.Entity("Persistence.Models.SpeakerPhoto", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Path")
-                        .HasColumnType("character varying(128)")
-                        .HasMaxLength(128);
-
-                    b.Property<int>("SpeakerID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("SpeakerID");
-
-                    b.ToTable("SpeakerPhotos");
-                });
-
             modelBuilder.Entity("Persistence.Models.Sponsor", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("character varying(128)")
-                        .HasMaxLength(128);
 
                     b.Property<string>("Country")
                         .HasColumnType("character varying(32)")
@@ -523,10 +589,6 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("character varying(32)")
                         .HasMaxLength(32);
-
-                    b.Property<string>("Number")
-                        .HasColumnType("character varying(16)")
-                        .HasMaxLength(16);
 
                     b.Property<string>("Website")
                         .HasColumnType("character varying(256)")
@@ -573,6 +635,21 @@ namespace Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Persistence.Models.UserRole", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("Persistence.Models.BuildingPlan", b =>
                 {
                     b.HasOne("Persistence.Models.Conference", "Conference")
@@ -612,6 +689,21 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Persistence.Models.ConferenceOrganizer", b =>
+                {
+                    b.HasOne("Persistence.Models.Conference", "Conference")
+                        .WithMany("ConferenceOrganizers")
+                        .HasForeignKey("ConferenceID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Persistence.Models.Organizer", "Organizer")
+                        .WithMany("ConferenceOrganizers")
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Persistence.Models.ConferencePointOfInterest", b =>
                 {
                     b.HasOne("Persistence.Models.Conference", "Conference")
@@ -642,6 +734,15 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Persistence.Models.ParticipantPhoto", b =>
+                {
+                    b.HasOne("Persistence.Models.Participant", "Participant")
+                        .WithMany("ParticipantPhotos")
+                        .HasForeignKey("ParticipantID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Persistence.Models.PointOfInterest", b =>
                 {
                     b.HasOne("Persistence.Models.PointOfInterestType", "PointOfInterestType")
@@ -666,17 +767,17 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Persistence.Models.PresentationSpeaker", b =>
+            modelBuilder.Entity("Persistence.Models.PresentationParticipant", b =>
                 {
-                    b.HasOne("Persistence.Models.Presentation", "Presentation")
-                        .WithMany("PresentationSpeakers")
-                        .HasForeignKey("PresentationID")
+                    b.HasOne("Persistence.Models.Participant", "Participant")
+                        .WithMany("PresentationParticipants")
+                        .HasForeignKey("ParticipantID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Persistence.Models.Speaker", "Speaker")
-                        .WithMany("PresentationSpeakers")
-                        .HasForeignKey("SpeakerID")
+                    b.HasOne("Persistence.Models.Presentation", "Presentation")
+                        .WithMany("PresentationParticipants")
+                        .HasForeignKey("PresentationID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -686,14 +787,12 @@ namespace Persistence.Migrations
                     b.HasOne("Persistence.Models.Conference", "Conference")
                         .WithMany("Rates")
                         .HasForeignKey("ConferenceID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Persistence.Models.Presentation", "Presentation")
                         .WithMany("Rates")
                         .HasForeignKey("PresentationID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Persistence.Models.RateCriterion", "RateCriterion")
                         .WithMany("Rates")
@@ -717,11 +816,17 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Persistence.Models.SpeakerPhoto", b =>
+            modelBuilder.Entity("Persistence.Models.UserRole", b =>
                 {
-                    b.HasOne("Persistence.Models.Speaker", "Speaker")
-                        .WithMany("SpeakerPhotos")
-                        .HasForeignKey("SpeakerID")
+                    b.HasOne("Persistence.Models.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Persistence.Models.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

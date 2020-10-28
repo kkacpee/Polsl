@@ -13,6 +13,8 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.Property(x => x.EndDate);
             builder.Property(x => x.Place)
                 .HasMaxLength(128);
+            builder.Property(x => x.Authors)
+                .HasMaxLength(128);
             builder.Property(x => x.Description)
                 .HasMaxLength(256);
             builder.Property(x => x.Title)

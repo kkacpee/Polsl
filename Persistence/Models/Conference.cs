@@ -13,7 +13,7 @@ namespace Persistence.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Title { get; set; }
-        public string YouTubeLink { get; set; }
+        public string SocialMedia { get; set; }
 
         public virtual ICollection<BuildingPlan> BuildingPlans { get; set; }
         public virtual ICollection<ConferenceAccommodation> ConferenceAccommodations { get; set; }

@@ -17,14 +17,14 @@ namespace Persistence
         public DbSet<PointOfInterest> PointsOfInterest { get; set; }
         public DbSet<PointOfInterestType> PointOfInterestTypes { get; set; }
         public DbSet<Presentation> Presentations { get; set; }
-        public DbSet<PresentationSpeaker> PresentationSpeakers { get; set; }
+        public DbSet<PresentationParticipant> PresentationParticipants { get; set; }
         public DbSet<PresentationType> PresentationTypes { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<RateCriterion> RateCriteria { get; set; }
         public DbSet<RateCriterionType> RateCriterionTypes { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Speaker> Speakers { get; set; }
-        public DbSet<SpeakerPhoto> SpeakerPhotos { get; set; }
+        public DbSet<Participant> Participants { get; set; }
+        public DbSet<ParticipantPhoto> ParticipantPhotos { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }

@@ -1,12 +1,12 @@
 ﻿namespace Persistence.Models
 {
-    public class PresentationSpeaker
+    public class PresentationParticipant
     {
         public int ID { get; set; }
         public int PresentationID { get; set; }
-        public int SpeakerID { get; set; }
+        public int ParticipantID { get; set; }
 
         public virtual Presentation Presentation { get; set; }
-        public virtual Speaker Speaker { get; set; }
+        public virtual Participant Participant { get; set; }
     }
 }

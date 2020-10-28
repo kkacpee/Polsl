@@ -2,5 +2,5 @@
 {
     using Persistence.Models;
 
-    public interface ISpeakerRepository : IGenericRepository<Speaker> { }
+    public interface IParticipantRepository : IGenericRepository<Participant> { }
 }

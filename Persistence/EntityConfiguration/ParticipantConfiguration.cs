@@ -4,14 +4,14 @@ using Persistence.Models;
 
 namespace Persistence.Persistence.EntityConfiguration
 {
-    public class SpeakerConfiguration : IEntityTypeConfiguration<Speaker>
+    public class ParticipantConfiguration : IEntityTypeConfiguration<Participant>
     {
-        public void Configure(EntityTypeBuilder<Speaker> builder)
+        public void Configure(EntityTypeBuilder<Participant> builder)
         {
             builder.HasKey(x => x.ID);
             builder.Property(x => x.Company)
                 .HasMaxLength(128);
-            builder.Property(x => x.Univeristy)
+            builder.Property(x => x.Affiliation)
                 .HasMaxLength(128);
             builder.Property(x => x.Country)
                 .HasMaxLength(32);

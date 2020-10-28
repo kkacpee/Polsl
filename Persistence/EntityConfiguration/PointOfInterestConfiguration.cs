@@ -15,6 +15,8 @@ namespace Persistence.Persistence.EntityConfiguration
                 .HasMaxLength(128);
             builder.Property(x => x.Contact)
                 .HasMaxLength(32);
+            builder.Property(x => x.Description)
+                .HasMaxLength(512);
             builder.HasOne(x => x.PointOfInterestType)
                 .WithMany(x => x.PointsOfInterest)
                 .HasForeignKey(x => x.PointOfInterestTypeID)

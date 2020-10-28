@@ -17,7 +17,7 @@ namespace Persistence.Persistence.EntityConfiguration
                    .HasMaxLength(64);
             builder.Property(x => x.LastName)
                    .HasMaxLength(64);
-            builder.Property(x => x.University)
+            builder.Property(x => x.Affiliation)
                    .HasMaxLength(128);
         }
     }

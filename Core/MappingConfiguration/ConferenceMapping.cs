@@ -11,6 +11,12 @@ namespace Core.MappingConfiguration
         {
             CreateMap<Conference, ConferenceModel>().ReverseMap();
             CreateMap<Conference, AddConferenceRequest>().ReverseMap();
+            CreateMap<Accommodation, AccommodationModel>().ReverseMap();
+            CreateMap<Accommodation, AddAccommodationRequest>().ReverseMap();
+            CreateMap<EmergencyNumber, EmergencyNumberModel>().ReverseMap();
+            CreateMap<EmergencyNumber, AddEmergencyNumberRequest>().ReverseMap();
+            CreateMap<Organizer, OrganizerModel>().ReverseMap();
+            CreateMap<Organizer, AddOrganizerRequest>().ReverseMap();
         }
     }
 }

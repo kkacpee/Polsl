@@ -19,8 +19,8 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.Property(x => x.EndDate);
             builder.Property(x => x.Title)
                 .HasMaxLength(64);
-            builder.Property(x => x.YouTubeLink)
-                .HasMaxLength(128);  
+            builder.Property(x => x.SocialMedia)
+                .HasMaxLength(256);  
         }
     }
 }
