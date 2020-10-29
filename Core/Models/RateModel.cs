@@ -12,7 +12,7 @@
 
         public virtual ConferenceModel ConferenceModel { get; set; }
         public virtual PresentationModel PresentationModel { get; set; }
-        public virtual UserModel UserModel { get; set; }
+        //public virtual UserModel UserModel { get; set; }
         public virtual RateCriterionModel RateCriterionModel { get; set; }
     }
 }

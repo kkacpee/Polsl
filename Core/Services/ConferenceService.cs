@@ -30,6 +30,15 @@ namespace Core.Services
 
         public async Task<int> AddConferenceAsync(AddConferenceRequest request, CancellationToken cancellationToken)
         {
+            if (await _conferenceRepository.AnyAsync(x =>
+                        x.Address == request.Address &&
+                        x.Country == request.Country &&
+                        x.EndDate == request.EndDate &&
+                        x.StartDate == request.StartDate &&
+                        x.Title == request.Title, cancellationToken))
+            {
+                throw new InvalidOperationException("This accommodation exists");
+            }
             var mapped = _mapper.Map<Conference>(request);
             await _conferenceRepository.AddAsync(mapped, cancellationToken);
 

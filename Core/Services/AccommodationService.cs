@@ -31,6 +31,15 @@ namespace Core.Services
 
         public async Task<int> AddAccommodationAsync(AddAccommodationRequest request, CancellationToken cancellationToken)
         {
+            if(await _accommodationRepository.AnyAsync(x => 
+            x.Name == request.Name &&
+            x.Number == request.Number &&
+            x.Address == request.Address &&
+            x.Website == request.Website ,cancellationToken))
+            {
+                throw new InvalidOperationException("This accommodation exists");
+            }
+
             var mapped = _mapper.Map<Accommodation>(request);
             await _accommodationRepository.AddAsync(mapped, cancellationToken);
 

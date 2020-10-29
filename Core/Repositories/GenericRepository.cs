@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-namespace Core.Repositories
+﻿namespace Core.Repositories
 {
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Query;
     using Core.Extensions;
-    using Interfaces.Collections;
     using Core.Interfaces.Repositories;
-    using Models.Operations;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Microsoft.EntityFrameworkCore.Query;
     using Persistence;
     using System;
     using System.Collections.Generic;
@@ -15,7 +12,6 @@ namespace Core.Repositories
     using System.Linq.Expressions;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public class GenericRepository<TEntity> : BaseRepository, IGenericRepository<TEntity> where TEntity : class
     {
@@ -75,96 +71,6 @@ namespace Core.Repositories
             return await selectedQuery.ToListAsync(cancellationToken);
         }
 
-        public virtual async Task<IEnumerable<TResult>> GroupByAndSelectAsync<TKey, TResult>(
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> groupBy,
-            Expression<Func<IGrouping<TKey, TEntity>, TResult>> select,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TResult>, IOrderedQueryable<TResult>> orderBy = null,
-            int? take = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-            if (select == null) throw new ArgumentNullException($"Parameter {nameof(select)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-
-            var groupByQuery = query.Where(predicate).GroupBy(groupBy).Select(select);
-            groupByQuery = orderBy?.Invoke(groupByQuery) ?? groupByQuery;
-            groupByQuery = take.HasValue ? groupByQuery.Take(take.Value) : groupByQuery;
-
-            return await groupByQuery.ToListAsync(cancellationToken);
-        }
-
-        public virtual async Task<ICollectionResult<TResult>> SelectAndGetCollectionResultAsync<TResult>(
-            Expression<Func<TEntity, TResult>> select,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null) where TResult : class
-        {
-            if (operationQuery == null) throw new ArgumentNullException($"Parameter {nameof(operationQuery)} cannot be null.");
-            if (select == null) throw new ArgumentNullException($"Parameter {nameof(select)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.Select(select).ToExecutedResponseAsync(operationQuery, cancellationToken);
-        }
-
-        public virtual async Task<ICollectionResult<TResult>> SelectAndGetCollectionResultAsync<TResult>(
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TResult>> select,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null) where TResult : class
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-            if (operationQuery == null) throw new ArgumentNullException($"Parameter {nameof(operationQuery)} cannot be null.");
-            if (select == null) throw new ArgumentNullException($"Parameter {nameof(select)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.Where(predicate).Select(select).ToExecutedResponseAsync(operationQuery, cancellationToken);
-        }
-
-        public virtual async Task<ICollectionResult<TEntity>> GetCollectionResultAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-            if (operationQuery == null) throw new ArgumentNullException($"Parameter {nameof(operationQuery)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.Where(predicate).ToExecutedResponseAsync(operationQuery, cancellationToken);
-        }
-
-        public virtual async Task<ICollectionResult<TEntity>> GetCollectionResultAsync(
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (operationQuery == null) throw new ArgumentNullException($"Parameter {nameof(operationQuery)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.ToExecutedResponseAsync(operationQuery, cancellationToken);
-        }
-
         public virtual async Task<TEntity> GetByIdAsync<TId>(
             TId id,
             CancellationToken cancellationToken,
@@ -178,24 +84,6 @@ namespace Core.Repositories
             var lambda = CreateFindByPrimaryKeyLambda(id);
 
             var result = await query.SingleOrDefaultAsync(lambda, cancellationToken);
-            if (result == null) throw new NullReferenceException($"Object of type {typeof(TEntity).Name} not found.");
-
-            return result;
-        }
-
-        public virtual async Task<TEntity> GetFirstAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            var result = await query.FirstOrDefaultAsync(predicate, cancellationToken);
             if (result == null) throw new NullReferenceException($"Object of type {typeof(TEntity).Name} not found.");
 
             return result;
@@ -222,21 +110,6 @@ namespace Core.Repositories
             return await result.Select(select).FirstOrDefaultAsync(cancellationToken);
         }
 
-        public virtual async Task<TEntity> GetFirstOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.FirstOrDefaultAsync(predicate, cancellationToken);
-        }
-
         public virtual async Task<TResult> GetFirstOrDefaultAsync<TResult>(
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, TResult>> select,
@@ -252,22 +125,6 @@ namespace Core.Repositories
             query = orderBy?.Invoke(query) ?? query;
 
             return await query.Where(predicate).Select(select).FirstOrDefaultAsync(cancellationToken);
-        }
-
-        public virtual async Task<TEntity> GetSingleAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-
-            var result = await query.SingleOrDefaultAsync(predicate, cancellationToken);
-            if (result == null) throw new NullReferenceException($"Object of type {typeof(TEntity).Name} not found.");
-
-            return result;
         }
 
         public virtual async Task<TResult> GetSingleAsync<TResult>(
@@ -289,19 +146,6 @@ namespace Core.Repositories
             return await result.Select(select).SingleOrDefaultAsync(cancellationToken);
         }
 
-        public virtual async Task<TEntity> GetSingleOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-
-            return await query.SingleOrDefaultAsync(predicate, cancellationToken);
-        }
-
         public virtual async Task<TResult> GetSingleOrDefaultAsync<TResult>(
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, TResult>> select,
@@ -315,21 +159,6 @@ namespace Core.Repositories
             query = include?.Invoke(query) ?? query;
 
             return await query.Where(predicate).Select(select).SingleOrDefaultAsync(cancellationToken);
-        }
-
-        public virtual async Task<TEntity> GetLastAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.LastAsync(predicate, cancellationToken);
         }
 
         public virtual async Task<TResult> GetLastAsync<TResult>(
@@ -347,21 +176,6 @@ namespace Core.Repositories
             query = orderBy?.Invoke(query) ?? query;
 
             return await query.Where(predicate).Select(select).LastAsync(cancellationToken);
-        }
-
-        public virtual async Task<TEntity> GetLastOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null)
-        {
-            if (predicate == null) throw new ArgumentNullException($"Parameter {nameof(predicate)} cannot be null.");
-
-            var query = _context.Set<TEntity>().AsNoTracking();
-            query = include?.Invoke(query) ?? query;
-            query = orderBy?.Invoke(query) ?? query;
-
-            return await query.LastOrDefaultAsync(predicate, cancellationToken);
         }
 
         public virtual async Task<TResult> GetLastOrDefaultAsync<TResult>(
@@ -405,16 +219,6 @@ namespace Core.Repositories
             return await _context.Set<TEntity>().CountAsync(predicate, cancellationToken);
         }
 
-        public virtual async Task<decimal> AverageAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, decimal>> avg, CancellationToken cancellationToken)
-        {
-            if (avg == null) throw new ArgumentNullException($"Parameter {nameof(avg)} cannot be null.");
-
-            if (predicate == null)
-                return await _context.Set<TEntity>().AverageAsync(avg, cancellationToken);
-
-            return await _context.Set<TEntity>().Where(predicate).AverageAsync(avg, cancellationToken);
-        }
-
         public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool detachAll = false)
         {
             if (entity == null) throw new ArgumentNullException($"Parameter {nameof(entity)} cannot be null.");
@@ -441,7 +245,6 @@ namespace Core.Repositories
             await _context.SaveChangesAsync(cancellationToken);
             DetachAll(detachAll);
         }
-
 
         public virtual async Task UpdateManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool detachAll = false)
         {
@@ -515,22 +318,6 @@ namespace Core.Repositories
             _context.RemoveRange(entities);
             await _context.SaveChangesAsync(cancellationToken);
             DetachAll(detachAll);
-        }
-
-        public virtual async Task<IDbContextTransaction> TransactionBeginAsync(CancellationToken cancellationToken)
-        {
-            return await _context.Database.BeginTransactionAsync(cancellationToken);
-        }
-
-        public virtual async Task TransactionCommitAsync(IDbContextTransaction transaction, CancellationToken cancellationToken, bool detachAll = false)
-        {
-            await transaction.CommitAsync(cancellationToken);
-            DetachAll(detachAll);
-        }
-
-        public virtual async Task TransactionRollbackAsync(IDbContextTransaction transaction, CancellationToken cancellationToken)
-        {
-            await transaction.RollbackAsync(cancellationToken);
         }
 
         protected Expression<Func<TEntity, bool>> CreateFindByPrimaryKeyLambda<TId>(TId id)

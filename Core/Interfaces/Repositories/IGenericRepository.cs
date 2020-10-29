@@ -35,63 +35,14 @@ namespace Core.Interfaces.Repositories
             Func<IQueryable<TResult>, IOrderedQueryable<TResult>> orderBy = null,
             int? take = null);
 
-        Task<IEnumerable<TResult>> GroupByAndSelectAsync<TKey, TResult>(
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TKey>> groupBy,
-            Expression<Func<IGrouping<TKey, TEntity>, TResult>> select,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TResult>, IOrderedQueryable<TResult>> orderBy = null,
-            int? take = null);
-
-        Task<ICollectionResult<TResult>> SelectAndGetCollectionResultAsync<TResult>(
-            Expression<Func<TEntity, TResult>> select,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null) where TResult : class;
-
-        Task<ICollectionResult<TResult>> SelectAndGetCollectionResultAsync<TResult>(
-            Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, TResult>> select,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null) where TResult : class;
-
-        Task<ICollectionResult<TEntity>> GetCollectionResultAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
-        Task<ICollectionResult<TEntity>> GetCollectionResultAsync(
-            OperationQuery operationQuery,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
         Task<TEntity> GetByIdAsync<TId>(
             TId id,
             CancellationToken cancellationToken,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
 
-        Task<TEntity> GetFirstAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
         Task<TResult> GetFirstAsync<TResult>(
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, TResult>> select,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
-        Task<TEntity> GetFirstOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
@@ -103,19 +54,9 @@ namespace Core.Interfaces.Repositories
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
 
-        Task<TEntity> GetSingleAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
-
         Task<TResult> GetSingleAsync<TResult>(
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, TResult>> select,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
-
-        Task<TEntity> GetSingleOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
 
@@ -125,21 +66,9 @@ namespace Core.Interfaces.Repositories
             CancellationToken cancellationToken,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null);
 
-        Task<TEntity> GetLastAsync(
-            Expression<Func<TEntity, bool>> predicate,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
         Task<TResult> GetLastAsync<TResult>(
             Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, TResult>> select,
-            CancellationToken cancellationToken,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
-
-        Task<TEntity> GetLastOrDefaultAsync(
-            Expression<Func<TEntity, bool>> predicate,
             CancellationToken cancellationToken,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null);
@@ -159,8 +88,6 @@ namespace Core.Interfaces.Repositories
 
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
-        Task<decimal> AverageAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, decimal>> avg, CancellationToken cancellationToken);
-
         Task AddAsync(TEntity entity, CancellationToken cancellationToken, bool detachAll = false);
 
         Task AddManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool detachAll = false);
@@ -178,12 +105,6 @@ namespace Core.Interfaces.Repositories
         Task DeletePermanentlyByIdAsync<TId>(TId id, CancellationToken cancellationToken, bool detachAll = false);
 
         Task DeleteManyPermanentlyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool detachAll = false);
-
-        Task<IDbContextTransaction> TransactionBeginAsync(CancellationToken cancellationToken);
-
-        Task TransactionCommitAsync(IDbContextTransaction transaction, CancellationToken cancellationToken, bool detachAll = false);
-
-        Task TransactionRollbackAsync(IDbContextTransaction transaction, CancellationToken cancellationToken);
 
         Task DeleteManyAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool detachAll = false);
     }

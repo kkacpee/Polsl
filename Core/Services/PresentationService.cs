@@ -2,11 +2,12 @@
 using Core.Interfaces.Repositories.Presentation;
 using Core.Interfaces.Services;
 using Core.Models;
+using Core.DTO.Requests;
 using Persistence.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Core.Services
 {
@@ -19,23 +20,30 @@ namespace Core.Services
         {
             _presentationRepository = presentationRepository;
             _mapper = mapper;
-            presentationRepository.AddAsync(
-                new Presentation
-                {
-                    Place = "text",
-                    Description = "desc",
-                    StartDate = new System.DateTime(2020, 10, 10),
-                    EndDate = new System.DateTime(2020, 10, 10),
-                    Title = "title"
-                }, new CancellationToken()
-                );
         }
 
-        public async Task<List<PresentationModel>> GetAllPresentations(CancellationToken cancellationToken)
+        public async Task<List<PresentationModel>> GetPresentationsAsync(CancellationToken cancellationToken)
         {
             var result = await _presentationRepository.GetAllAsync(cancellationToken);
-
             return _mapper.Map<List<PresentationModel>>(result);
+        }
+
+        public async Task<int> AddPresentationAsync(AddPresentationRequest request, CancellationToken cancellationToken)
+        {
+            var mapped = _mapper.Map<Presentation>(request);
+            await _presentationRepository.AddAsync(mapped, cancellationToken);
+
+            return mapped.ID;
+        }
+
+        public async Task DeletePresentationPermanentlyAsync(int id, CancellationToken cancellationToken)
+        {
+            if (!await _presentationRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            {
+                throw new InvalidOperationException("There is no Presentation with given ID");
+            }
+
+            await _presentationRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
         }
     }
 }

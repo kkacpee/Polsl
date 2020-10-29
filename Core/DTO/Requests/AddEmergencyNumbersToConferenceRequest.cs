@@ -6,6 +6,6 @@ namespace Core.DTO.Requests
     public class AddEmergencyNumbersToConferenceRequest
     {
         public int ConferenceID { get; set; }
-        public List<EmergencyNumberModel> EmergencyNumbers { get; set; }
+        public List<int> EmergencyNumberIDs { get; set; }
     }
 }

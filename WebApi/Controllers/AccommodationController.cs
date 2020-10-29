@@ -26,11 +26,19 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddConference([FromBody] AddAccommodationRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddAccommodation([FromBody] AddAccommodationRequest request, CancellationToken cancellationToken)
         {
             var result = await _accommodationService.AddAccommodationAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteAccommodation(int id, CancellationToken cancellationToken)
+        {
+            await _accommodationService.DeleteAccommodationPermanentlyAsync(id, cancellationToken);
+
+            return NoContent();
         }
     }
 }

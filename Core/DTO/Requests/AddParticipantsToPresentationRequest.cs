@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Core.DTO.Requests
 {
-    public class AddParticipantsToPresentation
+    public class AddParticipantsToPresentationRequest
     {
         public int PresentationID { get; set; }
-        public List<ParticipantModel> Participants { get; set; }
+        public List<int> ParticipantIDs { get; set; }
     }
 }

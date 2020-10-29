@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Core.DTO.Requests
 {
-    public class AddSponsorsToConference
+    public class AddSponsorsToConferenceRequest
     {
         public int ConferenceID { get; set; }
-        public List<SponsorModel> Sponsors { get; set; }
+        public List<int> SponsorIDs { get; set; }
     }
 }
