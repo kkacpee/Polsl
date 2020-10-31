@@ -37,7 +37,7 @@ namespace Core.Services
              x.Path == request.Path &&
              x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("This building plan already exists");
+                throw new InvalidOperationException("Building plan with given parameters already exists");
             }
 
             var mapped = _mapper.Map<BuildingPlan>(request);

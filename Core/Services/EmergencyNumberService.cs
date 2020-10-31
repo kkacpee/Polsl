@@ -31,6 +31,13 @@ namespace Core.Services
 
         public async Task<int> AddEmergencyNumberAsync(AddEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
+            if (await _emergencyNumberRepository.AnyAsync(x =>
+                        x.Number == request.Number &&
+                        x.Name == request.Name, cancellationToken))
+            {
+                throw new InvalidOperationException("Emergency Number with given parameters exists");
+            }
+
             var mapped = _mapper.Map<EmergencyNumber>(request);
             await _emergencyNumberRepository.AddAsync(mapped, cancellationToken);
 

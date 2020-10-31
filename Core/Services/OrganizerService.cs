@@ -31,6 +31,15 @@ namespace Core.Services
 
         public async Task<int> AddOrganizerAsync(AddOrganizerRequest request, CancellationToken cancellationToken)
         {
+            if (await _organizerRepository.AnyAsync(x =>
+                        x.FirstName == request.FirstName &&
+                        x.LastName == request.LastName &&
+                        x.Affiliation == request.Affiliation &&
+                        x.Company == request.Company, cancellationToken))
+            {
+                throw new InvalidOperationException("Organizer with given parameters exists");
+            }
+
             var mapped = _mapper.Map<Organizer>(request);
             await _organizerRepository.AddAsync(mapped, cancellationToken);
 

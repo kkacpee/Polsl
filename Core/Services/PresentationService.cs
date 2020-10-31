@@ -30,6 +30,17 @@ namespace Core.Services
 
         public async Task<int> AddPresentationAsync(AddPresentationRequest request, CancellationToken cancellationToken)
         {
+            if (await _presentationRepository.AnyAsync(x =>
+                        x.ConferenceID == request.ConferenceID &&
+                        x.Authors == request.Authors &&
+                        x.EndDate == request.EndDate &&
+                        x.StartDate == request.StartDate &&
+                        x.Title == request.Title &&
+                        x.Place == request.Place, cancellationToken))
+            {
+                throw new InvalidOperationException("Presentation with given parameters exists");
+            }
+
             var mapped = _mapper.Map<Presentation>(request);
             await _presentationRepository.AddAsync(mapped, cancellationToken);
 

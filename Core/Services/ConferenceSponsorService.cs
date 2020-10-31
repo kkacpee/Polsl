@@ -30,6 +30,13 @@ namespace Core.Services
 
         public async Task AddSponsorsToConferenceAsync(AddSponsorsToConferenceRequest request, CancellationToken cancellationToken)
         {
+            if (await _conferenceSponsorRepository.AnyAsync(x =>
+                        request.SponsorIDs.Contains(x.SponsorID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
+            {
+                throw new InvalidOperationException("This Sponsor for given conference exists");
+            }
+
             var list = new List<ConferenceSponsor>();
             foreach (var id in request.SponsorIDs)
                 list.Add(new ConferenceSponsor

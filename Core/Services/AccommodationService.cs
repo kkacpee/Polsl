@@ -37,7 +37,7 @@ namespace Core.Services
             x.Address == request.Address &&
             x.Website == request.Website ,cancellationToken))
             {
-                throw new InvalidOperationException("This accommodation exists");
+                throw new InvalidOperationException("Accommodation with given parameters exists");
             }
 
             var mapped = _mapper.Map<Accommodation>(request);

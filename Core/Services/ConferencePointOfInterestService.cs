@@ -34,7 +34,7 @@ namespace Core.Services
                         request.PointOfInterestIDs.Contains(x.PointOfInterestID) &&
                         x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("This Point Of Interest exists");
+                throw new InvalidOperationException("This Point Of Interest for given conference exists");
             }
             var list = new List<ConferencePointOfInterest>();
             foreach (var id in request.PointOfInterestIDs)

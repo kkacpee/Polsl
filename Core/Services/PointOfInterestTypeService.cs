@@ -31,6 +31,12 @@ namespace Core.Services
 
         public async Task<int> AddPointOfInterestTypeAsync(AddPointOfInterestTypeRequest request, CancellationToken cancellationToken)
         {
+            if (await _pointOfInterestTypeRepository.AnyAsync(x =>
+                        x.Name == request.Name, cancellationToken))
+            {
+                throw new InvalidOperationException("Point Of Interest Type with given parameters exists");
+            }
+
             var mapped = _mapper.Map<PointOfInterestType>(request);
             await _pointOfInterestTypeRepository.AddAsync(mapped, cancellationToken);
 

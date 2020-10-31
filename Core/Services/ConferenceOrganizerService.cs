@@ -34,7 +34,7 @@ namespace Core.Services
                         request.OrganizerIDs.Contains(x.OrganizerID) &&
                         x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("This Organizer exists");
+                throw new InvalidOperationException("This Organizer for given conference exists");
             }
             var list = new List<ConferenceOrganizer>();
             foreach (var id in request.OrganizerIDs)

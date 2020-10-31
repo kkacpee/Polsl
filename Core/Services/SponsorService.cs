@@ -31,6 +31,14 @@ namespace Core.Services
 
         public async Task<int> AddSponsorAsync(AddSponsorRequest request, CancellationToken cancellationToken)
         {
+            if (await _sponsorRepository.AnyAsync(x =>
+                        x.Name == request.Name &&
+                        x.Country == request.Country &&
+                        x.Website == request.Website, cancellationToken))
+            {
+                throw new InvalidOperationException("Sponsor with given parameters exists");
+            }
+
             var mapped = _mapper.Map<Sponsor>(request);
             await _sponsorRepository.AddAsync(mapped, cancellationToken);
 

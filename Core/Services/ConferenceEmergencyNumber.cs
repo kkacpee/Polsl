@@ -34,7 +34,7 @@ namespace Core.Services
                         request.EmergencyNumberIDs.Contains(x.EmergencyNumberID) &&
                         x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("This Emergency Number exists");
+                throw new InvalidOperationException("This Emergency Number for given conference exists");
             }
             var list = new List<ConferenceEmergencyNumber>();
             foreach (var id in request.EmergencyNumberIDs)

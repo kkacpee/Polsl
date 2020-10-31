@@ -37,8 +37,9 @@ namespace Core.Services
                         x.StartDate == request.StartDate &&
                         x.Title == request.Title, cancellationToken))
             {
-                throw new InvalidOperationException("This accommodation exists");
+                throw new InvalidOperationException("Conference with given parameters exists");
             }
+
             var mapped = _mapper.Map<Conference>(request);
             await _conferenceRepository.AddAsync(mapped, cancellationToken);
 

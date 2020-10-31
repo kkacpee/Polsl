@@ -31,6 +31,13 @@ namespace Core.Services
 
         public async Task<int> AddParticipantPhotoAsync(AddParticipantPhotoRequest request, CancellationToken cancellationToken)
         {
+            if (await _participantPhotoRepository.AnyAsync(x =>
+                        x.Path == request.Path &&
+                        x.ParticipantID == request.ParticipantID, cancellationToken))
+            {
+                throw new InvalidOperationException("Participant Photo with given parameters exists");
+            }
+
             var mapped = _mapper.Map<ParticipantPhoto>(request);
             await _participantPhotoRepository.AddAsync(mapped, cancellationToken);
 

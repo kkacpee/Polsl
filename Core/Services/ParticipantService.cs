@@ -31,6 +31,15 @@ namespace Core.Services
 
         public async Task<int> AddParticipantAsync(AddParticipantRequest request, CancellationToken cancellationToken)
         {
+            if (await _participantRepository.AnyAsync(x =>
+                        x.FirstName == request.FirstName &&
+                        x.LastName == request.LastName &&
+                        x.Affiliation == request.Affiliation &&
+                        x.Company == request.Company &&
+                        x.Country == request.Country, cancellationToken))
+            {
+                throw new InvalidOperationException("Participant with given parameters exists");
+            }
             var mapped = _mapper.Map<Participant>(request);
             await _participantRepository.AddAsync(mapped, cancellationToken);
 
