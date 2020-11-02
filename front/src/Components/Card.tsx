@@ -33,7 +33,6 @@ const Card = <DataItem extends object>({ name, data, dates, onRowClick }: Props<
         )
     }
     else{
-        console.log(dates)
         return (
         <BsCard border="dark" className="my-3">
             <BsCard.Header as="h5">{name}</BsCard.Header>
@@ -48,7 +47,6 @@ const Card = <DataItem extends object>({ name, data, dates, onRowClick }: Props<
                        return (
                         <BsCard.Text key={idx}>
                         {new Intl.DateTimeFormat('en-US', options).format(new Date(date))}
-                        {/* {new Date(date).toLocaleDateString()} */}
                         </BsCard.Text>
                        )   
                     })}

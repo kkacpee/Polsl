@@ -6,9 +6,12 @@ import AccommodationDetails from './Screens/Accommodation/AccommodationDetails';
 import ConferenceList from './Screens/Conference/ConferenceList';
 import SignIn from './Screens/SignIn';
 import NavBar from './Components/Navbar';
+import Snackbar from './Components/Snackbar'
+
 const App = () => (
   <div>
     <NavBar></NavBar>
+    <Snackbar />
     <Switch>
             <Route exact path='/' />
             <Route path={"/sign-in"} exact component={SignIn} />

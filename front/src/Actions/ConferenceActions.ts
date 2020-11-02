@@ -31,13 +31,13 @@ export const AddConference = (values:AddConferenceRequest): ThunkAction<void, Ro
         dispatch({
             type: CONFERENCE_ADD
         });
-        await axios.post('http://localhost:50561/api/Conference/add', {
+        const response = await axios.post('http://localhost:50561/api/Conference/add', {
             ...values
             })
         
         dispatch({
             type: CONFERENCE_ADD_SUCCESS,
-            payload: "success"
+            payload: response.statusText
         })
     } catch (e){
         dispatch({

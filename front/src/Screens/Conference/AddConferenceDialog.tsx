@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { AddConferenceRequest } from '../../Types/ConferenceTypes';
 import { AddConference} from '../../Actions/ConferenceActions';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
+import { setAlert } from '../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -47,7 +48,7 @@ const FormDialog = (props:DialogProps) => {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
+  async function handleSubmit(){
     const request:AddConferenceRequest = {
       address: address,
       country: country,
@@ -57,9 +58,9 @@ const FormDialog = (props:DialogProps) => {
       title: title,
       socialMedia: socialMedia
     }
-    console.log(request)
-    dispatch(AddConference(request));
-    handleClose();
+    await dispatch(AddConference(request));  
+    dispatch(setAlert(true, "success", "Added conference successfully"));
+    setOpen(false);
   }
   return (
     <div>

@@ -12,7 +12,7 @@ import Dialog from "./AddConferenceDialog"
 const ConferenceList = () => {
     const dispatch = useDispatch();
     const ConferenceList:ConferenceState = useSelector((state: RootState ) => state.ConferenceList);
-    
+
     React.useEffect( () => {
         FetchData()
     },[]);
@@ -47,12 +47,13 @@ const ConferenceList = () => {
         }
 
         if (ConferenceList.errorMsg !== ""){
-            return <p>{ConferenceList.errorMsg}</p>
+        console.log(ConferenceList.errorMsg)
         }
     }
-    
+
     return(
-        <div> {ShowData()}</div>
+        <div> {ShowData()}
+        </div>
     )
 };
 
