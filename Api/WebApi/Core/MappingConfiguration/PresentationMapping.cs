@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Models;
 using Persistence.Models;
 
@@ -20,6 +21,7 @@ namespace Core.MappingConfiguration
 
             CreateMap<Presentation, PresentationModel>().ReverseMap();
             CreateMap<Presentation, AddPresentationRequest>().ReverseMap();
+            CreateMap<Presentation, PresentationResponse>().ReverseMap();
 
             CreateMap<PresentationType, PresentationTypeModel>().ReverseMap();
             CreateMap<PresentationType, AddPresentationTypeRequest>().ReverseMap();

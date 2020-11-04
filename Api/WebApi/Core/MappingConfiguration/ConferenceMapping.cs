@@ -2,6 +2,7 @@
 using Core.Models;
 using Core.DTO.Requests;
 using Persistence.Models;
+using Core.DTO.Response;
 
 namespace Core.MappingConfiguration
 {
@@ -47,6 +48,17 @@ namespace Core.MappingConfiguration
 
             CreateMap<Sponsor, SponsorModel>().ReverseMap();
             CreateMap<Sponsor, AddSponsorRequest>().ReverseMap();
+
+  
+            CreateMap<BuildingPlan, BuildingPlanResponse>().ReverseMap();
+            CreateMap<EmergencyNumber, EmergencyNumberResponse>().ReverseMap();
+            CreateMap<Organizer, OrganizerResponse>().ReverseMap();
+            CreateMap<PointOfInterest, PointOfInterestResponse>().ReverseMap();
+            CreateMap<Accommodation, AccommodationResponse>().ReverseMap();
+            CreateMap<Rate, RateResponse>().ReverseMap();
+            CreateMap<Sponsor, SponsorResponse>().ReverseMap();
+
+
         }
     }
 }

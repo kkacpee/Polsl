@@ -1,6 +1,8 @@
 ﻿using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +60,15 @@ namespace WebApi.Controllers
             await _conferenceService.DeleteConferencePermanentlyAsync(id, cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("get/{id}")]
+        [ProducesResponseType(typeof(ConferenceDetailsResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetConferenceDetails(int id, CancellationToken cancellationToken)
+        {
+            var result = await _conferenceService.GetConferenceDetailsAsync(id, cancellationToken);
+
+            return Ok(result);
         }
         #endregion
 

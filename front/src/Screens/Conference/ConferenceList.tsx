@@ -29,7 +29,7 @@ const ConferenceList = () => {
                     {ConferenceList.data.map(({id, title, startDate, endDate,...rest}) => {
                     return (
                         <Col md={4}>
-                        <Card key={id} name={title} data={rest} dates={[startDate, endDate]} onRowClick={row => console.log(row)}></Card>
+                        <Card key={id} id={id} name={title} data={rest} dates={[startDate, endDate]} onRowClick={() => {FetchData()}}></Card>
                         </Col>
                     )
                     })}

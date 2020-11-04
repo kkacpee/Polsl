@@ -19,7 +19,7 @@ function NavBar() {
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label='Home' icon={ <HomeIcon />} component={Link} to="/" />
           <Tab label='Conference' icon={<CodeIcon />} component={Link} to="/conference" />
-          <Tab label='Accommodation' icon={<TimelineIcon />} component={Link} to="/accommodation" />
+          <Tab label='Misc' icon={<TimelineIcon />} component={Link} to="/misc" />
           <Tab label='Sign In' icon={<TimelineIcon />} component={Link} to="/sign-in" />
         </Tabs>
       </AppBar>

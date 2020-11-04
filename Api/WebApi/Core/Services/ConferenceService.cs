@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Core.DTO.Response;
 
 namespace Core.Services
 {
@@ -54,6 +58,96 @@ namespace Core.Services
             }
 
             await _conferenceRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+        }
+
+        public async Task<ConferenceDetailsResponse> GetConferenceDetailsAsync(int id, CancellationToken cancellationToken)
+        {
+            var include = CreateInclude();
+
+            var result = await _conferenceRepository.GetByIdAsync(id, cancellationToken, include);
+
+            var mapped = new ConferenceDetailsResponse
+            {
+                ID = result.ID,
+                Address = result.Address,
+                Country = result.Country,
+                Description = result.Description,
+                SocialMedia = result.SocialMedia,
+                Title = result.Title,
+                StartDate = result.StartDate,
+                EndDate = result.EndDate,
+                BuildingPlans = _mapper.Map<ICollection<BuildingPlanResponse>>(result.BuildingPlans),
+                Presentations = _mapper.Map<ICollection<PresentationResponse>>(result.Presentations),
+                Rates = _mapper.Map<ICollection<RateResponse>>(result.Rates)
+            };
+
+            if(result.ConferenceAccommodations != null)
+            {
+                var temp = new List<Accommodation>();
+                foreach (var accommodation in result.ConferenceAccommodations)
+                {
+                    temp.Add(accommodation.Accommodation);
+                }
+                mapped.Accommodations = _mapper.Map<ICollection<AccommodationResponse>>(temp);
+            }
+
+            if (result.ConferenceEmergencyNumbers != null)
+            {
+                var temp = new List<EmergencyNumber>();
+                foreach (var conferenceEmergency in result.ConferenceEmergencyNumbers)
+                {
+                   temp.Add(conferenceEmergency.EmergencyNumber);
+                }
+                mapped.EmergencyNumbers = _mapper.Map < ICollection<EmergencyNumberResponse>>(temp);
+            }
+
+            if (result.ConferenceOrganizers != null)
+            {
+                var temp = new List<Organizer>();
+                foreach (var organizer in result.ConferenceOrganizers)
+                {
+                    temp.Add(organizer.Organizer);
+                }
+                mapped.Organizers = _mapper.Map<ICollection<OrganizerResponse>>(temp);
+            }
+
+            if (result.ConferencePointOfInterests != null)
+            {
+                var temp = new List<PointOfInterest>();
+                foreach (var pointOfInterest in result.ConferencePointOfInterests)
+                {
+                    temp.Add(pointOfInterest.PointOfInterest);
+                }
+                mapped.PointsOfInterest = _mapper.Map<ICollection<PointOfInterestResponse>>(temp);
+            }
+
+            if (result.ConferenceSponsors != null)
+            {
+                var temp = new List<Sponsor>();
+                foreach (var sponsor in result.ConferenceSponsors)
+                {
+                    temp.Add(sponsor.Sponsor);
+                }
+                mapped.Sponsors = _mapper.Map<ICollection<SponsorResponse>>(temp);
+            }
+
+            return mapped;
+        }
+
+        private Func<IQueryable<Conference>, IIncludableQueryable<Conference, object>> CreateInclude()
+        {
+            return x => x.Include(x => x.BuildingPlans)
+                        .Include(x => x.ConferenceAccommodations)
+                            .ThenInclude(x => x.Accommodation)
+                        .Include(x => x.ConferenceEmergencyNumbers)
+                            .ThenInclude(x => x.EmergencyNumber)
+                        .Include(x => x.ConferenceOrganizers)
+                            .ThenInclude(x => x.Organizer)
+                        .Include(x => x.ConferencePointOfInterests)
+                            .ThenInclude(x => x.PointOfInterest)
+                        .Include(x => x.ConferenceSponsors)
+                            .ThenInclude(x => x.Sponsor)
+                        .Include(x => x.Presentations);
         }
     }
 }

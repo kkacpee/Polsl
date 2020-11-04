@@ -6,6 +6,7 @@
 
     public class ConferenceRepository : GenericRepository<Conference>, IConferenceRepository
     {
-        public ConferenceRepository(ApiDbContext context) : base(context) { }
+        public ConferenceRepository(ApiDbContext context) : base(context) {}
+        
     }
 }

@@ -39,6 +39,7 @@ const AccommodationList = () => {
     const ShowData = () => {
         if (!_.isEmpty(accommodationList.data)){
             return (
+                <>
                 <Container>
                     <Row>
                     <div style={{ height: 400, width: '100%' }}>
@@ -51,6 +52,7 @@ const AccommodationList = () => {
                         </div>
                     </Row>
                 </Container>
+                </>
             )
         }
         if (accommodationList.loading){

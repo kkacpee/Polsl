@@ -1,12 +1,19 @@
 import React from 'react';
 import BsCard from 'react-bootstrap/Card';
 import _ from 'lodash';
+import { Button, IconButton, Tooltip } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useDispatch } from 'react-redux';
+import { setAlert } from '../Actions/AlertActions';
+import { DeleteConference } from '../Actions/ConferenceActions';
+import { Link } from 'react-router-dom';
 
 type Props<DataItem> = {
-    name: string
+    id: number;
+    name: string;
     data: DataItem;
     dates?: Date[];
-    onRowClick: (item: DataItem) => void;
+    onRowClick: () => void;
   };
   const options = {
     year: 'numeric', month: 'numeric', day: 'numeric',
@@ -15,11 +22,22 @@ type Props<DataItem> = {
     timeZone: 'America/Los_Angeles' 
   };
 
-const Card = <DataItem extends object>({ name, data, dates, onRowClick }: Props<DataItem>) => {
+const Card = <DataItem extends object>({id, name, data, dates, onRowClick }: Props<DataItem>) => {
+
+    const dispatch = useDispatch();
+
+    async function handleDelete(key:number){
+        await dispatch(DeleteConference(key));  
+        dispatch(setAlert(true, "success", "Deleted conference successfully"));
+        onRowClick();
+      }
+
     if(_.isEmpty(dates)){
         return (
             <BsCard border="dark" className="my-3">
-            <BsCard.Header as="h5">{name}</BsCard.Header>
+            <BsCard.Header as="h5">{name}
+                
+            </BsCard.Header>
             <BsCard.Body>
                     {(Object.keys(data) as Array<keyof DataItem>).map(key => {
                        return (
@@ -35,7 +53,13 @@ const Card = <DataItem extends object>({ name, data, dates, onRowClick }: Props<
     else{
         return (
         <BsCard border="dark" className="my-3">
-            <BsCard.Header as="h5">{name}</BsCard.Header>
+            <BsCard.Header as="h5">{name}
+                <Tooltip title="Delete">
+                    <IconButton aria-label="delete" style={{alignSelf:'end'}} onClick={() => handleDelete(id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            </BsCard.Header>
             <BsCard.Body>
                     {(Object.keys(data) as Array<keyof DataItem>).map((key, idx) => {
                        return (
@@ -51,6 +75,13 @@ const Card = <DataItem extends object>({ name, data, dates, onRowClick }: Props<
                        )   
                     })}
             </BsCard.Body>
+            <BsCard.Footer>
+                <Link to={`/conference/${id}`}>
+                    <Button variant="outlined" color="primary">
+                        Primary
+                    </Button>
+                </Link>
+            </BsCard.Footer>
             </BsCard>
         )
     }

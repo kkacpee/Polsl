@@ -4,6 +4,9 @@ export const CONFERENCE_LIST_FAIL= "CONFERENCE_LIST_FAIL";
 export const CONFERENCE_ADD= "CONFERENCE_ADD";
 export const CONFERENCE_ADD_SUCCESS= "CONFERENCE_ADD_SUCCESS";
 export const CONFERENCE_ADD_FAIL= "CONFERENCE_ADD_FAIL";
+export const CONFERENCE_DELETE="CONFERENCE_DELETE";
+export const CONFERENCE_DELETE_SUCCESS= "CONFERENCE_DELETE_SUCCESS";
+export const CONFERENCE_DELETE_FAIL= "CONFERENCE_DELETE_FAIL"
 
 export interface Conference {
     id: number,
@@ -61,6 +64,19 @@ export interface ConferenceAddFailAction {
     payload: string
 }
 
+export interface ConferenceDeleteAction {
+    type: typeof CONFERENCE_DELETE,
+}
+export interface ConferenceDeleteSuccessAction {
+    type: typeof CONFERENCE_DELETE_SUCCESS,
+    payload: string
+}
+export interface ConferenceDeleteFailAction {
+    type: typeof CONFERENCE_DELETE_FAIL,
+    payload: string
+}
+
 export type ConferenceAction = 
 ConferenceListLoadingAction | ConferenceListFailAction | ConferenceListSuccessAction |
-ConferenceAddAction | ConferenceAddSuccessAction | ConferenceAddFailAction;
+ConferenceAddAction | ConferenceAddSuccessAction | ConferenceAddFailAction |
+ConferenceDeleteAction | ConferenceDeleteSuccessAction | ConferenceDeleteFailAction;
