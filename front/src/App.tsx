@@ -11,23 +11,24 @@ import { CONFERENCE_DELETE_FAIL } from './Types/ConferenceTypes';
 import ConferenceDetails from './Screens/Conference/ConferenceDetails';
 import Misc from './Screens/Misc';
 
-const App = () => (
-  <div>
-    <NavBar></NavBar>
-    <Snackbar />
-    <Switch>
-            <Route exact path='/' />
-            <Route path={"/sign-in"} exact component={SignIn} />
-            <Route path={'/conference'} exact component={ConferenceList} />
-            <Route path={'/misc'} exact component={Misc} />
-            <Route path={'/accommodation'} exact component={AccommodationList} />
-            <Route path={'/accommodation/:id'} exact component={AccommodationDetails} />
-            <Route path={'/conference/:id'} exact component={ConferenceDetails} />
-            <Redirect to={'/'}></Redirect>
-    </Switch>
-  </div>
-  
-
-);
+const App = () => {
+  console.log(process.env);
+  return (
+    <div>
+        <NavBar></NavBar>
+        <Snackbar />
+        <Switch>
+                <Route exact path='/' />
+                <Route path={"/sign-in"} exact component={SignIn} />
+                <Route path={'/conference'} exact component={ConferenceList} />
+                <Route path={'/misc'} exact component={Misc} />
+                <Route path={'/accommodation'} exact component={AccommodationList} />
+                <Route path={'/accommodation/:id'} exact component={AccommodationDetails} />
+                <Route path={'/conference/:id'} exact component={ConferenceDetails} />
+                <Redirect to={'/'}></Redirect>
+        </Switch>
+      </div>
+  )
+};
 
 export default App;

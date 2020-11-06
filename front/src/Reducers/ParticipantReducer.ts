@@ -1,51 +1,52 @@
-import {ConferenceState, 
-    ConferenceAction, 
-    CONFERENCE_LIST_LOADING, 
-    CONFERENCE_LIST_FAIL, 
-    CONFERENCE_LIST_SUCCESS,
-    CONFERENCE_ADD,
-    CONFERENCE_ADD_SUCCESS,
-    CONFERENCE_ADD_FAIL} from '../Types/ConferenceTypes'
-const DefaultState: ConferenceState  = {
+import {ParticipantState, 
+    ParticipantAction, 
+    PARTICIPANT_LIST_LOADING, 
+    PARTICIPANT_LIST_FAIL, 
+    PARTICIPANT_LIST_SUCCESS,
+    PARTICIPANT_ADD,
+    PARTICIPANT_ADD_SUCCESS,
+    PARTICIPANT_ADD_FAIL} from '../Types/ParticipantTypes'
+    
+const DefaultState: ParticipantState  = {
     loading: false,
     data: [],
     errorMsg: ""
 };
 
-const ConferenceListReducer = (state = DefaultState, action: ConferenceAction) => {
+const ParticipantReducer = (state = DefaultState, action: ParticipantAction) => {
     switch (action.type) {
-        case CONFERENCE_LIST_LOADING:
+        case PARTICIPANT_LIST_LOADING:
             return {
                 ...state,
                 loading: true,
                 errorMsg: ""
             };
-        case CONFERENCE_LIST_FAIL:
+        case PARTICIPANT_LIST_FAIL:
             return {
                 ...state,
                 loading: false,
                 errorMsg: action.payload
             };
-        case CONFERENCE_LIST_SUCCESS:
+        case PARTICIPANT_LIST_SUCCESS:
         return {
             ...state,
             loading: false,
             data: action.payload,
             errorMsg: ""
         };
-        case CONFERENCE_ADD:
+        case PARTICIPANT_ADD:
             return {
                 ...state,
                 loading: true,
                 errorMsg: ""
             };
-        case CONFERENCE_ADD_SUCCESS:
+        case PARTICIPANT_ADD_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 errorMsg: action.payload
             };
-        case CONFERENCE_ADD_FAIL:
+        case PARTICIPANT_ADD_FAIL:
         return {
             ...state,
             loading: false,
@@ -56,4 +57,4 @@ const ConferenceListReducer = (state = DefaultState, action: ConferenceAction) =
     }
 };
 
-export default ConferenceListReducer;
+export default ParticipantReducer;

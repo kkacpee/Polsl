@@ -7,36 +7,33 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { AddConferenceRequest } from '../../Types/ConferenceTypes';
-import { AddConference} from '../../Actions/ConferenceActions';
-import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import { setAlert } from '../../Actions/AlertActions';
+import { AddParticipant } from '../../Actions/ParticipantActions';
+import { AddParticipantRequest } from '../../Types/ParticipantTypes';
 
 interface DialogProps {
   dialogTitle: string,
   fetch: () => void
 }
 
-const initial:AddConferenceRequest = {
-  address: "",
-  country: "",
-  description:"",
-  startDate: new Date(),
-  endDate: new Date(),
-  title: "",
-  socialMedia: ""
+const initial:AddParticipantRequest = {
+    firstName: '',
+    lastName: '',
+    affiliation: '',
+    company: '',
+    country: '',
+    description: ''
 }
 
 const FormDialog = (props:DialogProps) => {
     const {dialogTitle, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [address, setAddress] = React.useState(initial.address);
-  const [title, setTitle] = React.useState(initial.title);
+  const [firstName, setFirstName] = React.useState(initial.firstName);
+  const [lastName, setLastName] = React.useState(initial.lastName);
+  const [company, setCompany] = React.useState(initial.company);
+  const [affiliation, setAffiliation] = React.useState(initial.affiliation);
   const [country, setCountry] = React.useState(initial.country);
   const [description, setDescription] = React.useState(initial.description);
-  const [socialMedia, setSocialMedia] = React.useState(initial.socialMedia);
-  const [startDate, setStartDate] = React.useState<Date | null>(new Date());
-  const [endDate, setEndDate] = React.useState<Date | null>(new Date());
 
   const dispatch = useDispatch();
 
@@ -49,16 +46,15 @@ const FormDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddConferenceRequest = {
-      address: address,
-      country: country,
-      description: description,
-      startDate: startDate!,
-      endDate: endDate!,
-      title: title,
-      socialMedia: socialMedia
+    const request:AddParticipantRequest = {
+        firstName: firstName,
+        lastName: lastName,
+        affiliation: affiliation,
+        company: company,
+        country: country,
+        description: description
     }
-    await dispatch(AddConference(request));  
+    await dispatch(AddParticipant(request));  
     dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
@@ -75,25 +71,45 @@ const FormDialog = (props:DialogProps) => {
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
         <DialogContent>
-        <TextField
+            <TextField
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="title"
-            label="Title"
+            id="firstName"
+            label="First Name"
             variant="outlined"
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)}
+            value={firstName} 
+            onChange={(e) => setFirstName(e.target.value)}
             />
             <TextField
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="address"
-            label="Address"
+            id="lastName"
+            label="Last Name"
             variant="outlined"
-            value={address} 
-            onChange={(e) => setAddress(e.target.value)}
+            value={lastName} 
+            onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+            required
+            fullWidth
+            style={{ marginBottom: 8 }}
+            id="company"
+            label="Company"
+            variant="outlined"
+            value={company} 
+            onChange={(e) => setCompany(e.target.value)}
+            />
+            <TextField
+            required
+            fullWidth
+            style={{ marginBottom: 8 }}
+            id="affiliation"
+            label="Affiliation"
+            variant="outlined"
+            value={affiliation} 
+            onChange={(e) => setAffiliation(e.target.value)}
             />
             <TextField
             required
@@ -108,16 +124,6 @@ const FormDialog = (props:DialogProps) => {
             <TextField
             required
             fullWidth
-            style={{ marginBottom: 8 }}
-            id="socialmedia"
-            label="Social Media"
-            variant="outlined"
-            value={socialMedia} 
-            onChange={(e) => setSocialMedia(e.target.value)}
-            />
-                        <TextField
-            required
-            fullWidth
             multiline
             style={{ marginBottom: 8 }}
             id="description"
@@ -126,28 +132,6 @@ const FormDialog = (props:DialogProps) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)}
             />
-            <div>
-            <KeyboardDateTimePicker
-              id="startdate"
-              label="Start Date"
-              value={startDate}
-              onChange={setStartDate}
-              className="w-50 p-1"
-              onError={console.log}
-              minDate={new Date("2018-01-01T00:00")}
-              format="yyyy/MM/dd hh:mm a"
-            />
-            <KeyboardDateTimePicker
-              id="enddate"
-              label="End Date"
-              value={endDate}
-              onChange={setEndDate}
-              className="w-50 p-1"
-              onError={console.log}
-              minDate={new Date("2018-01-01T00:00")}
-              format="yyyy/MM/dd hh:mm a"
-            />
-            </div>
         </DialogContent>
         <DialogActions>
             <Button onClick={handleClose} color="primary">

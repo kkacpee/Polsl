@@ -7,36 +7,32 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { AddConferenceRequest } from '../../Types/ConferenceTypes';
-import { AddConference} from '../../Actions/ConferenceActions';
-import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import { setAlert } from '../../Actions/AlertActions';
+import { AddPointOfInterest } from '../../Actions/PointOfInterestActions';
+import { AddPointOfInterestRequest } from '../../Types/PointOfInterestTypes';
 
 interface DialogProps {
   dialogTitle: string,
   fetch: () => void
 }
 
-const initial:AddConferenceRequest = {
-  address: "",
-  country: "",
-  description:"",
-  startDate: new Date(),
-  endDate: new Date(),
-  title: "",
-  socialMedia: ""
+const initial:AddPointOfInterestRequest = {
+    name: '',
+    address: '',
+    description: '',
+    contact: '',
+    pointOfInterestTypeID: 0
 }
 
 const FormDialog = (props:DialogProps) => {
     const {dialogTitle, fetch} = props;
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState(initial.name);
   const [address, setAddress] = React.useState(initial.address);
-  const [title, setTitle] = React.useState(initial.title);
-  const [country, setCountry] = React.useState(initial.country);
   const [description, setDescription] = React.useState(initial.description);
-  const [socialMedia, setSocialMedia] = React.useState(initial.socialMedia);
-  const [startDate, setStartDate] = React.useState<Date | null>(new Date());
-  const [endDate, setEndDate] = React.useState<Date | null>(new Date());
+  const [contact, setContact] = React.useState(initial.contact);
+  const [pointOfInterestTypeID, setPointOfInterestTypeID] = React.useState(initial.pointOfInterestTypeID);
+
 
   const dispatch = useDispatch();
 
@@ -48,17 +44,19 @@ const FormDialog = (props:DialogProps) => {
     setOpen(false);
   };
 
+  const handleSetType = (text:string) => {
+      setPointOfInterestTypeID(1);
+  }
+
   async function handleSubmit(){
-    const request:AddConferenceRequest = {
-      address: address,
-      country: country,
-      description: description,
-      startDate: startDate!,
-      endDate: endDate!,
-      title: title,
-      socialMedia: socialMedia
+    const request:AddPointOfInterestRequest = {
+        name: name,
+        address: address,
+        description: description,
+        contact: contact,
+        pointOfInterestTypeID: pointOfInterestTypeID
     }
-    await dispatch(AddConference(request));  
+    await dispatch(AddPointOfInterest(request));  
     dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
@@ -75,15 +73,15 @@ const FormDialog = (props:DialogProps) => {
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
         <DialogContent>
-        <TextField
+            <TextField
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="title"
-            label="Title"
+            id="name"
+            label="Name"
             variant="outlined"
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)}
+            value={name} 
+            onChange={(e) => setName(e.target.value)}
             />
             <TextField
             required
@@ -99,23 +97,23 @@ const FormDialog = (props:DialogProps) => {
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="country"
-            label="Country"
+            id="contact"
+            label="Contact"
             variant="outlined"
-            value={country} 
-            onChange={(e) => setCountry(e.target.value)}
+            value={contact} 
+            onChange={(e) => setContact(e.target.value)}
             />
             <TextField
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="socialmedia"
-            label="Social Media"
+            id="pointOfInterestTypeID"
+            label="Type"
             variant="outlined"
-            value={socialMedia} 
-            onChange={(e) => setSocialMedia(e.target.value)}
+            value={pointOfInterestTypeID} 
+            onChange={(e) => handleSetType(e.target.value)}
             />
-                        <TextField
+            <TextField
             required
             fullWidth
             multiline
@@ -126,28 +124,6 @@ const FormDialog = (props:DialogProps) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)}
             />
-            <div>
-            <KeyboardDateTimePicker
-              id="startdate"
-              label="Start Date"
-              value={startDate}
-              onChange={setStartDate}
-              className="w-50 p-1"
-              onError={console.log}
-              minDate={new Date("2018-01-01T00:00")}
-              format="yyyy/MM/dd hh:mm a"
-            />
-            <KeyboardDateTimePicker
-              id="enddate"
-              label="End Date"
-              value={endDate}
-              onChange={setEndDate}
-              className="w-50 p-1"
-              onError={console.log}
-              minDate={new Date("2018-01-01T00:00")}
-              format="yyyy/MM/dd hh:mm a"
-            />
-            </div>
         </DialogContent>
         <DialogActions>
             <Button onClick={handleClose} color="primary">

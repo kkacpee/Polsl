@@ -11,7 +11,7 @@ import Dialog from "./AddConferenceDialog"
 
 const ConferenceList = () => {
     const dispatch = useDispatch();
-    const ConferenceList:ConferenceState = useSelector((state: RootState ) => state.ConferenceList);
+    const ConferenceList:ConferenceState = useSelector((state: RootState ) => state.Conference);
 
     React.useEffect( () => {
         FetchData()

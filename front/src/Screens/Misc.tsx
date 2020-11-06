@@ -6,6 +6,12 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AccommodationList from './Accommodation/AccommodationList';
+import OrganizerList from './Organizer/OrganizerList';
+import EmergencyNumberList from './EmergencyNumber/EmergencyNumberList';
+import SponsorList from './Sponsor/SponsorList';
+import PointOfInterestList from './PointOfInterest/PointOfInterestList';
+import BuildingPlanList from './BuildingPlan/BuildingPlan';
+import ParticipantList from './Participant/ParticipantList';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -59,25 +65,35 @@ export default function Misc() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example" centered> 
-          <Tab
-            value="one"
-            label="New Arrivals in the Longest Text of Nonfiction"
-            wrapped
-            {...a11yProps('one')}
-          />
-          <Tab value="two" label="Item Two" {...a11yProps('two')} />
-          <Tab value="three" label="Item Three" {...a11yProps('three')} />
+          <Tab value="one" label="Accommodations" {...a11yProps('one')} />
+          <Tab value="two" label="Sponsors" {...a11yProps('two')} />
+          <Tab value="three" label="Emergency Numbers" {...a11yProps('three')} />
+          <Tab value="four" label="Organizers" {...a11yProps('four')} />
+          <Tab value="five" label="Building Plans" {...a11yProps('five')} />
+          <Tab value="six" label="Points of Interest" {...a11yProps('six')} />
+          <Tab value="seven" label="Participants" {...a11yProps('seven')} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index="one">
         {AccommodationList}
       </TabPanel>
       <TabPanel value={value} index="two">
-      {AccommodationList}
+        {SponsorList}
       </TabPanel>
       <TabPanel value={value} index="three">
-        Item Three
-        {AccommodationList}
+        {EmergencyNumberList}
+      </TabPanel>
+      <TabPanel value={value} index="four">
+        {OrganizerList}
+      </TabPanel>
+      <TabPanel value={value} index="five">
+        {BuildingPlanList}
+      </TabPanel>
+      <TabPanel value={value} index="six">
+        {PointOfInterestList}
+      </TabPanel>
+      <TabPanel value={value} index="seven">
+        {ParticipantList}
       </TabPanel>
     </div>
   );

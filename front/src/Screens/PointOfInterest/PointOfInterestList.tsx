@@ -3,64 +3,58 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
-import { AccommodationState } from '../../Types/AccommodationTypes';
-import { GetAccommodationList } from '../../Actions/AccommodationActions';
+import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
+import { GetPointOfInterestList } from '../../Actions/PointOfInterestActions';
 import { Container, Row } from 'react-bootstrap';
 import { DataGrid } from '@material-ui/data-grid';
-import Dialog from './AddAccommodationDialog'
-const AccommodationList = () => {
+import Dialog from './AddPointOfInterestDialog';
+
+const PointOfInterestList = () => {
     const dispatch = useDispatch();
-    const accommodationList:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
+    const pointOfInterestState:PointOfInterestState = useSelector((state: RootState ) => state.PointOfInterest);
     
     React.useEffect( () => {
         FetchData()
     }, []);
 
     const FetchData = () => {
-        dispatch(GetAccommodationList())
+        dispatch(GetPointOfInterestList())
     }
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'address', headerName: 'Address', width: 130 },
-        {
-          field: 'number',
-          headerName: 'Number',
-          width: 130,
-        },
-        {
-            field: 'website',
-            headerName: 'Website',
-            width: 130,
-        }
+        { field: 'contact', headerName: 'Contact', width: 130 },
+        { field: 'description', headerName: 'Description', width: 130 },
+        { field: 'pointOfInterestTypeID', headerName: 'Type ID', width: 130 },
       ];
 
     const ShowData = () => {
-        if (!_.isEmpty(accommodationList.data)){
+        if (!_.isEmpty(pointOfInterestState.data)){
             return (
                 <>
                 <Container>
                     <Row>
                     <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid autoHeight rows={accommodationList.data} columns={columns} pageSize={5} checkboxSelection />
+                    <DataGrid autoHeight rows={pointOfInterestState.data} columns={columns} pageSize={5} checkboxSelection />
                     </div> 
                     </Row>
                     <Row>
                         <div>
-                        <Dialog dialogTitle="Add new Accommodation" fetch={() => {FetchData()}}></Dialog>
+                        <Dialog dialogTitle="Add new Point Of Interest" fetch={() => {FetchData()}}></Dialog>
                         </div>
                     </Row>
                 </Container>
                 </>
             )
         }
-        if (accommodationList.loading){
+        if (pointOfInterestState.loading){
             return <p> loading... </p>
         }
 
-        if (accommodationList.errorMsg !== ""){
-            return <p>{accommodationList.errorMsg}</p>
+        if (pointOfInterestState.errorMsg !== ""){
+            return <p>{pointOfInterestState.errorMsg}</p>
         }
 
         return <p> unable to do shit </p>
@@ -71,4 +65,4 @@ const AccommodationList = () => {
     )
 };
 
-export default AccommodationList;
+export default PointOfInterestList;

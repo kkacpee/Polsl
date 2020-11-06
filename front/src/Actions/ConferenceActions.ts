@@ -10,7 +10,7 @@ export const GetConferenceList = (): ThunkAction<void, RootState, null, Conferen
         dispatch({
             type: CONFERENCE_LIST_LOADING
         });
-        const result = await axios.get('http://localhost:50561/api/Conference/get')
+        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/Conference/get`)
         
         dispatch({
             type: CONFERENCE_LIST_SUCCESS,
@@ -31,7 +31,7 @@ export const AddConference = (values:AddConferenceRequest): ThunkAction<void, Ro
         dispatch({
             type: CONFERENCE_ADD
         });
-        const response = await axios.post('http://localhost:50561/api/Conference/add', {
+        const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/Conference/add`, {
             ...values
             })
         
@@ -55,7 +55,7 @@ export const DeleteConference = (key:number): ThunkAction<void, RootState, null,
             dispatch({
                 type: CONFERENCE_DELETE
             });
-            const response = await axios.delete(`http://localhost:50561/api/Conference/delete/${key}`)
+            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/Conference/delete/${key}`)
             
             dispatch({
                 type: CONFERENCE_DELETE_SUCCESS,
