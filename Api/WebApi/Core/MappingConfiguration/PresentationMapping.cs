@@ -21,7 +21,10 @@ namespace Core.MappingConfiguration
 
             CreateMap<Presentation, PresentationModel>().ReverseMap();
             CreateMap<Presentation, AddPresentationRequest>().ReverseMap();
-            CreateMap<Presentation, PresentationResponse>().ReverseMap();
+            CreateMap<Presentation, PresentationResponse>()
+                                .ForMember(dest => dest.PresentationTypeName,
+                                  opt => opt.MapFrom(src => src.PresentationType.Name))
+                                .ReverseMap();
 
             CreateMap<PresentationType, PresentationTypeModel>().ReverseMap();
             CreateMap<PresentationType, AddPresentationTypeRequest>().ReverseMap();

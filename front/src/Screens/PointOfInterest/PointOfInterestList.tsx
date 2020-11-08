@@ -6,8 +6,8 @@ import _ from 'lodash';
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
 import { GetPointOfInterestList } from '../../Actions/PointOfInterestActions';
 import { Container, Row } from 'react-bootstrap';
-import { DataGrid } from '@material-ui/data-grid';
 import Dialog from './AddPointOfInterestDialog';
+import PointOfInterestDataGrid from '../../Components/DataGrids/PointOfInterestDataGrid';
 
 const PointOfInterestList = () => {
     const dispatch = useDispatch();
@@ -21,24 +21,13 @@ const PointOfInterestList = () => {
         dispatch(GetPointOfInterestList())
     }
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Name', width: 130 },
-        { field: 'address', headerName: 'Address', width: 130 },
-        { field: 'contact', headerName: 'Contact', width: 130 },
-        { field: 'description', headerName: 'Description', width: 130 },
-        { field: 'pointOfInterestTypeID', headerName: 'Type ID', width: 130 },
-      ];
-
     const ShowData = () => {
         if (!_.isEmpty(pointOfInterestState.data)){
             return (
                 <>
                 <Container>
                     <Row>
-                    <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid autoHeight rows={pointOfInterestState.data} columns={columns} pageSize={5} checkboxSelection />
-                    </div> 
+                    <PointOfInterestDataGrid data={pointOfInterestState.data} />
                     </Row>
                     <Row>
                         <div>

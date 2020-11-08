@@ -6,8 +6,10 @@ import _ from 'lodash';
 import { AccommodationState } from '../../Types/AccommodationTypes';
 import { GetAccommodationList } from '../../Actions/AccommodationActions';
 import { Container, Row } from 'react-bootstrap';
-import { DataGrid } from '@material-ui/data-grid';
-import Dialog from './AddAccommodationDialog'
+import Dialog from './AddAccommodationDialog';
+import AccommodationDataGrid from '../../Components/DataGrids/AccommodationDataGrid';
+import { CircularProgress } from '@material-ui/core';
+
 const AccommodationList = () => {
     const dispatch = useDispatch();
     const accommodationList:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
@@ -20,31 +22,13 @@ const AccommodationList = () => {
         dispatch(GetAccommodationList())
     }
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Name', width: 130 },
-        { field: 'address', headerName: 'Address', width: 130 },
-        {
-          field: 'number',
-          headerName: 'Number',
-          width: 130,
-        },
-        {
-            field: 'website',
-            headerName: 'Website',
-            width: 130,
-        }
-      ];
-
     const ShowData = () => {
         if (!_.isEmpty(accommodationList.data)){
             return (
                 <>
                 <Container>
                     <Row>
-                    <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid autoHeight rows={accommodationList.data} columns={columns} pageSize={5} checkboxSelection />
-                    </div> 
+                    <AccommodationDataGrid data={accommodationList.data} />
                     </Row>
                     <Row>
                         <div>
@@ -56,14 +40,12 @@ const AccommodationList = () => {
             )
         }
         if (accommodationList.loading){
-            return <p> loading... </p>
+            return <CircularProgress />
         }
 
         if (accommodationList.errorMsg !== ""){
             return <p>{accommodationList.errorMsg}</p>
         }
-
-        return <p> unable to do shit </p>
     }
     
     return(

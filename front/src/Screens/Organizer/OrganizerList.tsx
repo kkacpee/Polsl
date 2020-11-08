@@ -6,8 +6,9 @@ import _ from 'lodash';
 import { OrganizerState } from '../../Types/OrganizerTypes';
 import { GetOrganizerList } from '../../Actions/OrganizerActions';
 import { Container, Row } from 'react-bootstrap';
-import { DataGrid } from '@material-ui/data-grid';
 import Dialog from './AddOrganizerDialog';
+import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
+import { CircularProgress } from '@material-ui/core';
 const OrganizerList = () => {
     const dispatch = useDispatch();
     const organizerState:OrganizerState = useSelector((state: RootState ) => state.Organizer);
@@ -20,24 +21,13 @@ const OrganizerList = () => {
         dispatch(GetOrganizerList())
     }
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'firstName', headerName: 'First Name', width: 130 },
-        { field: 'lastName', headerName: 'Last Name', width: 130 },
-        { field: 'affiliation', headerName: 'Affiliation', width: 130 },
-        { field: 'company', headerName: 'Company', width: 130 },
-        { field: 'contact', headerName: 'Contact', width: 130 }
-      ];
-
     const ShowData = () => {
         if (!_.isEmpty(organizerState.data)){
             return (
                 <>
                 <Container>
                     <Row>
-                    <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid autoHeight rows={organizerState.data} columns={columns} pageSize={5} checkboxSelection />
-                    </div> 
+                    <OrganizerDataGrid data={organizerState.data} /> 
                     </Row>
                     <Row>
                         <div>
@@ -49,14 +39,12 @@ const OrganizerList = () => {
             )
         }
         if (organizerState.loading){
-            return <p> loading... </p>
+            return <CircularProgress />
         }
 
         if (organizerState.errorMsg !== ""){
             return <p>{organizerState.errorMsg}</p>
         }
-
-        return <p> unable to do shit </p>
     }
     
     return(

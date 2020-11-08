@@ -16,6 +16,7 @@ namespace Core.DTO.Response
         public string Title { get; set; }
         public int ConferenceID { get; set; }
         public int PresentationTypeID { get; set; }
+        public string PresentationTypeName { get; set; }
 
         public PresentationTypeModel PresentationType { get; set; }
     }

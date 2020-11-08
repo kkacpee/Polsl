@@ -5,12 +5,16 @@ import {ConferenceState,
     CONFERENCE_LIST_SUCCESS,
     CONFERENCE_ADD,
     CONFERENCE_ADD_SUCCESS,
-    CONFERENCE_ADD_FAIL} from '../Types/ConferenceTypes'
+    CONFERENCE_ADD_FAIL,
+    CONFERENCE_DETAILS_LOADING,
+    CONFERENCE_DETAILS_FAIL,
+    CONFERENCE_DETAILS_SUCCESS} from '../Types/ConferenceTypes'
     
 const DefaultState: ConferenceState  = {
     loading: false,
     data: [],
-    errorMsg: ""
+    errorMsg: "",
+    details: undefined
 };
 
 const ConferenceReducer = (state = DefaultState, action: ConferenceAction) => {
@@ -32,6 +36,25 @@ const ConferenceReducer = (state = DefaultState, action: ConferenceAction) => {
             ...state,
             loading: false,
             data: action.payload,
+            errorMsg: ""
+        };
+        case CONFERENCE_DETAILS_LOADING:
+            return {
+                ...state,
+                loading: true,
+                errorMsg: ""
+            };
+        case CONFERENCE_DETAILS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                errorMsg: action.payload
+            };
+        case CONFERENCE_DETAILS_SUCCESS:
+        return {
+            ...state,
+            loading: false,
+            details: action.payload,
             errorMsg: ""
         };
         case CONFERENCE_ADD:

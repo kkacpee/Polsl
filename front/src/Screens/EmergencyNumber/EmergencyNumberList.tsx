@@ -6,8 +6,9 @@ import _ from 'lodash';
 import { EmergencyNumberState } from '../../Types/EmergencyNumberTypes';
 import { GetEmergencyNumberList } from '../../Actions/EmergencyNumberActions';
 import { Container, Row } from 'react-bootstrap';
-import { DataGrid } from '@material-ui/data-grid';
 import Dialog from './AddEmergencyNumberDialog';
+import EmergencyNumberDataGrid from '../../Components/DataGrids/EmergencyNumberDataGrid';
+import { CircularProgress } from '@material-ui/core';
 
 const EmergencyNumberList = () => {
     const dispatch = useDispatch();
@@ -21,21 +22,13 @@ const EmergencyNumberList = () => {
         dispatch(GetEmergencyNumberList())
     }
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'name', headerName: 'Name', width: 130 },
-        { field: 'number', headerName: 'Number', width: 130 }
-      ];
-
     const ShowData = () => {
         if (!_.isEmpty(emergencyNumberState.data)){
             return (
                 <>
                 <Container>
                     <Row>
-                    <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid autoHeight rows={emergencyNumberState.data} columns={columns} pageSize={5} checkboxSelection />
-                    </div> 
+                    <EmergencyNumberDataGrid data={emergencyNumberState.data} />
                     </Row>
                     <Row>
                         <div>
@@ -47,14 +40,12 @@ const EmergencyNumberList = () => {
             )
         }
         if (emergencyNumberState.loading){
-            return <p> loading... </p>
+            return <CircularProgress />
         }
 
         if (emergencyNumberState.errorMsg !== ""){
             return <p>{emergencyNumberState.errorMsg}</p>
         }
-
-        return <p> unable to do shit </p>
     }
     
     return(

@@ -7,7 +7,6 @@ import ConferenceList from './Screens/Conference/ConferenceList';
 import SignIn from './Screens/SignIn';
 import NavBar from './Components/Navbar';
 import Snackbar from './Components/Snackbar'
-import { CONFERENCE_DELETE_FAIL } from './Types/ConferenceTypes';
 import ConferenceDetails from './Screens/Conference/ConferenceDetails';
 import Misc from './Screens/Misc';
 

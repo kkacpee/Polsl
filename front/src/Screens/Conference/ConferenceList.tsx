@@ -8,6 +8,7 @@ import { GetConferenceList } from '../../Actions/ConferenceActions';
 import Card from '../../Components/Card';
 import { Col, Container, Row } from 'react-bootstrap';
 import Dialog from "./AddConferenceDialog"
+import { CircularProgress } from '@material-ui/core';
 
 const ConferenceList = () => {
     const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const ConferenceList = () => {
             )
         }
         if (ConferenceList.loading){
-            return <p> loading... </p>
+            return <CircularProgress />
         }
 
         if (ConferenceList.errorMsg !== ""){

@@ -10,6 +10,7 @@ namespace Core.DTO.Response
         public string Contact { get; set; }
         public string Description { get; set; }
         public int PointOfInterestTypeID { get; set; }
+        public string PointOfInterestTypeName { get; set; }
 
         public virtual PointOfInterestTypeModel PointOfInterestType { get; set; }
     }

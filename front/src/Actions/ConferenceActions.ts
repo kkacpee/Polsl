@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddConferenceRequest, ConferenceAction, CONFERENCE_ADD, CONFERENCE_ADD_FAIL, CONFERENCE_ADD_SUCCESS, CONFERENCE_DELETE, CONFERENCE_DELETE_FAIL, CONFERENCE_DELETE_SUCCESS, CONFERENCE_LIST_FAIL, CONFERENCE_LIST_LOADING, CONFERENCE_LIST_SUCCESS } from '../Types/ConferenceTypes';
+import { AddConferenceRequest, ConferenceAction, CONFERENCE_ADD, CONFERENCE_ADD_FAIL, CONFERENCE_ADD_SUCCESS, CONFERENCE_DELETE, CONFERENCE_DELETE_FAIL, CONFERENCE_DELETE_SUCCESS, CONFERENCE_DETAILS_FAIL, CONFERENCE_DETAILS_LOADING, CONFERENCE_DETAILS_SUCCESS, CONFERENCE_LIST_FAIL, CONFERENCE_LIST_LOADING, CONFERENCE_LIST_SUCCESS } from '../Types/ConferenceTypes';
 
 
 export const GetConferenceList = (): ThunkAction<void, RootState, null, ConferenceAction> => 
@@ -19,6 +19,27 @@ export const GetConferenceList = (): ThunkAction<void, RootState, null, Conferen
     } catch (e){
         dispatch({
             type: CONFERENCE_LIST_FAIL,
+            payload: e.message
+        })
+    }
+    }
+}
+
+export const GetConferenceDetails = (id:number): ThunkAction<void, RootState, null, ConferenceAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: CONFERENCE_DETAILS_LOADING
+        });
+        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/Conference/get/${id}`)
+        
+        dispatch({
+            type: CONFERENCE_DETAILS_SUCCESS,
+            payload: result.data
+        })
+    } catch (e){
+        dispatch({
+            type: CONFERENCE_DETAILS_FAIL,
             payload: e.message
         })
     }

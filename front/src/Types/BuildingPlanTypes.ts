@@ -16,6 +16,13 @@ export interface BuildingPlan {
     conferenceId: number
 }
 
+export interface ConferenceBuildngPlan {
+    id: number,
+    name: string,
+    path: string,
+    description: string
+}
+
 export interface AddBuildingPlanRequest {
     name: string,
     path: string,

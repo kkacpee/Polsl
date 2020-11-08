@@ -15,6 +15,7 @@ export interface PointOfInterest {
     description: string,
     contact: string,
     pointOfInterestTypeID: number
+    pointOfInterestTypeName: number
 }
 
 export interface AddPointOfInterestRequest {

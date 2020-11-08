@@ -145,9 +145,11 @@ namespace Core.Services
                             .ThenInclude(x => x.Organizer)
                         .Include(x => x.ConferencePointOfInterests)
                             .ThenInclude(x => x.PointOfInterest)
+                                .ThenInclude(x => x.PointOfInterestType)
                         .Include(x => x.ConferenceSponsors)
                             .ThenInclude(x => x.Sponsor)
-                        .Include(x => x.Presentations);
+                        .Include(x => x.Presentations)
+                            .ThenInclude(x => x.PresentationType);
         }
     }
 }

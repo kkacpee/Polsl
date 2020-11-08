@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
 import { AddAccommodation } from '../../Actions/AccommodationActions';
 import { AddAccommodationRequest } from '../../Types/AccommodationTypes';
-import AddIcon from '@material-ui/icons/Add';
 
 interface DialogProps {
   dialogTitle: string,

@@ -53,7 +53,10 @@ namespace Core.MappingConfiguration
             CreateMap<BuildingPlan, BuildingPlanResponse>().ReverseMap();
             CreateMap<EmergencyNumber, EmergencyNumberResponse>().ReverseMap();
             CreateMap<Organizer, OrganizerResponse>().ReverseMap();
-            CreateMap<PointOfInterest, PointOfInterestResponse>().ReverseMap();
+            CreateMap<PointOfInterest, PointOfInterestResponse>()
+                                .ForMember(dest => dest.PointOfInterestTypeName,
+                                  opt => opt.MapFrom(src => src.PointOfInterestType.Name))
+                                .ReverseMap();
             CreateMap<Accommodation, AccommodationResponse>().ReverseMap();
             CreateMap<Rate, RateResponse>().ReverseMap();
             CreateMap<Sponsor, SponsorResponse>().ReverseMap();
