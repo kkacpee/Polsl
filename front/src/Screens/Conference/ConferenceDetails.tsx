@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardHeader, CardMedia, Container, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -14,6 +14,9 @@ import EmergencyNumberDataGrid from '../../Components/DataGrids/EmergencyNumberD
 import PointOfInterestDataGrid from '../../Components/DataGrids/PointOfInterestDataGrid';
 import SponsorDataGrid from '../../Components/DataGrids/SponsorDataGrid';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
+import PresentationDataGrid from '../../Components/DataGrids/PresentationDataGrid';
+import Details from '../../Components/Details';
+//import { Details } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,14 +44,24 @@ const ConferenceDetails = () => {
        await dispatch(GetConferenceDetails(id))
     }
     const ShowData = () => {
-        if (!_.isEmpty(Conference.data)){
-            console.log(Conference.details)
+        if (!_.isEmpty(Conference.details)){
                 return(
-                    <>
-                    <div>
-                        
-                    </div>
-                    <Accordion>
+                    <Container>
+                    <Grid container direction="column" justify='center' alignItems='stretch' >
+                        <Details details={Conference.details!}></Details>
+                        <Accordion>
+                        <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="presentations-header"
+                        >
+                            <Typography className={classes.heading}>Presentations</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <PresentationDataGrid data={Conference.details!.presentations} />
+                        </AccordionDetails>
+                    </Accordion>
+                        <Accordion>
                             <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel2a-content"
@@ -109,19 +122,20 @@ const ConferenceDetails = () => {
                             </AccordionDetails>
                         </Accordion>
                         <Accordion>
-                            <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="sponsor-header"
-                            >
-                                <Typography className={classes.heading}>Sponsor</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <SponsorDataGrid data={Conference.details!.sponsors} />
-                            </AccordionDetails>
-                        </Accordion>
-                    </>
-                )
+                        <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="sponsor-header"
+                        >
+                            <Typography className={classes.heading}>Sponsor</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <SponsorDataGrid data={Conference.details!.sponsors} />
+                        </AccordionDetails>
+                    </Accordion>
+                    </Grid>
+                    </Container>
+            )
         }
         if (Conference.loading){
             return <p> loading... </p>
@@ -133,9 +147,8 @@ const ConferenceDetails = () => {
     }
 
     return(
-        <div> Conference {id} Details
+        <div>
         {ShowData()}
-
         </div>
     )
 };

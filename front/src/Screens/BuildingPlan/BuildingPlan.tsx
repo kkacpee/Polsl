@@ -21,8 +21,6 @@ const BuildingPlanList = () => {
         dispatch(GetBuildingPlanList())
     }
 
-   
-
     const ShowData = () => {
         if (!_.isEmpty(buildingPlanState.data)){
             return (

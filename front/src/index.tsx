@@ -8,14 +8,18 @@ import {BrowserRouter} from 'react-router-dom';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ThemeProvider } from '@material-ui/core';
+import Theme from './Styles/ThemeProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={Store}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <App />
-        </MuiPickersUtilsProvider>
+        <ThemeProvider theme={Theme}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <App />
+          </MuiPickersUtilsProvider>
+        </ThemeProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

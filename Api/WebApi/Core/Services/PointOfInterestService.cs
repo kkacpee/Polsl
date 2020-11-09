@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Interfaces.Repositories.Conference;
 using Core.Interfaces.Services;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,11 +26,12 @@ namespace Core.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PointOfInterestModel>> GetAllPointsOfInterestAsync(CancellationToken cancellationToken)
+        public async Task<List<PointOfInterestResponse>> GetAllPointsOfInterestAsync(CancellationToken cancellationToken)
         {
-            var result = await _pointOfInterestRepository.GetAllAsync(cancellationToken);
+            var include = CreateInclude();
+            var result = await _pointOfInterestRepository.GetAllAsync(cancellationToken, include);
 
-            return _mapper.Map<List<PointOfInterestModel>>(result);
+            return _mapper.Map<List<PointOfInterestResponse>>(result);
         }
 
         public async Task<int> AddPointOfInterestAsync(AddPointOfInterestRequest request, CancellationToken cancellationToken)
@@ -53,6 +58,11 @@ namespace Core.Services
             }
 
             await _pointOfInterestRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+        }
+
+        private Func<IQueryable<PointOfInterest>, IIncludableQueryable<PointOfInterest, object>> CreateInclude()
+        {
+            return x => x.Include(x => x.PointOfInterestType);
         }
     }
 }

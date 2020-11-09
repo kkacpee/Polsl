@@ -5,7 +5,7 @@ import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
 import { ConferenceState } from '../../Types/ConferenceTypes';
 import { GetConferenceList } from '../../Actions/ConferenceActions';
-import Card from '../../Components/Card';
+import{ default as Card} from '../../Components/CardX';
 import { Col, Container, Row } from 'react-bootstrap';
 import Dialog from "./AddConferenceDialog"
 import { CircularProgress } from '@material-ui/core';
@@ -27,10 +27,10 @@ const ConferenceList = () => {
             return (
                 <Container>
                     <Row>
-                    {ConferenceList.data.map(({id, title, startDate, endDate,...rest}) => {
+                    {ConferenceList.data.map((data) => {
                     return (
                         <Col md={4}>
-                        <Card key={id} id={id} name={title} data={rest} dates={[startDate, endDate]} onRowClick={() => {FetchData()}}></Card>
+                        <Card key={data.id} data={data} onRowClick={() => {FetchData()}}></Card>
                         </Col>
                     )
                     })}
