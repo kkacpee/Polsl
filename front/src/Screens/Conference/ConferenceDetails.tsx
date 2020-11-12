@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardHeader, CardMedia, Container, createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardHeader, CardMedia, Container, createStyles, Divider, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -16,6 +16,8 @@ import SponsorDataGrid from '../../Components/DataGrids/SponsorDataGrid';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
 import PresentationDataGrid from '../../Components/DataGrids/PresentationDataGrid';
 import Details from '../../Components/Details';
+import AddConferenceAccommodationDialog from './ConferenceMiscDialogs/AddConferenceAccommodationDialog';
+
 //import { Details } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,7 +62,14 @@ const ConferenceDetails = () => {
                         <AccordionDetails>
                             <PresentationDataGrid data={Conference.details!.presentations} />
                         </AccordionDetails>
-                    </Accordion>
+                        <Divider />
+                        <AccordionActions>
+                            <Button size="small" >Delete selected</Button>
+                            <Button size="small" color="primary">
+                                Add
+                            </Button>
+                        </AccordionActions>
+                        </Accordion>
                         <Accordion>
                             <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -72,6 +81,11 @@ const ConferenceDetails = () => {
                             <AccordionDetails>
                                 <AccommodationDataGrid data={Conference.details!.accommodations} />
                             </AccordionDetails>
+                            <Divider />
+                            <AccordionActions>
+                                <Button size="small" >Delete selected</Button>
+                                <AddConferenceAccommodationDialog dialogTitle="Add Accommodation" fetch={() => {FetchData()}} />
+                            </AccordionActions>
                         </Accordion>
                         <Accordion>
                             <AccordionSummary
@@ -84,6 +98,13 @@ const ConferenceDetails = () => {
                             <AccordionDetails>
                                 <BuildingPlanDataGrid type='noId' dataNoConferenceId={Conference.details!.buildingPlans} />
                             </AccordionDetails>
+                            <Divider />
+                            <AccordionActions>
+                                <Button size="small">Delete selected</Button>
+                                <Button size="small" color="primary">
+                                    Add
+                                </Button>
+                            </AccordionActions>
                         </Accordion>
                         <Accordion>
                             <AccordionSummary
@@ -96,6 +117,13 @@ const ConferenceDetails = () => {
                             <AccordionDetails>
                                 <EmergencyNumberDataGrid data={Conference.details!.emergencyNumbers} />
                             </AccordionDetails>
+                            <Divider />
+                            <AccordionActions>
+                                <Button size="small">Delete selected</Button>
+                                <Button size="small" color="primary">
+                                    Add
+                                </Button>
+                            </AccordionActions>
                         </Accordion>
                         <Accordion>
                             <AccordionSummary
@@ -108,6 +136,13 @@ const ConferenceDetails = () => {
                             <AccordionDetails>
                                 <OrganizerDataGrid data={Conference.details!.organizers} />
                             </AccordionDetails>
+                            <Divider />
+                            <AccordionActions>
+                                <Button size="small">Delete selected</Button>
+                                <Button size="small" color="primary">
+                                    Add
+                                </Button>
+                            </AccordionActions>
                         </Accordion>
                         <Accordion>
                             <AccordionSummary
@@ -120,6 +155,13 @@ const ConferenceDetails = () => {
                             <AccordionDetails>
                                 <PointOfInterestDataGrid data={Conference.details!.pointsOfInterest} />
                             </AccordionDetails>
+                            <Divider />
+                            <AccordionActions>
+                                <Button size="small">Delete selected</Button>
+                                <Button size="small" color="primary">
+                                    Add
+                                </Button>
+                            </AccordionActions>
                         </Accordion>
                         <Accordion>
                         <AccordionSummary
@@ -132,6 +174,13 @@ const ConferenceDetails = () => {
                         <AccordionDetails>
                             <SponsorDataGrid data={Conference.details!.sponsors} />
                         </AccordionDetails>
+                        <Divider />
+                            <AccordionActions>
+                                <Button size="small">Delete selected</Button>
+                                <Button size="small" color="primary">
+                                    Add
+                                </Button>
+                            </AccordionActions>
                     </Accordion>
                     </Grid>
                     </Container>
