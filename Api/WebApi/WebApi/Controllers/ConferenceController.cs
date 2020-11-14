@@ -1,6 +1,8 @@
 ﻿using Core.DTO.Requests;
 using Core.DTO.Response;
 using Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading;
@@ -10,6 +12,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ConferenceController : ControllerBase
     {
         private readonly IConferenceService _conferenceService;

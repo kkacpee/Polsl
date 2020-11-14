@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddPointOfInterestRequest, PointOfInterestAction, POINTOFINTEREST_ADD, POINTOFINTEREST_ADD_FAIL, POINTOFINTEREST_ADD_SUCCESS, POINTOFINTEREST_DELETE, POINTOFINTEREST_DELETE_FAIL, POINTOFINTEREST_DELETE_SUCCESS, POINTOFINTEREST_LIST_FAIL, POINTOFINTEREST_LIST_LOADING, POINTOFINTEREST_LIST_SUCCESS } from '../Types/PointOfInterestTypes';
+import { apiClient } from './ApiClient';
 
 
 export const GetPointOfInterestList = (): ThunkAction<void, RootState, null, PointOfInterestAction> => 
@@ -10,7 +11,7 @@ export const GetPointOfInterestList = (): ThunkAction<void, RootState, null, Poi
         dispatch({
             type: POINTOFINTEREST_LIST_LOADING
         });
-        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/PointOfInterest/get`)
+        const result = await apiClient.get(`/api/PointOfInterest/get`)
         
         dispatch({
             type: POINTOFINTEREST_LIST_SUCCESS,
@@ -31,7 +32,7 @@ export const AddPointOfInterest = (values:AddPointOfInterestRequest): ThunkActio
         dispatch({
             type: POINTOFINTEREST_ADD
         });
-        const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/PointOfInterest/add`, {
+        const response = await apiClient.post(`/api/PointOfInterest/add`, {
             ...values
             })
         
@@ -55,7 +56,7 @@ export const DeletePointOfInterest = (key:number): ThunkAction<void, RootState, 
             dispatch({
                 type: POINTOFINTEREST_DELETE
             });
-            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/PointOfInterest/delete/${key}`)
+            const response = await apiClient.delete(`/api/PointOfInterest/delete/${key}`)
             
             dispatch({
                 type: POINTOFINTEREST_DELETE_SUCCESS,

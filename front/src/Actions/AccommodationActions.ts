@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddAccommodationRequest, AccommodationAction, ACCOMMODATION_ADD, ACCOMMODATION_ADD_FAIL, ACCOMMODATION_ADD_SUCCESS, ACCOMMODATION_DELETE, ACCOMMODATION_DELETE_FAIL, ACCOMMODATION_DELETE_SUCCESS, ACCOMMODATION_LIST_FAIL, ACCOMMODATION_LIST_LOADING, ACCOMMODATION_LIST_SUCCESS } from '../Types/AccommodationTypes';
+import { apiClient } from './ApiClient';
 
 
 export const GetAccommodationList = (): ThunkAction<void, RootState, null, AccommodationAction> => 
@@ -31,7 +32,7 @@ export const AddAccommodation = (values:AddAccommodationRequest): ThunkAction<vo
         dispatch({
             type: ACCOMMODATION_ADD
         });
-        const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/Accommodation/add`, {
+        const response = await apiClient.post(`/api/Accommodation/add`, {
             ...values
             })
         
@@ -55,7 +56,7 @@ export const DeleteAccommodation = (key:number): ThunkAction<void, RootState, nu
             dispatch({
                 type: ACCOMMODATION_DELETE
             });
-            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/Accommodation/delete/${key}`)
+            const response = await apiClient.delete(`/api/Accommodation/delete/${key}`)
             
             dispatch({
                 type: ACCOMMODATION_DELETE_SUCCESS,

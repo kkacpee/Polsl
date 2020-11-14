@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddBuildingPlanRequest, BuildingPlanAction, BUILDINGPLAN_ADD, BUILDINGPLAN_ADD_FAIL, BUILDINGPLAN_ADD_SUCCESS, BUILDINGPLAN_DELETE, BUILDINGPLAN_DELETE_FAIL, BUILDINGPLAN_DELETE_SUCCESS, BUILDINGPLAN_LIST_FAIL, BUILDINGPLAN_LIST_LOADING, BUILDINGPLAN_LIST_SUCCESS } from '../Types/BuildingPlanTypes';
+import { apiClient } from './ApiClient';
 
 
 export const GetBuildingPlanList = (): ThunkAction<void, RootState, null, BuildingPlanAction> => 
@@ -10,7 +11,7 @@ export const GetBuildingPlanList = (): ThunkAction<void, RootState, null, Buildi
         dispatch({
             type: BUILDINGPLAN_LIST_LOADING
         });
-        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/BuildingPlan/get`)
+        const result = await apiClient.get(`/api/BuildingPlan/get`)
         
         dispatch({
             type: BUILDINGPLAN_LIST_SUCCESS,
@@ -31,7 +32,7 @@ export const AddBuildingPlan = (values:AddBuildingPlanRequest): ThunkAction<void
         dispatch({
             type: BUILDINGPLAN_ADD
         });
-        const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/BuildingPlan/add`, {
+        const response = await apiClient.post(`/api/BuildingPlan/add`, {
             ...values
             })
         
@@ -55,7 +56,7 @@ export const DeleteBuildingPlan = (key:number): ThunkAction<void, RootState, nul
             dispatch({
                 type: BUILDINGPLAN_DELETE
             });
-            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/BuildingPlan/delete/${key}`)
+            const response = await apiClient.delete(`/api/BuildingPlan/delete/${key}`)
             
             dispatch({
                 type: BUILDINGPLAN_DELETE_SUCCESS,

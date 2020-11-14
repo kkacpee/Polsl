@@ -2,8 +2,21 @@ import {createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './Reducers/rootReducer';
+import rootReducer, { RootState } from './Reducers/rootReducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
+const persistConfig = {
+ key: 'root',
+ storage: storage,
+ stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
+};
+
+const pReducer = persistReducer<RootState>(persistConfig, rootReducer);
+
+
+const Store = createStore(pReducer , composeWithDevTools(applyMiddleware(thunk)));
+export const persistor = persistStore(Store);
 export default Store;

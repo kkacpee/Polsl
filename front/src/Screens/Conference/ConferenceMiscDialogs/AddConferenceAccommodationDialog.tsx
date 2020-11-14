@@ -23,6 +23,12 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     const [open, setOpen] = React.useState(false);
     const accommodation:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
     const dispatch = useDispatch();
+  //   const [selectedRows, setSelectedRows] = useState([]);
+
+  // const handleSelectionChange = (selection) => {
+  //   setSelectedRows(selection.rows);
+  // };
+
 
   const handleClickOpen = () => {
     setOpen(true);

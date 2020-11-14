@@ -8,6 +8,7 @@ import OrganizerReducer from './OrganizerReducer';
 import ParticipantReducer from './ParticipantReducer';
 import PointOfInterestReducer from './PointOfInterestReducer';
 import SponsorReducer from './SponsorReducer';
+import AuthReducer from './AuthReducer';
 
 const RootReducer = combineReducers({
     Accommodation: AccommodationReducer,
@@ -18,7 +19,8 @@ const RootReducer = combineReducers({
     Organizer: OrganizerReducer,
     Participant: ParticipantReducer,
     PointOfInterest: PointOfInterestReducer,
-    Sponsor: SponsorReducer
+    Sponsor: SponsorReducer,
+    Auth: AuthReducer
 });
 
 export type RootState = ReturnType<typeof RootReducer>

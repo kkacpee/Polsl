@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddOrganizerRequest, OrganizerAction, ORGANIZER_ADD, ORGANIZER_ADD_FAIL, ORGANIZER_ADD_SUCCESS, ORGANIZER_DELETE, ORGANIZER_DELETE_FAIL, ORGANIZER_DELETE_SUCCESS, ORGANIZER_LIST_FAIL, ORGANIZER_LIST_LOADING, ORGANIZER_LIST_SUCCESS } from '../Types/OrganizerTypes';
+import { apiClient } from './ApiClient';
 
 
 export const GetOrganizerList = (): ThunkAction<void, RootState, null, OrganizerAction> => 
@@ -10,7 +11,7 @@ export const GetOrganizerList = (): ThunkAction<void, RootState, null, Organizer
         dispatch({
             type: ORGANIZER_LIST_LOADING
         });
-        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/Organizer/get`)
+        const result = await apiClient.get(`/api/Organizer/get`)
         
         dispatch({
             type: ORGANIZER_LIST_SUCCESS,
@@ -31,7 +32,7 @@ export const AddOrganizer = (values:AddOrganizerRequest): ThunkAction<void, Root
         dispatch({
             type: ORGANIZER_ADD
         });
-        const response = await axios.post(`${process.env.REACT_APP_API_URI}/api/Organizer/add`, {
+        const response = await apiClient.post(`/api/Organizer/add`, {
             ...values
             })
         
@@ -55,7 +56,7 @@ export const DeleteOrganizer = (key:number): ThunkAction<void, RootState, null, 
             dispatch({
                 type: ORGANIZER_DELETE
             });
-            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/Organizer/delete/${key}`)
+            const response = await apiClient.delete(`/api/Organizer/delete/${key}`)
             
             dispatch({
                 type: ORGANIZER_DELETE_SUCCESS,

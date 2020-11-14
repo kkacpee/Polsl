@@ -3,23 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
-import Store from './Store';
+import Store, { persistor } from './Store';
 import {BrowserRouter} from 'react-router-dom';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider } from '@material-ui/core';
 import Theme from './Styles/ThemeProvider';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import LoadingScreen from './Screens/LoadingScreen';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={Store}>
-        <ThemeProvider theme={Theme}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <App />
-          </MuiPickersUtilsProvider>
-        </ThemeProvider>
+        <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+          <ThemeProvider theme={Theme}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <App />
+            </MuiPickersUtilsProvider>
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

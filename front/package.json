@@ -14,6 +14,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
+    "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.162",
     "@types/node": "^12.19.1",
     "@types/react": "^16.9.53",
@@ -23,6 +24,7 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "date-fns": "^2.16.1",
+    "js-cookie": "^2.2.1",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
@@ -36,6 +38,7 @@
     "react-scripts": "4.0.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
