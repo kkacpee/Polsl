@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { DeleteConference } from '../Actions/ConferenceActions';
 import { setAlert } from '../Actions/AlertActions';
 import { Link } from 'react-router-dom';
+import {default as MyTheme} from '../Styles/ThemeProvider'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({ 
@@ -53,7 +54,6 @@ const CustomCard = ({data, onRowClick}: Props) => {
 
   async function handleDelete(key:number){
     await dispatch(DeleteConference(key));  
-    dispatch(setAlert(true, "success", "Deleted conference successfully"));
     onRowClick();
   }
 
@@ -70,13 +70,14 @@ const CustomCard = ({data, onRowClick}: Props) => {
 
   return (
       //className={classes.root}
-    <Card>
+    <Card color={MyTheme.palette.secondary.main}>
       <CardHeader
         action={
           <IconButton aria-label="settings" onClick={() => handleDelete(data.id)}>
             <Delete />
           </IconButton>
         }
+        titleTypographyProps={{variant:'h4' }}
         title={data.title}
         subheader={SubHeader()}
       />

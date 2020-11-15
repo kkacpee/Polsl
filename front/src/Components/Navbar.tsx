@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      backgroundColor: theme.palette.primary.main
     },
     tabs: {
       flexGrow: 1,
@@ -49,7 +50,7 @@ function NavBar() {
   }
   return (
     <div className={classes.root}>
-      <AppBar position="static" >
+      <AppBar position="static" color="transparent">
         <Toolbar>
         <Tabs value={value} onChange={handleChange} className={classes.tabs} centered>
           <Tab label='Home' icon={ <HomeIcon />} component={Link} to="/" />

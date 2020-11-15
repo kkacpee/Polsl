@@ -1,4 +1,5 @@
 ﻿using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Models;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,5 +12,6 @@ namespace Core.Interfaces.Services
         Task<List<PresentationModel>> GetPresentationsAsync(CancellationToken cancellationToken);
         Task<int> AddPresentationAsync(AddPresentationRequest request, CancellationToken cancellationToken);
         Task DeletePresentationPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task<PresentationDetailsResponse> GetPresentationDetailsAsync(int id, CancellationToken cancellationToken);
     }
 }

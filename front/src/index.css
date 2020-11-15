@@ -13,6 +13,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #F4F7F3;
+  background-color: #2F2635;
 }
 
 code {

@@ -6,9 +6,8 @@ import _ from 'lodash';
 import { ConferenceState } from '../../Types/ConferenceTypes';
 import { GetConferenceList } from '../../Actions/ConferenceActions';
 import{ default as Card} from '../../Components/CardX';
-import { Col, Container, Row } from 'react-bootstrap';
 import Dialog from "./AddConferenceDialog"
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Container, Grid } from '@material-ui/core';
 
 const ConferenceList = () => {
     const dispatch = useDispatch();
@@ -25,21 +24,19 @@ const ConferenceList = () => {
     const ShowData = () => {
         if (!_.isEmpty(ConferenceList.data)){
             return (
-                <Container>
-                    <Row>
+                <Container style={{padding: 20}}>
+                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                     {ConferenceList.data.map((data) => {
                     return (
-                        <Col md={4}>
                         <Card key={data.id} data={data} onRowClick={() => {FetchData()}}></Card>
-                        </Col>
                     )
                     })}
-                    </Row>
-                    <Row>
+                    </Grid>
+                    <Grid container direction="row" justify='center' alignItems='flex-end' >
                         <div>
                         <Dialog dialogTitle="Add new conference" fetch={() => {FetchData()}}></Dialog>
                         </div>
-                    </Row>
+                    </Grid>
                 </Container>
             )
         }

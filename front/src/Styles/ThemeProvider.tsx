@@ -1,6 +1,26 @@
 import { createMuiTheme} from '@material-ui/core/styles';
 
 const Theme = createMuiTheme({
+  palette: {
+    background: {
+      default: '#2F2635',
+      paper: '#F4F7F3'
+    },
+    primary: {
+      main: '#CA506E'
+    },
+    secondary: {
+      main: '#CE7B5C'
+    },
+    info: {
+      main: '#8B89A2'
+    },
+    type: 'light',
+    text: {
+      primary: '#2F2635',
+      secondary: '#F4F7F3'
+    }
+  },
   overrides: {
   //   // Style sheet name ⚛️
   //   // MuiButton: {
@@ -27,8 +47,14 @@ const Theme = createMuiTheme({
             height: 0,
             paddingTop: '56.25%', // 16:9
           }
+    },
+    MuiPaper: {
+      root: {
+        backgroundColor: '#8B89A2',
+        color: '#2F2635'
+      }
     }
-  }
+  },
 });
 
 export default Theme;

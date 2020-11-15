@@ -1,5 +1,7 @@
 ﻿using Core.DTO.Requests;
 using Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EmergencyNumberController : ControllerBase
     {
         private readonly IEmergencyNumberService _emergencyNumberService;

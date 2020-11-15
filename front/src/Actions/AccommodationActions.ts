@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddAccommodationRequest, AccommodationAction, ACCOMMODATION_ADD, ACCOMMODATION_ADD_FAIL, ACCOMMODATION_ADD_SUCCESS, ACCOMMODATION_DELETE, ACCOMMODATION_DELETE_FAIL, ACCOMMODATION_DELETE_SUCCESS, ACCOMMODATION_LIST_FAIL, ACCOMMODATION_LIST_LOADING, ACCOMMODATION_LIST_SUCCESS } from '../Types/AccommodationTypes';
+import { setAlert } from './AlertActions';
 import { apiClient } from './ApiClient';
-
 
 export const GetAccommodationList = (): ThunkAction<void, RootState, null, AccommodationAction> => 
 { return async dispatch => {
@@ -18,6 +19,7 @@ export const GetAccommodationList = (): ThunkAction<void, RootState, null, Accom
             payload: result.data
         })
     } catch (e){
+        
         dispatch({
             type: ACCOMMODATION_LIST_FAIL,
             payload: e.message

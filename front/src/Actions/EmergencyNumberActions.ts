@@ -11,7 +11,7 @@ export const GetEmergencyNumberList = (): ThunkAction<void, RootState, null, Eme
         dispatch({
             type: EMERGENCYNUMBER_LIST_LOADING
         });
-        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/EmergencyNumber/get`)
+        const result = await apiClient.get(`/api/EmergencyNumber/get`)
         
         dispatch({
             type: EMERGENCYNUMBER_LIST_SUCCESS,

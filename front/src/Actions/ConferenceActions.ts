@@ -77,7 +77,7 @@ export const DeleteConference = (key:number): ThunkAction<void, RootState, null,
             dispatch({
                 type: CONFERENCE_DELETE
             });
-            const response = await axios.delete(`${process.env.REACT_APP_API_URI}/api/Conference/delete/${key}`)
+            const response = await apiClient.delete(`${process.env.REACT_APP_API_URI}/api/Conference/delete/${key}`)
             
             dispatch({
                 type: CONFERENCE_DELETE_SUCCESS,

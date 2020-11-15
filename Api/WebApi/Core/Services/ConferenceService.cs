@@ -62,6 +62,11 @@ namespace Core.Services
 
         public async Task<ConferenceDetailsResponse> GetConferenceDetailsAsync(int id, CancellationToken cancellationToken)
         {
+            if (!await _conferenceRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            {
+                throw new InvalidOperationException("There is no conference with given ID");
+            }
+
             var include = CreateInclude();
 
             var result = await _conferenceRepository.GetByIdAsync(id, cancellationToken, include);

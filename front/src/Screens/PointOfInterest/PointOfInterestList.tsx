@@ -5,7 +5,7 @@ import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
 import { GetPointOfInterestList } from '../../Actions/PointOfInterestActions';
-import { Container, Row } from 'react-bootstrap';
+import { CircularProgress, Container, Grid } from '@material-ui/core';
 import Dialog from './AddPointOfInterestDialog';
 import PointOfInterestDataGrid from '../../Components/DataGrids/PointOfInterestDataGrid';
 
@@ -24,18 +24,16 @@ const PointOfInterestList = () => {
     const ShowData = () => {
         if (!_.isEmpty(pointOfInterestState.data)){
             return (
-                <>
-                <Container>
-                    <Row>
+                <Container style={{padding: 20}}>
+                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                     <PointOfInterestDataGrid data={pointOfInterestState.data} />
-                    </Row>
-                    <Row>
+                    </Grid>
+                    <Grid container direction="row" justify='center' alignItems='flex-end' >
                         <div>
                         <Dialog dialogTitle="Add new Point Of Interest" fetch={() => {FetchData()}}></Dialog>
                         </div>
-                    </Row>
+                    </Grid>
                 </Container>
-                </>
             )
         }
         if (pointOfInterestState.loading){

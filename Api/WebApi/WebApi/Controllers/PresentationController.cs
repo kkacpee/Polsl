@@ -1,6 +1,10 @@
 ﻿using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +12,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PresentationController : ControllerBase
     {
         private readonly IPresentationService _presentationService;
@@ -46,6 +51,15 @@ namespace WebApi.Controllers
             await _presentationService.DeletePresentationPermanentlyAsync(id, cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("get/{id}")]
+        [ProducesResponseType(typeof(PresentationDetailsResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPresentationDetails(int id, CancellationToken cancellationToken)
+        {
+            var result = await _presentationService.GetPresentationDetailsAsync(id, cancellationToken);
+
+            return Ok(result);
         }
         #endregion
 

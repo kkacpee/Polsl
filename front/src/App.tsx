@@ -11,24 +11,26 @@ import ConferenceDetails from './Screens/Conference/ConferenceDetails';
 import Misc from './Screens/Misc';
 import PrivateRoute from './PrivateRoutes/PrivateRoute'
 import Store from './Store';
+import { Box } from '@material-ui/core';
+import Theme from './Styles/ThemeProvider';
 
 const App = () => {
   const state = Store.getState();
   return (
-    <div>
+      <Box component='div' width="100%" height="100%" bgcolor={Theme.palette.background.default}>
         <NavBar></NavBar>
-        <Snackbar />
-        <Switch>
-                <Route exact path='/' />
-                <PrivateRoute path={"/login"} exact component={SignIn} />
-                <PrivateRoute path={'/conference'} exact component={ConferenceList} />
-                <PrivateRoute path={'/misc'} exact component={Misc} />
-                <PrivateRoute path={'/accommodation'} exact component={AccommodationList} />
-                <PrivateRoute path={'/accommodation/:id'} exact component={AccommodationDetails} />
-                <PrivateRoute path={'/conference/:id'} exact component={ConferenceDetails} />
-                <Redirect to={'/'}></Redirect>
-        </Switch>
-      </div>
+          <Snackbar />
+          <Switch>
+                  <Route exact path='/' />
+                  <PrivateRoute path={"/login"} exact component={SignIn} />
+                  <PrivateRoute path={'/conference'} exact component={ConferenceList} />
+                  <PrivateRoute path={'/misc'} exact component={Misc} />
+                  <PrivateRoute path={'/accommodation'} exact component={AccommodationList} />
+                  <PrivateRoute path={'/accommodation/:id'} exact component={AccommodationDetails} />
+                  <PrivateRoute path={'/conference/:id'} exact component={ConferenceDetails} />
+                  <Redirect to={'/'}></Redirect>
+          </Switch>
+      </Box>
   )
 };
 

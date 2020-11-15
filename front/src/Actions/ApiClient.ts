@@ -10,7 +10,6 @@ export const apiClient = axios.create({
       const state = Store.getState();
       const token = state.Auth.token;
     
-      console.log(token);
       if (token !== "") {
         config.headers["Authorization"] = `Bearer ${token}`;
       }

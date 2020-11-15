@@ -13,8 +13,8 @@ const options = {
   };
 const Details = ({details}:Props) => {
     return (
-        <Box>
-            <Grid container direction="row" justify='space-evenly' alignItems='stretch' >
+        <Box height='300px'>
+            <Grid container direction="row" justify='space-evenly' alignItems='center' >
                     <Paper >
                     <img src="https://via.placeholder.com/150" />
                     </Paper>

@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using Core.DTO.Response;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Services
 {
@@ -55,6 +59,49 @@ namespace Core.Services
             }
 
             await _presentationRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+        }
+
+        public async Task<PresentationDetailsResponse> GetPresentationDetailsAsync(int id, CancellationToken cancellationToken)
+        {
+            if (!await _presentationRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            {
+                throw new InvalidOperationException("There is no Presentation with given ID");
+            }
+
+            var include = CreateInclude();
+
+            var result = await _presentationRepository.GetByIdAsync(id, cancellationToken, include);
+
+            var mapped = new PresentationDetailsResponse
+            {
+                Authors = result.Authors,
+                Description = result.Description,
+                EndDate = result.EndDate,
+                StartDate = result.StartDate,
+                Place = result.Place,
+                Title = result.Title,
+                PresentationTypeID = result.PresentationTypeID,
+                PresentationTypeName = result.PresentationType.Name
+            };
+
+            if (result.PresentationParticipants != null)
+            {
+                var temp = new List<Participant>();
+                foreach (var participant in result.PresentationParticipants)
+                {
+                    temp.Add(participant.Participant);
+                }
+                mapped.Participants = _mapper.Map<ICollection<ParticipantModel>>(temp);
+            }
+
+            return mapped;
+        }
+
+        private Func<IQueryable<Presentation>, IIncludableQueryable<Presentation, object>> CreateInclude()
+        {
+            return x => x.Include(x => x.PresentationParticipants)
+                            .ThenInclude(x => x.Participant)
+                          .Include(x => x.PresentationType);          
         }
     }
 }

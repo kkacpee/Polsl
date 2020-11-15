@@ -1,5 +1,6 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid';
+import { useStyles, CustomPagination } from './GridStyles';
 import { Presentation } from '../../Types/PresentationTypes';
 
 const columns = [
@@ -18,9 +19,11 @@ const columns = [
   }
 
 const PresentationDataGrid = ({data}:GridProps) => {
+    const classes = useStyles();
     return (
         <div style={{ height: 400, width: '100%' }}>
-        <DataGrid autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection />
+        <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+        autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection />
         </div> 
     )
 }

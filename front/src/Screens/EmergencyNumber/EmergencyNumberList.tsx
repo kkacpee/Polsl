@@ -5,10 +5,9 @@ import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
 import { EmergencyNumberState } from '../../Types/EmergencyNumberTypes';
 import { GetEmergencyNumberList } from '../../Actions/EmergencyNumberActions';
-import { Container, Row } from 'react-bootstrap';
 import Dialog from './AddEmergencyNumberDialog';
 import EmergencyNumberDataGrid from '../../Components/DataGrids/EmergencyNumberDataGrid';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Container, Grid } from '@material-ui/core';
 
 const EmergencyNumberList = () => {
     const dispatch = useDispatch();
@@ -25,18 +24,16 @@ const EmergencyNumberList = () => {
     const ShowData = () => {
         if (!_.isEmpty(emergencyNumberState.data)){
             return (
-                <>
-                <Container>
-                    <Row>
+                <Container style={{padding: 20}}>
+                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                     <EmergencyNumberDataGrid data={emergencyNumberState.data} />
-                    </Row>
-                    <Row>
+                    </Grid>
+                    <Grid container direction="row" justify='center' alignItems='flex-end' >
                         <div>
                         <Dialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></Dialog>
                         </div>
-                    </Row>
+                    </Grid>
                 </Container>
-                </>
             )
         }
         if (emergencyNumberState.loading){

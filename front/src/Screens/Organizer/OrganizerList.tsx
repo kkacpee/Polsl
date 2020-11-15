@@ -5,10 +5,10 @@ import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
 import { OrganizerState } from '../../Types/OrganizerTypes';
 import { GetOrganizerList } from '../../Actions/OrganizerActions';
-import { Container, Row } from 'react-bootstrap';
 import Dialog from './AddOrganizerDialog';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Container, Grid } from '@material-ui/core';
+
 const OrganizerList = () => {
     const dispatch = useDispatch();
     const organizerState:OrganizerState = useSelector((state: RootState ) => state.Organizer);
@@ -24,18 +24,16 @@ const OrganizerList = () => {
     const ShowData = () => {
         if (!_.isEmpty(organizerState.data)){
             return (
-                <>
-                <Container>
-                    <Row>
+                <Container style={{padding: 20}}>
+                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                     <OrganizerDataGrid data={organizerState.data} /> 
-                    </Row>
-                    <Row>
+                    </Grid>
+                    <Grid container direction="row" justify='center' alignItems='flex-end' >
                         <div>
                         <Dialog dialogTitle="Add new Organizer" fetch={() => {FetchData()}}></Dialog>
                         </div>
-                    </Row>
+                    </Grid>
                 </Container>
-                </>
             )
         }
         if (organizerState.loading){
