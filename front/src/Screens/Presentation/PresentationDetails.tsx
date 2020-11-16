@@ -1,5 +1,5 @@
+import React from 'react';
 // import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardHeader, CardMedia, Container, createStyles, Divider, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
-// import React from 'react';
 // import { useParams } from 'react-router-dom';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import { PresentationState } from '../../Types/PresentationTypes';
@@ -201,5 +201,11 @@
 //         </div>
 //     )
 // };
+function PresentationDetails(){
+    return (
+        <>
+        </>
+    )
+};
 
-// export default PresentationDetails;
+export default PresentationDetails;

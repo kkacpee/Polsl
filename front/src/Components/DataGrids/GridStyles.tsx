@@ -2,6 +2,7 @@ import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {default as MyTheme} from '../../Styles/ThemeProvider'
 import { ComponentProps, DataGrid } from '@material-ui/data-grid';
 
   function customCheckbox(theme: Theme) {
@@ -56,7 +57,7 @@ import { ComponentProps, DataGrid } from '@material-ui/data-grid';
         color:
           theme.palette.type === 'light'
             ? 'rgba(0,0,0,.85)'
-            : 'rgba(255,255,255,0.85)',
+            : ` ${theme.palette.text.secondary}`,
         fontFamily: [
           '-apple-system',
           'BlinkMacSystemFont',
@@ -92,10 +93,12 @@ import { ComponentProps, DataGrid } from '@material-ui/data-grid';
           color:
             theme.palette.type === 'light'
               ? 'rgba(0,0,0,.85)'
-              : 'rgba(255,255,255,0.65)',
+              : ` ${theme.palette.text.primary}`,
         },
         '& .MuiPaginationItem-root': {
           borderRadius: 0,
+          color: ` ${theme.palette.text.primary}`,
+          borderColor:  `${theme.palette.text.primary}`
         },
         ...customCheckbox(theme),
       },
@@ -107,7 +110,7 @@ import { ComponentProps, DataGrid } from '@material-ui/data-grid';
   
     return (
       <Pagination
-        color="primary"
+        color='secondary'
         variant="outlined"
         shape="rounded"
         page={paginationProps.page}

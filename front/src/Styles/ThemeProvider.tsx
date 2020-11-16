@@ -3,11 +3,11 @@ import { createMuiTheme} from '@material-ui/core/styles';
 const Theme = createMuiTheme({
   palette: {
     background: {
-      default: '#2F2635',
-      paper: '#F4F7F3'
+      default: '#DEE9F0',
+      paper: 'rgba(0,0,0,0)'
     },
     primary: {
-      main: '#CA506E'
+      main: '#97BBD1'
     },
     secondary: {
       main: '#CE7B5C'
@@ -15,10 +15,10 @@ const Theme = createMuiTheme({
     info: {
       main: '#8B89A2'
     },
-    type: 'light',
+    type: 'dark',
     text: {
       primary: '#2F2635',
-      secondary: '#F4F7F3'
+      secondary: '#8B89A2'
     }
   },
   overrides: {
@@ -39,7 +39,8 @@ const Theme = createMuiTheme({
     MuiCard: {
         root: {
             maxWidth: 345,
-            margin: 10
+            margin: 10,
+            color: '#8B89A2'
         }
     },
     MuiCardMedia: {
@@ -47,10 +48,10 @@ const Theme = createMuiTheme({
             height: 0,
             paddingTop: '56.25%', // 16:9
           }
-    },
+    },    
     MuiPaper: {
       root: {
-        backgroundColor: '#8B89A2',
+        backgroundColor: 'rgba(0,0,0,0.1)',
         color: '#2F2635'
       }
     }
