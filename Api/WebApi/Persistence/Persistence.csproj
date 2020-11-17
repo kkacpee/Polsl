@@ -10,6 +10,16 @@
     <Compile Remove="Migrations\20201018202505_IdentityAndOrganizers.Designer.cs" />
     <Compile Remove="Migrations\20201018203423_IdentityAndOrganizers.cs" />
     <Compile Remove="Migrations\20201018203423_IdentityAndOrganizers.Designer.cs" />
+    <Compile Remove="Migrations\20201116185222_RemoveRoles.cs" />
+    <Compile Remove="Migrations\20201116185222_RemoveRoles.Designer.cs" />
+    <Compile Remove="Migrations\20201117155524_PhotosIconsAuthorsAndSpeakers.cs" />
+    <Compile Remove="Migrations\20201117155524_PhotosIconsAuthorsAndSpeakers.Designer.cs" />
+    <Compile Remove="Migrations\20201117155707_PhotosIconsAuthorsAndSpeakers.cs" />
+    <Compile Remove="Migrations\20201117155707_PhotosIconsAuthorsAndSpeakers.Designer.cs" />
+    <Compile Remove="Migrations\20201117160346_PhotosIconsAuthorsAndSpeakers.cs" />
+    <Compile Remove="Migrations\20201117160346_PhotosIconsAuthorsAndSpeakers.Designer.cs" />
+    <Compile Remove="Migrations\20201117160527_PhotosIconsAuthorsAndSpeakersAndRoles.cs" />
+    <Compile Remove="Migrations\20201117160527_PhotosIconsAuthorsAndSpeakersAndRoles.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

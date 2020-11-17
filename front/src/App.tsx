@@ -10,12 +10,11 @@ import Snackbar from './Components/Snackbar'
 import ConferenceDetails from './Screens/Conference/ConferenceDetails';
 import Misc from './Screens/Misc';
 import PrivateRoute from './PrivateRoutes/PrivateRoute'
-import Store from './Store';
 import { Box } from '@material-ui/core';
 import Theme from './Styles/ThemeProvider';
+import PresentationDetails from './Screens/Presentation/PresentationDetails';
 
 const App = () => {
-  const state = Store.getState();
   return (
       <Box component='div' width="100%" height="100%" bgcolor={Theme.palette.background.default}>
         <NavBar></NavBar>
@@ -28,6 +27,7 @@ const App = () => {
                   <PrivateRoute path={'/accommodation'} exact component={AccommodationList} />
                   <PrivateRoute path={'/accommodation/:id'} exact component={AccommodationDetails} />
                   <PrivateRoute path={'/conference/:id'} exact component={ConferenceDetails} />
+                  <Route path={'/presentation/:id'} exact component={PresentationDetails} />
                   <Redirect to={'/'}></Redirect>
           </Switch>
       </Box>

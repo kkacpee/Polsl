@@ -16,7 +16,8 @@ const columns = [
     { field: 'presentationTypeName', headerName: 'Type', width: 130 },
     { field: 'id', headerName: 'Details', width: 100, 
     renderCell: (params: ValueFormatterParams) => (
-        <Link to={`/presentation/${params.data.id}`}>
+       // <Link to={`/presentation/${params.data.id}`}>
+       <Link to={`/presentation/1`}>
         <IconButton aria-label="See details" size='small'>
             Details
         </IconButton>

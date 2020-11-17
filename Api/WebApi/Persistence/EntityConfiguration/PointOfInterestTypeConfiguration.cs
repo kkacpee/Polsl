@@ -11,6 +11,10 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.HasKey(x => x.ID);
             builder.Property(x => x.Name)
                 .HasMaxLength(32);
+            builder.HasOne(x => x.PointOfInterestIcon)
+                .WithMany(x => x.PointOfInterestTypes)
+                .HasForeignKey(x => x.PointOfInterestIconID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

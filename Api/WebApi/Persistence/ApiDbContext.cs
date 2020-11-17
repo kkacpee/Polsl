@@ -22,12 +22,10 @@ namespace Persistence
         public DbSet<Rate> Rates { get; set; }
         public DbSet<RateCriterion> RateCriteria { get; set; }
         public DbSet<RateCriterionType> RateCriterionTypes { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Participant> Participants { get; set; }
         public DbSet<ParticipantPhoto> ParticipantPhotos { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

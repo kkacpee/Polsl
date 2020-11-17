@@ -12,6 +12,7 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.Property(x => x.Description)
                 .HasMaxLength(512);
             builder.Property(x => x.Value).IsRequired();
+            builder.Property(x => x.MobileUserID).IsRequired();
             builder.HasOne(x => x.Conference)
                 .WithMany(x => x.Rates)
                 .HasForeignKey(x => x.ConferenceID)
@@ -19,10 +20,6 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.HasOne(x => x.Presentation)
                 .WithMany(x => x.Rates)
                 .HasForeignKey(x => x.PresentationID)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(x => x.User)
-                .WithMany(x => x.Rates)
-                .HasForeignKey(x => x.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(x => x.RateCriterion)
                 .WithMany(x => x.Rates)

@@ -18,6 +18,7 @@ namespace Persistence.Models
         public Conference Conference { get; set; }
         public PresentationType PresentationType { get; set; }
         public virtual ICollection<PresentationParticipant> PresentationParticipants { get; set; }
+        public virtual ICollection<PresentationPhoto> PresentationPhotos { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
 
     }

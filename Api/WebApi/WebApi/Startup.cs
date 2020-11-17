@@ -44,7 +44,7 @@ namespace WebApi
             {
                 mc.AddMaps(typeof(PresentationMapping).Assembly);
             });
-            services.AddIdentity<User, Role>(options =>
+            services.AddIdentity<User, IdentityRole<int>>(options =>
             {
                 options.Password.RequiredLength = 5;
                 options.Password.RequireLowercase = false;

@@ -12,7 +12,7 @@ export const GetAccommodationList = (): ThunkAction<void, RootState, null, Accom
         dispatch({
             type: ACCOMMODATION_LIST_LOADING
         });
-        const result = await axios.get(`${process.env.REACT_APP_API_URI}/api/Accommodation/get`)
+        const result = await apiClient.get(`${process.env.REACT_APP_API_URI}/api/Accommodation/get`)
         
         dispatch({
             type: ACCOMMODATION_LIST_SUCCESS,

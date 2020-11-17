@@ -19,15 +19,13 @@ namespace WebApi.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IConfiguration _configuration;
         public AuthController(IConfiguration configuration, UserManager<User> userManager,
-            SignInManager<User> signInManager, RoleManager<Role> roleManager, IDateTimeProvider dateTimeProvider)
+            SignInManager<User> signInManager, IDateTimeProvider dateTimeProvider)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
             _dateTimeProvider = dateTimeProvider;
             _configuration = configuration;
         }

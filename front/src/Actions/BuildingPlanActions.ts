@@ -12,7 +12,7 @@ export const GetBuildingPlanList = (): ThunkAction<void, RootState, null, Buildi
             type: BUILDINGPLAN_LIST_LOADING
         });
         const result = await apiClient.get(`/api/BuildingPlan/get`)
-        
+        console.log(result)
         dispatch({
             type: BUILDINGPLAN_LIST_SUCCESS,
             payload: result.data
