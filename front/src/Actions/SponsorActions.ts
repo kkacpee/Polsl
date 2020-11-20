@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddSponsorRequest, SponsorAction, SPONSOR_ADD, SPONSOR_ADD_FAIL, SPONSOR_ADD_SUCCESS, SPONSOR_DELETE, SPONSOR_DELETE_FAIL, SPONSOR_DELETE_SUCCESS, SPONSOR_LIST_FAIL, SPONSOR_LIST_LOADING, SPONSOR_LIST_SUCCESS } from '../Types/SponsorTypes';
@@ -12,6 +11,27 @@ export const GetSponsorList = (): ThunkAction<void, RootState, null, SponsorActi
             type: SPONSOR_LIST_LOADING
         });
         const result = await apiClient.get(`/api/Sponsor/get`)
+        
+        dispatch({
+            type: SPONSOR_LIST_SUCCESS,
+            payload: result.data
+        })
+    } catch (e){
+        dispatch({
+            type: SPONSOR_LIST_FAIL,
+            payload: e.message
+        })
+    }
+    }
+}
+
+export const GetSponsorsForConferenceList = (id:number): ThunkAction<void, RootState, null, SponsorAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: SPONSOR_LIST_LOADING
+        });
+        const result = await apiClient.get(`/api/Sponsor/get/${id}`)
         
         dispatch({
             type: SPONSOR_LIST_SUCCESS,

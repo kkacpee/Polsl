@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,56 +9,58 @@ import AccommodationDataGrid from '../../../Components/DataGrids/AccommodationDa
 import { AccommodationState } from '../../../Types/AccommodationTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
-import { GetAccommodationList } from '../../../Actions/AccommodationActions';
+import { GetAccommodationsForConferenceList } from '../../../Actions/AccommodationActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
+import { RowData } from '@material-ui/data-grid';
+import { AddToConference } from '../../../Actions/ConferenceActions';
+import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
+  id: number
   fetch: () => void
 }
 
 const AddConferenceAccommodationDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+    const {dialogTitle, id, fetch} = props;
     const [open, setOpen] = React.useState(false);
     const accommodation:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
     const dispatch = useDispatch();
-  //   const [selectedRows, setSelectedRows] = useState([]);
-
-  // const handleSelectionChange = (selection) => {
-  //   setSelectedRows(selection.rows);
-  // };
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const [rows, setRows] = useState<RowData[]>();
 
   async function handleSubmit(){
+    let array = Array<number>();
+    rows?.forEach(element => {
+        array.push(parseInt(element.id.toString(), 10))
+    });
 
-    //await dispatch(AddConference(request));  
-  //  dispatch(setAlert(true, "success", "Added conference successfully"));
-  //  setOpen(false);
-  }
-    
+    await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Accommodation"))
+    dispatch(setAlert(true, "success", "Added accommodation to conference successfully"));
+    setOpen(false);
+    }
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
     
     React.useEffect( () => {
         FetchData()
     }, []);
 
     const FetchData = () => {
-        dispatch(GetAccommodationList())
+        dispatch(GetAccommodationsForConferenceList(id))
     }
 
     const ShowData = () => {
         if (!_.isEmpty(accommodation.data)){
             return (
                 <>
-                    <AccommodationDataGrid data={accommodation.data} />
+                    <AccommodationDataGrid data={accommodation.data} setSelection={setRows}/>
                 </>
             )
         }
@@ -73,7 +75,7 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
 
   return (
     <div>
-        <Button size="small" color="primary" onClick={handleClickOpen} >
+        <Button size="small" color="secondary" onClick={handleClickOpen} >
             Add
         </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} 
@@ -84,10 +86,10 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
            {ShowData()}
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose}>
             Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} color="secondary">
             Submit
             </Button>
         </DialogActions>

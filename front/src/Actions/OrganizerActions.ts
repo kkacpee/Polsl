@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddOrganizerRequest, OrganizerAction, ORGANIZER_ADD, ORGANIZER_ADD_FAIL, ORGANIZER_ADD_SUCCESS, ORGANIZER_DELETE, ORGANIZER_DELETE_FAIL, ORGANIZER_DELETE_SUCCESS, ORGANIZER_LIST_FAIL, ORGANIZER_LIST_LOADING, ORGANIZER_LIST_SUCCESS } from '../Types/OrganizerTypes';
@@ -12,6 +11,27 @@ export const GetOrganizerList = (): ThunkAction<void, RootState, null, Organizer
             type: ORGANIZER_LIST_LOADING
         });
         const result = await apiClient.get(`/api/Organizer/get`)
+        
+        dispatch({
+            type: ORGANIZER_LIST_SUCCESS,
+            payload: result.data
+        })
+    } catch (e){
+        dispatch({
+            type: ORGANIZER_LIST_FAIL,
+            payload: e.message
+        })
+    }
+    }
+}
+
+export const GetOrganizersForConferenceList = (id:number): ThunkAction<void, RootState, null, OrganizerAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: ORGANIZER_LIST_LOADING
+        });
+        const result = await apiClient.get(`/api/Organizer/get${id}`)
         
         dispatch({
             type: ORGANIZER_LIST_SUCCESS,

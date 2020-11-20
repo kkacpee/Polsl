@@ -1,6 +1,7 @@
 ﻿using Core.DTO.Requests;
 using Core.DTO.Response;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,14 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditConference([FromBody] ConferenceModel model, CancellationToken cancellationToken)
+        {
+            await _conferenceService.EditConferenceAsync(model, cancellationToken);
+
+            return Ok();
+        }
+
         [HttpGet("get/{id}")]
         [ProducesResponseType(typeof(ConferenceDetailsResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetConferenceDetails(int id, CancellationToken cancellationToken)
@@ -85,7 +94,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("ConferenceAccommodation/add")]
-        public async Task<IActionResult> AddAccommodationToConference([FromBody] AddAccommodationsToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddAccommodationToConference([FromBody] ConferenceAccommodationRequest request, CancellationToken cancellationToken)
         {
             await _conferenceAccommodationService.AddAccommodationsToConferenceAsync(request, cancellationToken);
 
@@ -111,7 +120,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("ConferenceEmergencyNumber/add")]
-        public async Task<IActionResult> AddEmergencyNumberToConference([FromBody] AddEmergencyNumbersToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddEmergencyNumberToConference([FromBody] ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
             await _conferenceEmergencyNumberService.AddEmergencyNumbersToConferenceAsync(request, cancellationToken);
 
@@ -137,7 +146,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("ConferenceOrganizer/add")]
-        public async Task<IActionResult> AddOrganizersToConference([FromBody] AddOrganizersToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddOrganizersToConference([FromBody] ConferenceOrganizerRequest request, CancellationToken cancellationToken)
         {
             await _conferenceOrganizerService.AddOrganizersToConferenceAsync(request, cancellationToken);
 
@@ -163,7 +172,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("ConferencePointOfInterest/add")]
-        public async Task<IActionResult> AddPointsOfInterestsoConference([FromBody] AddPointsOfInterestToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddPointsOfInterestsoConference([FromBody] ConferencePointOfInterestRequest request, CancellationToken cancellationToken)
         {
             await _conferencePointOfInterestService.AddPointsOfInterestToConferenceAsync(request, cancellationToken);
 
@@ -189,7 +198,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("ConferenceSponsor/add")]
-        public async Task<IActionResult> AddSponsorsToConference([FromBody] AddSponsorsToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddSponsorsToConference([FromBody] ConferenceSponsorRequest request, CancellationToken cancellationToken)
         {
             await _conferenceSponsorService.AddSponsorsToConferenceAsync(request, cancellationToken);
 

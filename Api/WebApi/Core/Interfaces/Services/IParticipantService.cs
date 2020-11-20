@@ -11,5 +11,7 @@ namespace Core.Interfaces.Services
         Task<List<ParticipantModel>> GetAllParticipantsAsync(CancellationToken cancellationToken);
         Task<int> AddParticipantAsync(AddParticipantRequest request, CancellationToken cancellationToken);
         Task DeleteParticipantPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditParticipantAsync(ParticipantModel model, CancellationToken cancellationToken);
+        Task<List<ParticipantModel>> GetParticipantsForPresentationAsync(int id, CancellationToken cancellationToken);
     }
 }

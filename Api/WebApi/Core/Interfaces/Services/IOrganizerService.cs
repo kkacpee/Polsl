@@ -11,5 +11,7 @@ namespace Core.Interfaces.Services
         Task<List<OrganizerModel>> GetAllOrganizersAsync(CancellationToken cancellationToken);
         Task<int> AddOrganizerAsync(AddOrganizerRequest request, CancellationToken cancellationToken);
         Task DeleteOrganizerPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditOrganizerAsync(OrganizerModel model, CancellationToken cancellationToken);
+        Task<List<OrganizerModel>> GetOrganizersForConference(int id, CancellationToken cancellationToken);
     }
 }

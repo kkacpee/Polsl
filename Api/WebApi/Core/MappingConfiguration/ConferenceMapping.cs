@@ -17,22 +17,22 @@ namespace Core.MappingConfiguration
             CreateMap<BuildingPlan, AddBuildingPlanRequest>().ReverseMap();
 
             CreateMap<ConferenceAccommodation, ConferenceAccommodationModel>().ReverseMap();
-            CreateMap<ConferenceAccommodation, AddAccommodationsToConferenceRequest>().ReverseMap();
+            CreateMap<ConferenceAccommodation, ConferenceAccommodationRequest>().ReverseMap();
 
             CreateMap<ConferenceEmergencyNumber, ConferenceEmergencyNumberModel>().ReverseMap();
-            CreateMap<ConferenceEmergencyNumber, AddEmergencyNumbersToConferenceRequest>().ReverseMap();
+            CreateMap<ConferenceEmergencyNumber, ConferenceEmergencyNumberRequest>().ReverseMap();
 
             CreateMap<Conference, ConferenceModel>().ReverseMap();
             CreateMap<Conference, AddConferenceRequest>().ReverseMap();
 
             CreateMap<ConferenceOrganizer, ConferenceOrganizerModel>().ReverseMap();
-            CreateMap<ConferenceOrganizer, AddOrganizersToConferenceRequest>().ReverseMap();
+            CreateMap<ConferenceOrganizer, ConferenceOrganizerRequest>().ReverseMap();
 
             CreateMap<ConferencePointOfInterest, ConferencePointOfInterestModel>().ReverseMap();
-            CreateMap<ConferencePointOfInterest, AddPointsOfInterestToConferenceRequest>().ReverseMap();
+            CreateMap<ConferencePointOfInterest, ConferencePointOfInterestRequest>().ReverseMap();
 
             CreateMap<ConferenceSponsor, ConferenceSponsorModel>().ReverseMap();
-            CreateMap<ConferenceSponsor, AddSponsorsToConferenceRequest>().ReverseMap();
+            CreateMap<ConferenceSponsor, ConferenceSponsorRequest>().ReverseMap();
 
             CreateMap<EmergencyNumber, EmergencyNumberModel>().ReverseMap();
             CreateMap<EmergencyNumber, AddEmergencyNumberRequest>().ReverseMap();

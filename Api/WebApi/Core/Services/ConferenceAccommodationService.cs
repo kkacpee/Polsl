@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using Core.DTO.Requests;
 using Core.Interfaces.Repositories.Conference;
 using Core.Interfaces.Services;
 using Core.Models;
-using Core.DTO.Requests;
 using Persistence.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace Core.Services
 {
@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<ConferenceAccommodationModel>>(result);
         }
 
-        public async Task AddAccommodationsToConferenceAsync(AddAccommodationsToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task AddAccommodationsToConferenceAsync(ConferenceAccommodationRequest request, CancellationToken cancellationToken)
         {
             if (await _conferenceAccommodationRepository.AnyAsync(x =>
                         request.AccommodationIDs.Contains(x.AccommodationID) &&

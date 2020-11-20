@@ -11,5 +11,6 @@ namespace Core.Interfaces.Services
         Task<List<BuildingPlanModel>> GetAllBuildingPlansAsync(CancellationToken cancellationToken);
         Task<int> AddBuildingPlanAsync(AddBuildingPlanRequest request, CancellationToken cancellationToken);
         Task DeleteBuildingPlanPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditBuildingPlanAsync(BuildingPlanModel model, CancellationToken cancellationToken);
     }
 }

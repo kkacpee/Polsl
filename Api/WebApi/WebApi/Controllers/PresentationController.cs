@@ -1,6 +1,7 @@
 ﻿using Core.DTO.Requests;
 using Core.DTO.Response;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,14 @@ namespace WebApi.Controllers
             var result = await _presentationService.AddPresentationAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditPresentation([FromBody] PresentationModel model, CancellationToken cancellationToken)
+        {
+            await _presentationService.EditPresentationAsync(model, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]
@@ -99,7 +108,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("PresentationParticipant/add")]
-        public async Task<IActionResult> AddPresentationParticipant([FromBody] AddParticipantsToPresentationRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddPresentationParticipant([FromBody] PresentationParticipantRequest request, CancellationToken cancellationToken)
         {
             await _presentationParticipantService.AddParticipantsToPresentationAsync(request, cancellationToken);
 

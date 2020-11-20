@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     public interface IConferenceSponsorService
     {
         Task<List<ConferenceSponsorModel>> GetAllConferenceSponsorsAsync(CancellationToken cancellationToken);
-        Task AddSponsorsToConferenceAsync(AddSponsorsToConferenceRequest request, CancellationToken cancellationToken);
+        Task AddSponsorsToConferenceAsync(ConferenceSponsorRequest request, CancellationToken cancellationToken);
         Task DeleteSponsorFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
     }
 }

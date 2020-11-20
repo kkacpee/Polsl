@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<ConferenceSponsorModel>>(result);
         }
 
-        public async Task AddSponsorsToConferenceAsync(AddSponsorsToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task AddSponsorsToConferenceAsync(ConferenceSponsorRequest request, CancellationToken cancellationToken)
         {
             if (await _conferenceSponsorRepository.AnyAsync(x =>
                         request.SponsorIDs.Contains(x.SponsorID) &&

@@ -11,5 +11,7 @@ namespace Core.Interfaces.Services
         Task<List<EmergencyNumberModel>> GetAllEmergencyNumbers(CancellationToken cancellationToken);
         Task<int> AddEmergencyNumberAsync(AddEmergencyNumberRequest request, CancellationToken cancellationToken);
         Task DeleteEmergencyNumberPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditEmergencyNumberAsync(EmergencyNumberModel model, CancellationToken cancellationToken);
+        Task<List<EmergencyNumberModel>> GetEmergencyNumbersForConference(int id, CancellationToken cancellationToken);
     }
 }

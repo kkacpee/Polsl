@@ -18,11 +18,13 @@ namespace Core.Services
     public class PointOfInterestService : IPointOfInterestService
     {
         private readonly IPointOfInterestRepository _pointOfInterestRepository;
+        private readonly IConferencePointOfInterestRepository _conferencePointOfInterestRepository;
         private readonly IMapper _mapper;
 
-        public PointOfInterestService(IPointOfInterestRepository pointOfInterestRepository, IMapper mapper)
+        public PointOfInterestService(IPointOfInterestRepository pointOfInterestRepository,IConferencePointOfInterestRepository conferencePointOfInterestRepository, IMapper mapper)
         {
             _pointOfInterestRepository = pointOfInterestRepository;
+            _conferencePointOfInterestRepository = conferencePointOfInterestRepository;
             _mapper = mapper;
         }
 
@@ -32,6 +34,14 @@ namespace Core.Services
             var result = await _pointOfInterestRepository.GetAllAsync(cancellationToken, include);
 
             return _mapper.Map<List<PointOfInterestResponse>>(result);
+        }
+
+        public async Task<List<PointOfInterestModel>> GetPointsOfInterestForConference(int id, CancellationToken cancellationToken)
+        {
+            var conferencePointOfInterestIDs = await _conferencePointOfInterestRepository.SelectAsync(x => x.ConferenceID == id, x => x.PointOfInterestID, cancellationToken);
+            var result = await _pointOfInterestRepository.GetAsync(x => !conferencePointOfInterestIDs.ToList().Contains(x.ID), cancellationToken);
+
+            return _mapper.Map<List<PointOfInterestModel>>(result);
         }
 
         public async Task<int> AddPointOfInterestAsync(AddPointOfInterestRequest request, CancellationToken cancellationToken)
@@ -48,6 +58,29 @@ namespace Core.Services
             await _pointOfInterestRepository.AddAsync(mapped, cancellationToken);
 
             return mapped.ID;
+        }
+
+        public async Task EditPointOfInterestAsync(PointOfInterestModel model, CancellationToken cancellationToken)
+        {
+            var pointOfInterestToUpdate = await _pointOfInterestRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (pointOfInterestToUpdate == null)
+            {
+                throw new InvalidOperationException("PointOfInterest with given id does not exist");
+            }
+
+            if (await _pointOfInterestRepository.AnyAsync(x =>
+             x.Name == model.Name &&
+            x.PointOfInterestTypeID == model.PointOfInterestTypeID &&
+            x.Address == model.Address, cancellationToken))
+            {
+                throw new InvalidOperationException("PointOfInterest with given parameters exists");
+            }
+
+            pointOfInterestToUpdate.Name = model.Name;
+            pointOfInterestToUpdate.PointOfInterestTypeID = model.PointOfInterestTypeID;
+            pointOfInterestToUpdate.Address = model.Address;
+
+            await _pointOfInterestRepository.UpdateAsync(pointOfInterestToUpdate, cancellationToken);
         }
 
         public async Task DeletePointOfInterestPermanentlyAsync(int id, CancellationToken cancellationToken)

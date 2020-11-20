@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     public interface IConferenceEmergencyNumberService
     {
         Task<List<ConferenceEmergencyNumberModel>> GetAllConferenceEmergencyNumbersAsync(CancellationToken cancellationToken);
-        Task AddEmergencyNumbersToConferenceAsync(AddEmergencyNumbersToConferenceRequest request, CancellationToken cancellationToken);
+        Task AddEmergencyNumbersToConferenceAsync(ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken);
         Task DeleteEmergencyNumberFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
     }
 }

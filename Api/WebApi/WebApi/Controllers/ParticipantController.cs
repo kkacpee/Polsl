@@ -1,5 +1,6 @@
 ﻿using Core.DTO.Requests;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,12 +33,28 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetParticipantsForPresentation(int id, CancellationToken cancellationToken)
+        {
+            var result = await _participantService.GetParticipantsForPresentationAsync(id, cancellationToken);
+
+            return Ok(result);
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddParticipants([FromBody] AddParticipantRequest request, CancellationToken cancellationToken)
         {
             var result = await _participantService.AddParticipantAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditParticipant([FromBody] ParticipantModel model, CancellationToken cancellationToken)
+        {
+            await _participantService.EditParticipantAsync(model, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]

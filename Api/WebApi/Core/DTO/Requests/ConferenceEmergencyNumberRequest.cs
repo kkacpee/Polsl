@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Core.DTO.Requests
 {
-    public class AddPointsOfInterestToConferenceRequest
+    public class ConferenceEmergencyNumberRequest
     {
         public int ConferenceID { get; set; }
-        public List<int> PointOfInterestIDs { get; set; }
+        public List<int> EmergencyNumberIDs { get; set; }
     }
 }

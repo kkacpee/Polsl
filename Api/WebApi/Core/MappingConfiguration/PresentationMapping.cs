@@ -17,7 +17,7 @@ namespace Core.MappingConfiguration
             CreateMap<Participant, AddParticipantRequest>().ReverseMap();
 
             CreateMap<PresentationParticipant, PresentationParticipantModel>().ReverseMap();
-            CreateMap<PresentationParticipant, AddParticipantsToPresentationRequest>().ReverseMap();
+            CreateMap<PresentationParticipant, PresentationParticipantRequest>().ReverseMap();
 
             CreateMap<Presentation, PresentationModel>().ReverseMap();
             CreateMap<Presentation, AddPresentationRequest>().ReverseMap();

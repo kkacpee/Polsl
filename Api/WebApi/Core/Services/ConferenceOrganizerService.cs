@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<ConferenceOrganizerModel>>(result);
         }
 
-        public async Task AddOrganizersToConferenceAsync(AddOrganizersToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task AddOrganizersToConferenceAsync(ConferenceOrganizerRequest request, CancellationToken cancellationToken)
         {
             if (await _conferenceOrganizerRepository.AnyAsync(x =>
                         request.OrganizerIDs.Contains(x.OrganizerID) &&

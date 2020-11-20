@@ -11,5 +11,6 @@ namespace Core.Interfaces.Services
         Task<List<PresentationTypeModel>> GetAllPresentationTypesAsync(CancellationToken cancellationToken);
         Task<int> AddPresentationTypeAsync(AddPresentationTypeRequest request, CancellationToken cancellationToken);
         Task DeletePresentationTypePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditPresentationTypeAsync(PresentationTypeModel model, CancellationToken cancellationToken);
     }
 }

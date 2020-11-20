@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
     public interface IConferencePointOfInterestService
     {
         Task<List<ConferencePointOfInterestModel>> GetAllConferencePointsOfInterestAsync(CancellationToken cancellationToken);
-        Task AddPointsOfInterestToConferenceAsync(AddPointsOfInterestToConferenceRequest request, CancellationToken cancellationToken);
+        Task AddPointsOfInterestToConferenceAsync(ConferencePointOfInterestRequest request, CancellationToken cancellationToken);
         Task DeletePointOfInterestFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
     }
 }

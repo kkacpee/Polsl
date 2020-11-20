@@ -11,5 +11,6 @@ namespace Core.Interfaces.Services
         Task<List<PointOfInterestTypeModel>> GetAllPointOfInterestTypesAsync(CancellationToken cancellationToken);
         Task<int> AddPointOfInterestTypeAsync(AddPointOfInterestTypeRequest request, CancellationToken cancellationToken);
         Task DeletePointOfInterestTypePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditPointOfInterestTypeAsync(PointOfInterestTypeModel model, CancellationToken cancellationToken);
     }
 }

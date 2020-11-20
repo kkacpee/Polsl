@@ -1,5 +1,6 @@
 ﻿using Core.DTO.Requests;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,17 @@ namespace WebApi.Controllers
 
         #region PointOfInterest
         [HttpGet("get")]
-        public async Task<IActionResult> GetPointOfInterests(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetPointsOfInterest(CancellationToken cancellationToken)
         {
             var result = await _pointOfInterestService.GetAllPointsOfInterestAsync(cancellationToken);
+
+            return Ok(result);
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetPointsOfInterestForConference(int id, CancellationToken cancellationToken)
+        {
+            var result = await _pointOfInterestService.GetPointsOfInterestForConference(id, cancellationToken);
 
             return Ok(result);
         }
@@ -38,6 +47,14 @@ namespace WebApi.Controllers
             var result = await _pointOfInterestService.AddPointOfInterestAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditPointOfInterest([FromBody] PointOfInterestModel model, CancellationToken cancellationToken)
+        {
+            await _pointOfInterestService.EditPointOfInterestAsync(model, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]

@@ -3,6 +3,7 @@ import { ConferenceBuildngPlan } from "./BuildingPlanTypes";
 import { EmergencyNumber } from "./EmergencyNumberTypes";
 import { Organizer } from "./OrganizerTypes";
 import { PointOfInterest } from "./PointOfInterestTypes";
+import { Presentation } from "./PresentationTypes";
 import { Sponsor } from "./SponsorTypes";
 
 export const CONFERENCE_LIST_LOADING= "CONFERENCE_LIST_LOADING";
@@ -39,6 +40,11 @@ export interface AddConferenceRequest {
     socialMedia: string
 }
 
+export interface AddToConferenceRequest {
+    conferenceID: number,
+    arrayOfIDs: number[]
+}
+
 export interface ConferenceDetails {
     id: number,
     address: string,
@@ -62,20 +68,7 @@ export interface ConferenceDetails {
         rateCriterionID: number
       }
     ],
-    presentations: [
-      {
-        id: number,
-        startDate: Date,
-        endDate: Date,
-        place: string,
-        authors: string,
-        description: string,
-        title: string,
-        conferenceID: number,
-        presentationTypeID: number,
-        presentationTypeName: string
-      }
-    ],
+    presentations: Presentation[],
     organizers: Organizer[]
 } 
 

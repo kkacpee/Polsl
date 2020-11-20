@@ -1,5 +1,5 @@
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardHeader, CardMedia, Container, createStyles, Divider, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ConferenceState } from '../../Types/ConferenceTypes';
@@ -17,6 +17,7 @@ import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
 import PresentationDataGrid from '../../Components/DataGrids/PresentationDataGrid';
 import Details from '../../Components/Details';
 import AddConferenceAccommodationDialog from './ConferenceMiscDialogs/AddConferenceAccommodationDialog';
+import { RowData } from '@material-ui/data-grid';
 
 //import { Details } from '@material-ui/icons';
 
@@ -37,7 +38,8 @@ const ConferenceDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const Conference:ConferenceState = useSelector((state: RootState ) => state.Conference);
-
+    const [rows, setRows] = useState<RowData[]>();
+    
     React.useEffect( () => {
         FetchData()
     },[]);
@@ -79,12 +81,12 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Accommodations</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <AccommodationDataGrid data={Conference.details!.accommodations} />
+                                <AccommodationDataGrid data={Conference.details!.accommodations} setSelection={setRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
                                 <Button size="small" >Delete selected</Button>
-                                <AddConferenceAccommodationDialog dialogTitle="Add Accommodation" fetch={() => {FetchData()}} />
+                                <AddConferenceAccommodationDialog id={id} dialogTitle="Add Accommodation" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -101,7 +103,7 @@ const ConferenceDetails = () => {
                             <Divider />
                             <AccordionActions>
                                 <Button size="small">Delete selected</Button>
-                                <Button size="small" color="primary">
+                                <Button size="small" color="secondary">
                                     Add
                                 </Button>
                             </AccordionActions>

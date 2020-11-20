@@ -29,6 +29,31 @@ namespace Core.Services
             return _mapper.Map<List<BuildingPlanModel>>(result);
         }
 
+        public async Task EditBuildingPlanAsync(BuildingPlanModel model, CancellationToken cancellationToken)
+        {
+            var buildingPlanToUpdate = await _buildingPlanRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (buildingPlanToUpdate == null)
+            {
+                throw new InvalidOperationException("BuildingPlan with given id does not exist");
+            }
+
+            if (await _buildingPlanRepository.AnyAsync(x =>
+             x.Name == model.Name &&
+             x.Description == model.Description &&
+             x.Path == model.Path &&
+             x.ConferenceID == model.ConferenceID, cancellationToken))
+            {
+                throw new InvalidOperationException("BuildingPlan with given parameters exists");
+            }
+
+            buildingPlanToUpdate.Name = model.Name;
+            buildingPlanToUpdate.Description = model.Description;
+            buildingPlanToUpdate.Path = model.Path;
+            buildingPlanToUpdate.ConferenceID = model.ConferenceID;
+
+            await _buildingPlanRepository.UpdateAsync(buildingPlanToUpdate, cancellationToken);
+        }
+
         public async Task<int> AddBuildingPlanAsync(AddBuildingPlanRequest request, CancellationToken cancellationToken)
         {
             if (await _buildingPlanRepository.AnyAsync(x =>

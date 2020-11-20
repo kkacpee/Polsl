@@ -11,5 +11,7 @@ namespace Core.Interfaces.Services
         Task<List<AccommodationModel>> GetAllAccommodations(CancellationToken cancellationToken);
         Task<int> AddAccommodationAsync(AddAccommodationRequest request, CancellationToken cancellationToken);
         Task DeleteAccommodationPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditAccommodationAsync(AccommodationModel model, CancellationToken cancellationToken);
+        Task<List<AccommodationModel>> GetAccommodationsForConference(int id, CancellationToken cancellationToken);
     }
 }

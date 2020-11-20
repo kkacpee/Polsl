@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
 import { AddBuildingPlanRequest, BuildingPlanAction, BUILDINGPLAN_ADD, BUILDINGPLAN_ADD_FAIL, BUILDINGPLAN_ADD_SUCCESS, BUILDINGPLAN_DELETE, BUILDINGPLAN_DELETE_FAIL, BUILDINGPLAN_DELETE_SUCCESS, BUILDINGPLAN_LIST_FAIL, BUILDINGPLAN_LIST_LOADING, BUILDINGPLAN_LIST_SUCCESS } from '../Types/BuildingPlanTypes';

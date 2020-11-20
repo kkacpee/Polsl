@@ -1,5 +1,6 @@
 ﻿using Core.DTO.Requests;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,12 +29,28 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetSponsorsForConference(int id, CancellationToken cancellationToken)
+        {
+            var result = await _sponsorService.GetSponsorsForConference(id, cancellationToken);
+
+            return Ok(result);
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddSponsors([FromBody] AddSponsorRequest request, CancellationToken cancellationToken)
         {
             var result = await _sponsorService.AddSponsorAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditSponsor([FromBody] SponsorModel model, CancellationToken cancellationToken)
+        {
+            await _sponsorService.EditSponsorAsync(model, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]

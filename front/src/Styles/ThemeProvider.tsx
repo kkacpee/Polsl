@@ -40,7 +40,8 @@ const Theme = createMuiTheme({
         root: {
             maxWidth: 345,
             margin: 10,
-            color: '#8B89A2'
+            color: '#8B89A2',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)'
         }
     },
     MuiCardMedia: {
@@ -51,7 +52,7 @@ const Theme = createMuiTheme({
     },    
     MuiPaper: {
       root: {
-        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#97BBD1',
         color: '#2F2635'
       }
     }

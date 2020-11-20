@@ -1,5 +1,6 @@
 ﻿using Core.DTO.Requests;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,12 +29,28 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetEmergencyNumbersForConference(int id, CancellationToken cancellationToken)
+        {
+            var result = await _emergencyNumberService.GetEmergencyNumbersForConference(id, cancellationToken);
+
+            return Ok(result);
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddEmergencyNumber([FromBody] AddEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
             var result = await _emergencyNumberService.AddEmergencyNumberAsync(request, cancellationToken);
 
             return Created($"details/{result}", result);
+        }
+
+        [HttpPost("edit")]
+        public async Task<IActionResult> EditEmergencyNumber([FromBody] EmergencyNumberModel model, CancellationToken cancellationToken)
+        {
+            await _emergencyNumberService.EditEmergencyNumberAsync(model, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]

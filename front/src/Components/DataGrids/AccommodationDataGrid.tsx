@@ -1,5 +1,5 @@
-import React from 'react'
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useState } from 'react'
+import { DataGrid, RowData } from '@material-ui/data-grid';
 import { Accommodation } from '../../Types/AccommodationTypes';
 import { useStyles, CustomPagination } from './GridStyles';
 
@@ -13,14 +13,17 @@ const columns = [
 
   interface GridProps {
       data: Accommodation[]
+      setSelection: React.Dispatch<React.SetStateAction<RowData[] | undefined>>
   }
 
-const AccommodationDataGrid = ({data}:GridProps) => {
+const AccommodationDataGrid = ({data, setSelection}:GridProps) => {
     const classes = useStyles();
+
     return (
         <div style={{ height: 400, width: '100%' }}>
         <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
-        autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection />
+        autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection 
+        onSelectionChange={(newSelection) => {setSelection(newSelection.rows);}}/>
         </div> 
     )
 }

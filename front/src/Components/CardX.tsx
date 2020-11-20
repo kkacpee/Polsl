@@ -77,12 +77,11 @@ const CustomCard = ({data, onRowClick}: Props) => {
             <Delete />
           </IconButton>
         }
-        titleTypographyProps={{variant:'h4' }}
         title={data.title}
         subheader={SubHeader()}
       />
       <CardMedia
-        image="https://via.placeholder.com/150"
+        image="https://images.unsplash.com/photo-1580953870233-4c7f485628d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
         title="Paella dish"
       />
       <CardContent>

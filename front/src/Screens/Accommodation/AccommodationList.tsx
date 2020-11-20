@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
@@ -8,10 +8,12 @@ import { GetAccommodationList } from '../../Actions/AccommodationActions';
 import Dialog from './AddAccommodationDialog';
 import AccommodationDataGrid from '../../Components/DataGrids/AccommodationDataGrid';
 import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { RowData } from '@material-ui/data-grid';
 
 const AccommodationList = () => {
     const dispatch = useDispatch();
     const accommodationList:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
+    const [rows, setRows] = useState<RowData[]>();
     
     React.useEffect( () => {
         FetchData()
@@ -26,7 +28,7 @@ const AccommodationList = () => {
             return (
                 <Container style={{padding: 20}}>
                     <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                    <AccommodationDataGrid data={accommodationList.data} />
+                    <AccommodationDataGrid data={accommodationList.data} setSelection={setRows}/>
                     </Grid>
                     <Grid container direction="row" justify='center' alignItems='flex-end' >
                         <div>

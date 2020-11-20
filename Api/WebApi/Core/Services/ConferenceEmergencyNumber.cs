@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<ConferenceEmergencyNumberModel>>(result);
         }
 
-        public async Task AddEmergencyNumbersToConferenceAsync(AddEmergencyNumbersToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task AddEmergencyNumbersToConferenceAsync(ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
             if (await _conferenceEmergencyNumberRepository.AnyAsync(x =>
                         request.EmergencyNumberIDs.Contains(x.EmergencyNumberID) &&

@@ -29,6 +29,25 @@ namespace Core.Services
             return _mapper.Map<List<PointOfInterestTypeModel>>(result);
         }
 
+        public async Task EditPointOfInterestTypeAsync(PointOfInterestTypeModel model, CancellationToken cancellationToken)
+        {
+            var pointOfInterestTypeToUpdate = await _pointOfInterestTypeRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (pointOfInterestTypeToUpdate == null)
+            {
+                throw new InvalidOperationException("PointOfInterestType with given id does not exist");
+            }
+
+            if (await _pointOfInterestTypeRepository.AnyAsync(x =>
+             x.Name == model.Name, cancellationToken))
+            {
+                throw new InvalidOperationException("PointOfInterestType with given parameters exists");
+            }
+
+            pointOfInterestTypeToUpdate.Name = model.Name;
+
+            await _pointOfInterestTypeRepository.UpdateAsync(pointOfInterestTypeToUpdate, cancellationToken);
+        }
+
         public async Task<int> AddPointOfInterestTypeAsync(AddPointOfInterestTypeRequest request, CancellationToken cancellationToken)
         {
             if (await _pointOfInterestTypeRepository.AnyAsync(x =>

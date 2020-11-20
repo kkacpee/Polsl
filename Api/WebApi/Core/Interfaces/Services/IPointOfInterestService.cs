@@ -12,5 +12,7 @@ namespace Core.Interfaces.Services
         Task<List<PointOfInterestResponse>> GetAllPointsOfInterestAsync(CancellationToken cancellationToken);
         Task<int> AddPointOfInterestAsync(AddPointOfInterestRequest request, CancellationToken cancellationToken);
         Task DeletePointOfInterestPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task EditPointOfInterestAsync(PointOfInterestModel model, CancellationToken cancellationToken);
+        Task<List<PointOfInterestModel>> GetPointsOfInterestForConference(int id, CancellationToken cancellationToken);
     }
 }

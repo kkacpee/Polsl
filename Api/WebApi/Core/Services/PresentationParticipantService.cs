@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<PresentationParticipantModel>>(result);
         }
 
-        public async Task AddParticipantsToPresentationAsync(AddParticipantsToPresentationRequest request, CancellationToken cancellationToken)
+        public async Task AddParticipantsToPresentationAsync(PresentationParticipantRequest request, CancellationToken cancellationToken)
         {
             if (await _presentationParticipantRepository.AnyAsync(x =>
                         request.ParticipantIDs.Contains(x.ParticipantID) &&

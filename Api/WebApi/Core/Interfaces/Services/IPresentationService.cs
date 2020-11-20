@@ -13,5 +13,6 @@ namespace Core.Interfaces.Services
         Task<int> AddPresentationAsync(AddPresentationRequest request, CancellationToken cancellationToken);
         Task DeletePresentationPermanentlyAsync(int id, CancellationToken cancellationToken);
         Task<PresentationDetailsResponse> GetPresentationDetailsAsync(int id, CancellationToken cancellationToken);
+        Task EditPresentationAsync(PresentationModel model, CancellationToken cancellationToken);
     }
 }

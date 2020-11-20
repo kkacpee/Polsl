@@ -28,7 +28,7 @@ namespace Core.Services
             return _mapper.Map<List<ConferencePointOfInterestModel>>(result);
         }
 
-        public async Task AddPointsOfInterestToConferenceAsync(AddPointsOfInterestToConferenceRequest request, CancellationToken cancellationToken)
+        public async Task AddPointsOfInterestToConferenceAsync(ConferencePointOfInterestRequest request, CancellationToken cancellationToken)
         {
             if (await _conferencePointOfInterestRepository.AnyAsync(x =>
                         request.PointOfInterestIDs.Contains(x.PointOfInterestID) &&

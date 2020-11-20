@@ -51,6 +51,35 @@ namespace Core.Services
             return mapped.ID;
         }
 
+        public async Task EditPresentationAsync(PresentationModel model, CancellationToken cancellationToken)
+        {
+            var presentationToUpdate = await _presentationRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (presentationToUpdate == null)
+            {
+                throw new InvalidOperationException("Presentation with given id does not exist");
+            }
+
+            if (await _presentationRepository.AnyAsync(x =>
+             x.ConferenceID == model.ConferenceID &&
+            x.Authors == model.Authors &&
+            x.EndDate == model.EndDate &&
+            x.StartDate == model.StartDate &&
+            x.Title == model.Title &&
+            x.Place == model.Place, cancellationToken))
+{
+                throw new InvalidOperationException("Presentation with given parameters exists");
+            }
+
+            presentationToUpdate.ConferenceID = model.ConferenceID;
+            presentationToUpdate.Authors = model.Authors;
+            presentationToUpdate.EndDate = model.EndDate;
+            presentationToUpdate.StartDate = model.StartDate;
+            presentationToUpdate.Title = model.Title;
+            presentationToUpdate.Place = model.Place;
+
+            await _presentationRepository.UpdateAsync(presentationToUpdate, cancellationToken);
+        }
+
         public async Task DeletePresentationPermanentlyAsync(int id, CancellationToken cancellationToken)
         {
             if (!await _presentationRepository.AnyAsync(x => x.ID == id, cancellationToken))

@@ -13,5 +13,6 @@ namespace Core.Interfaces.Services
         Task<int> AddConferenceAsync(AddConferenceRequest request, CancellationToken cancellationToken);
         Task DeleteConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
         Task<ConferenceDetailsResponse> GetConferenceDetailsAsync(int id, CancellationToken cancellationToken);
+        Task EditConferenceAsync(ConferenceModel model, CancellationToken cancellationToken);
     }
 }

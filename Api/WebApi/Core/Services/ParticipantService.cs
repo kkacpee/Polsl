@@ -6,6 +6,7 @@ using Core.Models;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,17 +15,27 @@ namespace Core.Services
     public class ParticipantService : IParticipantService
     {
         private readonly IParticipantRepository _participantRepository;
+        private readonly IPresentationParticipantRepository _presentationParticipantRepository;
         private readonly IMapper _mapper;
 
-        public ParticipantService(IParticipantRepository participantRepository, IMapper mapper)
+        public ParticipantService(IParticipantRepository participantRepository, IPresentationParticipantRepository presentationParticipantRepository, IMapper mapper)
         {
             _participantRepository = participantRepository;
+            _presentationParticipantRepository = presentationParticipantRepository;
             _mapper = mapper;
         }
 
         public async Task<List<ParticipantModel>> GetAllParticipantsAsync(CancellationToken cancellationToken)
         {
             var result = await _participantRepository.GetAllAsync(cancellationToken);
+
+            return _mapper.Map<List<ParticipantModel>>(result);
+        }
+
+        public async Task<List<ParticipantModel>> GetParticipantsForPresentationAsync(int id, CancellationToken cancellationToken)
+        {
+            var presentationParticipantsIds = await _presentationParticipantRepository.SelectAsync(x => x.PresentationID == id, x => x.ParticipantID, cancellationToken);
+            var result = await _participantRepository.GetAsync(x => !presentationParticipantsIds.ToList().Contains(x.ID), cancellationToken);
 
             return _mapper.Map<List<ParticipantModel>>(result);
         }
@@ -44,6 +55,33 @@ namespace Core.Services
             await _participantRepository.AddAsync(mapped, cancellationToken);
 
             return mapped.ID;
+        }
+
+        public async Task EditParticipantAsync(ParticipantModel model, CancellationToken cancellationToken)
+        {
+            var participantToUpdate = await _participantRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (participantToUpdate == null)
+            {
+                throw new InvalidOperationException("Participant with given id does not exist");
+            }
+
+            if (await _participantRepository.AnyAsync(x =>
+             x.FirstName == model.FirstName &&
+            x.LastName == model.LastName &&
+            x.Affiliation == model.Affiliation &&
+            x.Company == model.Company &&
+            x.Country == model.Country, cancellationToken))
+            {
+                throw new InvalidOperationException("Participant with given parameters exists");
+            }
+
+            participantToUpdate.FirstName = model.FirstName;
+            participantToUpdate.LastName = model.LastName;
+            participantToUpdate.Affiliation = model.Affiliation;
+            participantToUpdate.Company = model.Company;
+            participantToUpdate.Country = model.Country;
+
+            await _participantRepository.UpdateAsync(participantToUpdate, cancellationToken);
         }
 
         public async Task DeleteParticipantPermanentlyAsync(int id, CancellationToken cancellationToken)

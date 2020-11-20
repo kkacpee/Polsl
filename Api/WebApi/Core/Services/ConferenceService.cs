@@ -50,6 +50,33 @@ namespace Core.Services
             return mapped.ID;
         }
 
+        public async Task EditConferenceAsync(ConferenceModel model, CancellationToken cancellationToken)
+        {
+            var conferenceToUpdate = await _conferenceRepository.GetByIdAsync(model.ID, cancellationToken);
+            if (conferenceToUpdate == null)
+            {
+                throw new InvalidOperationException("Conference with given id does not exist");
+            }
+
+            if (await _conferenceRepository.AnyAsync(x =>
+              x.Address == model.Address &&
+              x.Country == model.Country &&
+              x.EndDate == model.EndDate &&
+              x.StartDate == model.StartDate &&
+              x.Title == model.Title, cancellationToken))
+            {
+                throw new InvalidOperationException("Conference with given parameters exists");
+            }
+
+            conferenceToUpdate.Address = model.Address;
+            conferenceToUpdate.Country = model.Country;
+            conferenceToUpdate.EndDate = model.EndDate;
+            conferenceToUpdate.StartDate = model.StartDate;
+            conferenceToUpdate.Title = model.Title;
+
+            await _conferenceRepository.UpdateAsync(conferenceToUpdate, cancellationToken);
+        }
+
         public async Task DeleteConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
         {
             if (!await _conferenceRepository.AnyAsync(x => x.ID == id, cancellationToken))
