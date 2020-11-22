@@ -35,6 +35,18 @@ export interface AddPresentationRequest{
     presentationTypeID: number
 }
 
+export interface AddToPresentationRequest {
+    presentationID: number,
+    arrayOfIDs: number[]
+}
+
+export interface DeleteFromPresentationRequest {
+    presentationID: number,
+    arrayOfIDs: number[]
+}
+
+export type requestType = "Participant";
+
 export interface PresentationDetails{
     id: number,
     startDate: Date,

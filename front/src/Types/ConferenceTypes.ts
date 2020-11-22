@@ -19,6 +19,8 @@ export const CONFERENCE_DETAILS_LOADING= "CONFERENCE_DETAILS_LOADING";
 export const CONFERENCE_DETAILS_SUCCESS= "CONFERENCE_DETAILS_SUCCESS";
 export const CONFERENCE_DETAILS_FAIL= "CONFERENCE_DETAILS_FAIL";
 
+export type requestType = "Accommodation" | "Organizer" | "Sponsor" | "EmergencyNumber" | "PointOfInterest";
+
 export interface Conference {
     id: number,
     address: string,
@@ -41,6 +43,11 @@ export interface AddConferenceRequest {
 }
 
 export interface AddToConferenceRequest {
+    conferenceID: number,
+    arrayOfIDs: number[]
+}
+
+export interface DeleteFromConferenceRequest {
     conferenceID: number,
     arrayOfIDs: number[]
 }

@@ -47,14 +47,20 @@ namespace Core.Services
             await _conferenceSponsorRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeleteSponsorFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteSponsorFromConferencePermanentlyAsync(ConferenceSponsorRequest request, CancellationToken cancellationToken)
         {
-            if (!await _conferenceSponsorRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _conferenceSponsorRepository.AnyAsync(x =>
+                        request.SponsorIDs.Contains(x.SponsorID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no ConferenceSponsor with given ID");
+                throw new InvalidOperationException("There is no sponsor with given id for given conference");
             }
 
-            await _conferenceSponsorRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _conferenceSponsorRepository.GetAsync(x =>
+                        request.SponsorIDs.Contains(x.SponsorID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken);
+
+            await _conferenceSponsorRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

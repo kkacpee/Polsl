@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
-import _ from 'lodash';
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
 import { GetPointOfInterestList } from '../../Actions/PointOfInterestActions';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import Dialog from './AddPointOfInterestDialog';
 import PointOfInterestDataGrid from '../../Components/DataGrids/PointOfInterestDataGrid';
 
@@ -22,29 +21,27 @@ const PointOfInterestList = () => {
     }
 
     const ShowData = () => {
-        if (!_.isEmpty(pointOfInterestState.data)){
-            return (
-                <Container style={{padding: 20}}>
-                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                    <PointOfInterestDataGrid data={pointOfInterestState.data} />
-                    </Grid>
-                    <Grid container direction="row" justify='center' alignItems='flex-end' >
-                        <div>
-                        <Dialog dialogTitle="Add new Point Of Interest" fetch={() => {FetchData()}}></Dialog>
-                        </div>
-                    </Grid>
-                </Container>
-            )
-        }
-        if (pointOfInterestState.loading){
-            return <p> loading... </p>
-        }
-
+        
         if (pointOfInterestState.errorMsg !== ""){
             return <p>{pointOfInterestState.errorMsg}</p>
         }
 
-        return <p> unable to do shit </p>
+        if (pointOfInterestState.loading){
+            return <p> loading... </p>
+        }
+
+        return (
+            <Container style={{padding: 20}}>
+                <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
+                <PointOfInterestDataGrid data={pointOfInterestState.data} />
+                </Grid>
+                <Grid container direction="row" justify='center' alignItems='flex-end' >
+                    <div>
+                    <Dialog dialogTitle="Add new Point Of Interest" fetch={() => {FetchData()}}></Dialog>
+                    </div>
+                </Grid>
+            </Container>
+        )
     }
     
     return(

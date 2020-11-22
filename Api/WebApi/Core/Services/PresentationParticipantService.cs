@@ -47,14 +47,20 @@ namespace Core.Services
             await _presentationParticipantRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeleteParticipantFromPresentationPermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteParticipantFromPresentationPermanentlyAsync(PresentationParticipantRequest request, CancellationToken cancellationToken)
         {
-            if (!await _presentationParticipantRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _presentationParticipantRepository.AnyAsync(x =>
+                        request.ParticipantIDs.Contains(x.ParticipantID) &&
+                        x.PresentationID == request.PresentationID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no PresentationParticipant with given ID");
+                throw new InvalidOperationException("There is no participant with given id for given presentation");
             }
 
-            await _presentationParticipantRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _presentationParticipantRepository.GetAsync(x =>
+                        request.ParticipantIDs.Contains(x.ParticipantID) &&
+                        x.PresentationID == request.PresentationID, cancellationToken);
+
+            await _presentationParticipantRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

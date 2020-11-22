@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../Reducers/rootReducer';
 import {AUTHENTICATED, AUTHENTICATION_ERROR, AuthRequest, AuthenticationAction} from '../Types/AuthTypes';

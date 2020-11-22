@@ -10,8 +10,6 @@ import { Button, createStyles, makeStyles, Theme, Toolbar } from "@material-ui/c
 import { AuthState } from "../Types/AuthTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../Reducers/rootReducer";
-import { Redirect } from "react-router";
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

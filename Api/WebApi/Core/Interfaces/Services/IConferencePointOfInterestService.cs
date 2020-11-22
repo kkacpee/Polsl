@@ -10,6 +10,6 @@ namespace Core.Interfaces.Services
     {
         Task<List<ConferencePointOfInterestModel>> GetAllConferencePointsOfInterestAsync(CancellationToken cancellationToken);
         Task AddPointsOfInterestToConferenceAsync(ConferencePointOfInterestRequest request, CancellationToken cancellationToken);
-        Task DeletePointOfInterestFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task DeletePointOfInterestFromConferencePermanentlyAsync(ConferencePointOfInterestRequest request, CancellationToken cancellationToken);
     }
 }

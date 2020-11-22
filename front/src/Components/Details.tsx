@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 import React from "react"
 import { ConferenceDetails } from "../Types/ConferenceTypes"
 
@@ -13,12 +13,12 @@ const options = {
   };
 const Details = ({details}:Props) => {
     return (
-        <Box height='350px'>
-            <Grid container direction="row" justify='space-evenly' alignItems='center' >
-                    <Paper >
-                    <img src="https://via.placeholder.com/150" />
-                    </Paper>
-                <Box width='70%'>
+        <Box  border='1px solid black' padding='0'>
+            <Grid container direction="row" justify='center' alignItems='center'> 
+                <Box width='29%' >
+                    <img src="https://via.placeholder.com/300"/>
+                </Box>
+                <Box width='70%' height='100%' border='1px solid black'>
                     <Grid container direction="column" justify='space-between' alignItems='stretch' >
                         <Grid container direction="row" justify='center' alignItems='stretch' >
                             <Box component='h2'>

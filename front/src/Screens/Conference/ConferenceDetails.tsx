@@ -1,10 +1,10 @@
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardHeader, CardMedia, Container, createStyles, Divider, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Container, createStyles, Divider, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { ConferenceState } from '../../Types/ConferenceTypes';
+import { ConferenceState, requestType } from '../../Types/ConferenceTypes';
 import { useSelector } from 'react-redux';
-import { GetConferenceDetails } from '../../Actions/ConferenceActions';
+import { DeleteFromConference, GetConferenceDetails } from '../../Actions/ConferenceActions';
 import { RootState } from '../../Reducers/rootReducer';
 import { useDispatch } from 'react-redux';
 import _ from 'lodash';
@@ -18,6 +18,11 @@ import PresentationDataGrid from '../../Components/DataGrids/PresentationDataGri
 import Details from '../../Components/Details';
 import AddConferenceAccommodationDialog from './ConferenceMiscDialogs/AddConferenceAccommodationDialog';
 import { RowData } from '@material-ui/data-grid';
+import { setAlert } from '../../Actions/AlertActions';
+import AddConferenceSponsorDialog from './ConferenceMiscDialogs/AddConferenceSponsorDialog';
+import AddConferenceEmergencyNumberDialog from './ConferenceMiscDialogs/AddConferenceEmergencyNumber';
+import AddConferenceOrganizerDialog from './ConferenceMiscDialogs/AddConferenceOrganizer';
+import AddConferencePointOfInterestDialog from './ConferenceMiscDialogs/AddConferencePointOfInterest';
 
 //import { Details } from '@material-ui/icons';
 
@@ -38,8 +43,23 @@ const ConferenceDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const Conference:ConferenceState = useSelector((state: RootState ) => state.Conference);
-    const [rows, setRows] = useState<RowData[]>();
+    const [accommodationRows, setAccommodationRows] = useState<RowData[]>();
+    const [organizerRows, setOrganizerRows] = useState<RowData[]>();
+    const [emergencyNumberRows, setEmergencyNumberRows] = useState<RowData[]>();
+    const [pointOfInterestRows, setPointOfInterestRows] = useState<RowData[]>();
+    const [sponsorRows, setSponsorRows] = useState<RowData[]>();
+
+    async function handleDelete(rows: RowData[] | undefined, requestType: requestType){
+        let array = Array<number>();
+        rows?.forEach(element => {
+            array.push(parseInt(element.id.toString(), 10))
+        });
     
+        await dispatch(DeleteFromConference({conferenceID: id, arrayOfIDs: array}, requestType))
+        dispatch(setAlert(true, "success", "Deleted successfully"));
+        FetchData();
+        }
+
     React.useEffect( () => {
         FetchData()
     },[]);
@@ -81,11 +101,11 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Accommodations</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <AccommodationDataGrid data={Conference.details!.accommodations} setSelection={setRows} />
+                                <AccommodationDataGrid data={Conference.details!.accommodations} setSelection={setAccommodationRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
-                                <Button size="small" >Delete selected</Button>
+                                <Button size="small" onClick={() => {handleDelete(accommodationRows, "Accommodation")}}>Delete selected</Button>
                                 <AddConferenceAccommodationDialog id={id} dialogTitle="Add Accommodation" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
@@ -117,14 +137,12 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Emergency Numbers</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <EmergencyNumberDataGrid data={Conference.details!.emergencyNumbers} />
+                                <EmergencyNumberDataGrid data={Conference.details!.emergencyNumbers} setSelection={setEmergencyNumberRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
-                                <Button size="small">Delete selected</Button>
-                                <Button size="small" color="primary">
-                                    Add
-                                </Button>
+                                <Button size="small" onClick={() => {handleDelete(emergencyNumberRows, "EmergencyNumber")}}>Delete selected</Button>
+                                <AddConferenceEmergencyNumberDialog id={id} dialogTitle="Add Emergency Number" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -136,14 +154,12 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Organizer</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <OrganizerDataGrid data={Conference.details!.organizers} />
+                                <OrganizerDataGrid data={Conference.details!.organizers} setSelection={setOrganizerRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
-                                <Button size="small">Delete selected</Button>
-                                <Button size="small" color="primary">
-                                    Add
-                                </Button>
+                                <Button size="small" onClick={() => {handleDelete(organizerRows, "Organizer")}}>Delete selected</Button>
+                                <AddConferenceOrganizerDialog id={id} dialogTitle="Add Organizer" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -155,14 +171,12 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Points Of Interest</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <PointOfInterestDataGrid data={Conference.details!.pointsOfInterest} />
+                                <PointOfInterestDataGrid data={Conference.details!.pointsOfInterest} setSelection={setPointOfInterestRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
-                                <Button size="small">Delete selected</Button>
-                                <Button size="small" color="primary">
-                                    Add
-                                </Button>
+                                <Button size="small" onClick={() => {handleDelete(pointOfInterestRows, "PointOfInterest")}}>Delete selected</Button>
+                                <AddConferencePointOfInterestDialog id={id} dialogTitle="Add Point Of Interest" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -174,14 +188,12 @@ const ConferenceDetails = () => {
                             <Typography className={classes.heading}>Sponsor</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <SponsorDataGrid data={Conference.details!.sponsors} />
+                            <SponsorDataGrid data={Conference.details!.sponsors} setSelection={setSponsorRows} />
                         </AccordionDetails>
                         <Divider />
                             <AccordionActions>
-                                <Button size="small">Delete selected</Button>
-                                <Button size="small" color="primary">
-                                    Add
-                                </Button>
+                                <Button size="small" onClick={() => {handleDelete(sponsorRows, "Sponsor")}}>Delete selected</Button>
+                                <AddConferenceSponsorDialog id={id} dialogTitle="Add Sponsor" fetch={() => {FetchData()}} />
                             </AccordionActions>
                     </Accordion>
                     </Grid>

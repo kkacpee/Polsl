@@ -2,8 +2,7 @@ import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {default as MyTheme} from '../../Styles/ThemeProvider'
-import { ComponentProps, DataGrid } from '@material-ui/data-grid';
+import { ComponentProps} from '@material-ui/data-grid';
 
   function customCheckbox(theme: Theme) {
     return {

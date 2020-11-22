@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
-import _ from 'lodash';
 import { OrganizerState } from '../../Types/OrganizerTypes';
 import { GetOrganizerList } from '../../Actions/OrganizerActions';
 import Dialog from './AddOrganizerDialog';
@@ -22,27 +21,26 @@ const OrganizerList = () => {
     }
 
     const ShowData = () => {
-        if (!_.isEmpty(organizerState.data)){
-            return (
-                <Container style={{padding: 20}}>
-                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                    <OrganizerDataGrid data={organizerState.data} /> 
-                    </Grid>
-                    <Grid container direction="row" justify='center' alignItems='flex-end' >
-                        <div>
-                        <Dialog dialogTitle="Add new Organizer" fetch={() => {FetchData()}}></Dialog>
-                        </div>
-                    </Grid>
-                </Container>
-            )
+        if (organizerState.errorMsg !== ""){
+            return <p>{organizerState.errorMsg}</p>
         }
+
         if (organizerState.loading){
             return <CircularProgress />
         }
 
-        if (organizerState.errorMsg !== ""){
-            return <p>{organizerState.errorMsg}</p>
-        }
+        return (
+            <Container style={{padding: 20}}>
+                <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
+                <OrganizerDataGrid data={organizerState.data} /> 
+                </Grid>
+                <Grid container direction="row" justify='center' alignItems='flex-end' >
+                    <div>
+                    <Dialog dialogTitle="Add new Organizer" fetch={() => {FetchData()}}></Dialog>
+                    </div>
+                </Grid>
+            </Container>
+        )
     }
     
     return(

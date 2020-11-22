@@ -10,6 +10,6 @@ namespace Core.Interfaces.Services
     {
         Task<List<ConferenceEmergencyNumberModel>> GetAllConferenceEmergencyNumbersAsync(CancellationToken cancellationToken);
         Task AddEmergencyNumbersToConferenceAsync(ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken);
-        Task DeleteEmergencyNumberFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task DeleteEmergencyNumberFromConferencePermanentlyAsync(ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken);
     }
 }

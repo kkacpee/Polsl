@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
-import _ from 'lodash';
 import { EmergencyNumberState } from '../../Types/EmergencyNumberTypes';
 import { GetEmergencyNumberList } from '../../Actions/EmergencyNumberActions';
 import Dialog from './AddEmergencyNumberDialog';
@@ -22,27 +21,26 @@ const EmergencyNumberList = () => {
     }
 
     const ShowData = () => {
-        if (!_.isEmpty(emergencyNumberState.data)){
-            return (
-                <Container style={{padding: 20}}>
-                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                    <EmergencyNumberDataGrid data={emergencyNumberState.data} />
-                    </Grid>
-                    <Grid container direction="row" justify='center' alignItems='flex-end' >
-                        <div>
-                        <Dialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></Dialog>
-                        </div>
-                    </Grid>
-                </Container>
-            )
+        if (emergencyNumberState.errorMsg !== ""){
+            return <p>{emergencyNumberState.errorMsg}</p>
         }
+
         if (emergencyNumberState.loading){
             return <CircularProgress />
         }
 
-        if (emergencyNumberState.errorMsg !== ""){
-            return <p>{emergencyNumberState.errorMsg}</p>
-        }
+        return (
+            <Container style={{padding: 20}}>
+                <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
+                <EmergencyNumberDataGrid data={emergencyNumberState.data} />
+                </Grid>
+                <Grid container direction="row" justify='center' alignItems='flex-end' >
+                    <div>
+                    <Dialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></Dialog>
+                    </div>
+                </Grid>
+            </Container>
+        )
     }
     
     return(

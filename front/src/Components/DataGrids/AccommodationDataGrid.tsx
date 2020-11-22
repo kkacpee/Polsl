@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { DataGrid, RowData } from '@material-ui/data-grid';
 import { Accommodation } from '../../Types/AccommodationTypes';
 import { useStyles, CustomPagination } from './GridStyles';
+import _ from 'lodash';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -13,19 +14,28 @@ const columns = [
 
   interface GridProps {
       data: Accommodation[]
-      setSelection: React.Dispatch<React.SetStateAction<RowData[] | undefined>>
+      setSelection?: React.Dispatch<React.SetStateAction<RowData[] | undefined>>
   }
 
 const AccommodationDataGrid = ({data, setSelection}:GridProps) => {
     const classes = useStyles();
-
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-        <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
-        autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection 
-        onSelectionChange={(newSelection) => {setSelection(newSelection.rows);}}/>
-        </div> 
-    )
+    if(_.isUndefined(setSelection)){
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            autoHeight rows={data} columns={columns} pageSize={5} />
+            </div> 
+        )
+    }
+    else{
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection 
+            onSelectionChange={(newSelection) => {setSelection(newSelection.rows);}}/>
+            </div> 
+        )
+    }
 }
 
 export default AccommodationDataGrid;

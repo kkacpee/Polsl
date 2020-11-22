@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Card, CardHeader, CardMedia, Container, createStyles, Divider, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Container, createStyles, Divider, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { PresentationState } from '../../Types/PresentationTypes';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import _ from 'lodash';
 import Details from '../../Components/PresentationDetails';
 import ParticipantDataGrid from '../../Components/DataGrids/ParticipantDataGrid';
+import AddPresentationParticipantDialog from './PresentationDialogs/AddPresentationParticipantDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,9 +59,7 @@ const PresentationDetails = () => {
                         <Divider />
                         <AccordionActions>
                             <Button size="small" >Delete selected</Button>
-                            <Button size="small" color="primary">
-                                Add
-                            </Button>
+                            <AddPresentationParticipantDialog id={id} dialogTitle="Add Participant" fetch={() => {FetchData()}} />
                         </AccordionActions>
                         </Accordion>
                     </Grid>

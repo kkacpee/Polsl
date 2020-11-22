@@ -10,6 +10,6 @@ namespace Core.Interfaces.Services
     {
         Task<List<PresentationParticipantModel>> GetAllPresentationParticipantsAsync(CancellationToken cancellationToken);
         Task AddParticipantsToPresentationAsync(PresentationParticipantRequest request, CancellationToken cancellationToken);
-        Task DeleteParticipantFromPresentationPermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task DeleteParticipantFromPresentationPermanentlyAsync(PresentationParticipantRequest request, CancellationToken cancellationToken);
     }
 }

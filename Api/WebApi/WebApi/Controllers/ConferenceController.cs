@@ -101,10 +101,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("ConferenceAccommodation/delete/{id}")]
-        public async Task<IActionResult> DeleteConferenceAccommodation(int id, CancellationToken cancellationToken)
+        [HttpPost("ConferenceAccommodation/delete")]
+        public async Task<IActionResult> DeleteConferenceAccommodation([FromBody] ConferenceAccommodationRequest request, CancellationToken cancellationToken)
         {
-            await _conferenceAccommodationService.DeleteAccommodationFromConferencePermanentlyAsync(id, cancellationToken);
+            await _conferenceAccommodationService.DeleteAccommodationFromConferencePermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }
@@ -127,10 +127,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("ConferenceEmergencyNumber/delete/{id}")]
-        public async Task<IActionResult> DeleteConferenceEmergencyNumber(int id, CancellationToken cancellationToken)
+        [HttpPost("ConferenceEmergencyNumber/delete")]
+        public async Task<IActionResult> DeleteConferenceEmergencyNumber([FromBody] ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
-            await _conferenceEmergencyNumberService.DeleteEmergencyNumberFromConferencePermanentlyAsync(id, cancellationToken);
+            await _conferenceEmergencyNumberService.DeleteEmergencyNumberFromConferencePermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }
@@ -153,10 +153,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("ConferenceOrganizer/delete/{id}")]
-        public async Task<IActionResult> DeleteConferenceOrganizer(int id, CancellationToken cancellationToken)
+        [HttpPost("ConferenceOrganizer/delete")]
+        public async Task<IActionResult> DeleteConferenceOrganizer([FromBody] ConferenceOrganizerRequest request, CancellationToken cancellationToken)
         {
-            await _conferenceOrganizerService.DeleteOrganizerFromConferencePermanentlyAsync(id, cancellationToken);
+            await _conferenceOrganizerService.DeleteOrganizerFromConferencePermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }
@@ -179,10 +179,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("ConferencePointOfInterest/delete/{id}")]
-        public async Task<IActionResult> DeleteConferencePointOfInterest(int id, CancellationToken cancellationToken)
+        [HttpPost("ConferencePointOfInterest/delete")]
+        public async Task<IActionResult> DeleteConferencePointOfInterest([FromBody] ConferencePointOfInterestRequest request, CancellationToken cancellationToken)
         {
-            await _conferencePointOfInterestService.DeletePointOfInterestFromConferencePermanentlyAsync(id, cancellationToken);
+            await _conferencePointOfInterestService.DeletePointOfInterestFromConferencePermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }
@@ -205,10 +205,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("ConferenceSponsor/delete/{id}")]
-        public async Task<IActionResult> DeleteConferenceSponsor(int id, CancellationToken cancellationToken)
+        [HttpPost("ConferenceSponsor/delete")]
+        public async Task<IActionResult> DeleteConferenceSponsor([FromBody] ConferenceSponsorRequest request, CancellationToken cancellationToken)
         {
-            await _conferenceSponsorService.DeleteSponsorFromConferencePermanentlyAsync(id, cancellationToken);
+            await _conferenceSponsorService.DeleteSponsorFromConferencePermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }
@@ -231,7 +231,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpDelete("BuildingPlan/delete/{id}")]
+        [HttpPost("BuildingPlan/delete/{id}")]
         public async Task<IActionResult> DeleteBuildingPlan(int id, CancellationToken cancellationToken)
         {
             await _buildingPlanService.DeleteBuildingPlanPermanentlyAsync(id, cancellationToken);

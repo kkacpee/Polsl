@@ -1,7 +1,8 @@
 import React from 'react'
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, RowData } from '@material-ui/data-grid';
 import { PointOfInterest } from '../../Types/PointOfInterestTypes';
 import { useStyles, CustomPagination } from './GridStyles';
+import _ from 'lodash';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -13,17 +14,29 @@ const columns = [
   ];
 
   interface GridProps {
-      data: PointOfInterest[]
+      data: PointOfInterest[],
+      setSelection?: React.Dispatch<React.SetStateAction<RowData[] | undefined>>
   }
 
-const PointOfInterestDataGrid = ({data}:GridProps) => {
+const PointOfInterestDataGrid = ({data, setSelection}:GridProps) => {
     const classes = useStyles();
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-        <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
-        autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection />
-        </div> 
-    )
+    if(_.isUndefined(setSelection)){
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            autoHeight rows={data} columns={columns} pageSize={5} />
+            </div> 
+        )
+    }
+    else{
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection 
+            onSelectionChange={(newSelection) => {setSelection(newSelection.rows);}}/>
+            </div> 
+        )
+    }
 }
 
 export default PointOfInterestDataGrid;

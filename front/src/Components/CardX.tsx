@@ -14,7 +14,6 @@ import Delete from '@material-ui/icons/Delete';
 import { Conference } from '../Types/ConferenceTypes';
 import { useDispatch } from 'react-redux';
 import { DeleteConference } from '../Actions/ConferenceActions';
-import { setAlert } from '../Actions/AlertActions';
 import { Link } from 'react-router-dom';
 import {default as MyTheme} from '../Styles/ThemeProvider'
 

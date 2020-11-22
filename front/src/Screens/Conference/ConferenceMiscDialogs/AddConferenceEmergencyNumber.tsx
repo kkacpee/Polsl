@@ -5,11 +5,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import AccommodationDataGrid from '../../../Components/DataGrids/AccommodationDataGrid';
-import { AccommodationState } from '../../../Types/AccommodationTypes';
+import EmergencyNumberDataGrid from '../../../Components/DataGrids/EmergencyNumberDataGrid';
+import { EmergencyNumberState } from '../../../Types/EmergencyNumberTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
-import { GetAccommodationsForConferenceList } from '../../../Actions/AccommodationActions';
+import { GetEmergencyNumbersForConfereceList } from '../../../Actions/EmergencyNumberActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { RowData } from '@material-ui/data-grid';
@@ -22,21 +22,21 @@ interface DialogProps {
   fetch: () => void
 }
 
-const AddConferenceAccommodationDialog = (props:DialogProps) => {
+const AddConferenceEmergencyNumberDialog = (props:DialogProps) => {
     const {dialogTitle, id, fetch} = props;
     const [open, setOpen] = React.useState(false);
-    const accommodation:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
+    const EmergencyNumber:EmergencyNumberState = useSelector((state: RootState ) => state.EmergencyNumber);
     const dispatch = useDispatch();
     const [rows, setRows] = useState<RowData[]>();
 
-  async function handleSubmit(){
+    async function handleSubmit(){
     let array = Array<number>();
     rows?.forEach(element => {
         array.push(parseInt(element.id.toString(), 10))
     });
 
-    await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Accommodation"))
-    dispatch(setAlert(true, "success", "Added accommodation to conference successfully"));
+    await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "EmergencyNumber"))
+    dispatch(setAlert(true, "success", "Added EmergencyNumber to conference successfully"));
     setOpen(false);
     }
 
@@ -50,23 +50,23 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     };
     
     const FetchData = () => {
-        dispatch(GetAccommodationsForConferenceList(id))
+        dispatch(GetEmergencyNumbersForConfereceList(id))
     }
 
     const ShowData = () => {
-        if (!_.isEmpty(accommodation.data)){
+        if (!_.isEmpty(EmergencyNumber.data)){
             return (
                 <>
-                    <AccommodationDataGrid data={accommodation.data} setSelection={setRows}/>
+                    <EmergencyNumberDataGrid data={EmergencyNumber.data} setSelection={setRows}/>
                 </>
             )
         }
-        if (accommodation.loading){
+        if (EmergencyNumber.loading){
             return <CircularProgress />
         }
 
-        if (accommodation.errorMsg !== ""){
-            return <p>{accommodation.errorMsg}</p>
+        if (EmergencyNumber.errorMsg !== ""){
+            return <p>{EmergencyNumber.errorMsg}</p>
         }
     }
 
@@ -96,4 +96,4 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     );
 }
 
-export default AddConferenceAccommodationDialog;
+export default AddConferenceEmergencyNumberDialog;

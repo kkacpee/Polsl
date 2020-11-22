@@ -49,14 +49,20 @@ namespace Core.Services
             await _conferenceAccommodationRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeleteAccommodationFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteAccommodationFromConferencePermanentlyAsync(ConferenceAccommodationRequest request, CancellationToken cancellationToken)
         {
-            if (!await _conferenceAccommodationRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _conferenceAccommodationRepository.AnyAsync(x =>
+                        request.AccommodationIDs.Contains(x.AccommodationID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no ConferenceAccommodation with given ID");
+                throw new InvalidOperationException("There is no accommodation with given id for given conference");
             }
 
-            await _conferenceAccommodationRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _conferenceAccommodationRepository.GetAsync(x =>
+                        request.AccommodationIDs.Contains(x.AccommodationID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken);
+
+            await _conferenceAccommodationRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

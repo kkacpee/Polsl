@@ -46,14 +46,20 @@ namespace Core.Services
             await _conferenceEmergencyNumberRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeleteEmergencyNumberFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteEmergencyNumberFromConferencePermanentlyAsync(ConferenceEmergencyNumberRequest request, CancellationToken cancellationToken)
         {
-            if (!await _conferenceEmergencyNumberRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _conferenceEmergencyNumberRepository.AnyAsync(x =>
+                        request.EmergencyNumberIDs.Contains(x.EmergencyNumberID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no ConferenceEmergencyNumber with given ID");
+                throw new InvalidOperationException("There is no emergency number with given id for given conference");
             }
 
-            await _conferenceEmergencyNumberRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _conferenceEmergencyNumberRepository.GetAsync(x =>
+                        request.EmergencyNumberIDs.Contains(x.EmergencyNumberID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken);
+
+            await _conferenceEmergencyNumberRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

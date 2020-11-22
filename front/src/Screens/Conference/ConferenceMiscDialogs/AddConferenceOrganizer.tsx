@@ -5,11 +5,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import AccommodationDataGrid from '../../../Components/DataGrids/AccommodationDataGrid';
-import { AccommodationState } from '../../../Types/AccommodationTypes';
+import OrganizerDataGrid from '../../../Components/DataGrids/OrganizerDataGrid';
+import { OrganizerState } from '../../../Types/OrganizerTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
-import { GetAccommodationsForConferenceList } from '../../../Actions/AccommodationActions';
+import { GetOrganizersForConferenceList } from '../../../Actions/OrganizerActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { RowData } from '@material-ui/data-grid';
@@ -22,10 +22,10 @@ interface DialogProps {
   fetch: () => void
 }
 
-const AddConferenceAccommodationDialog = (props:DialogProps) => {
+const AddConferenceOrganizerDialog = (props:DialogProps) => {
     const {dialogTitle, id, fetch} = props;
     const [open, setOpen] = React.useState(false);
-    const accommodation:AccommodationState = useSelector((state: RootState ) => state.Accommodation);
+    const Organizer:OrganizerState = useSelector((state: RootState ) => state.Organizer);
     const dispatch = useDispatch();
     const [rows, setRows] = useState<RowData[]>();
 
@@ -35,8 +35,8 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
         array.push(parseInt(element.id.toString(), 10))
     });
 
-    await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Accommodation"))
-    dispatch(setAlert(true, "success", "Added accommodation to conference successfully"));
+    await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Organizer"))
+    dispatch(setAlert(true, "success", "Added Organizer to conference successfully"));
     setOpen(false);
     }
 
@@ -50,23 +50,23 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     };
     
     const FetchData = () => {
-        dispatch(GetAccommodationsForConferenceList(id))
+        dispatch(GetOrganizersForConferenceList(id))
     }
 
     const ShowData = () => {
-        if (!_.isEmpty(accommodation.data)){
+        if (!_.isEmpty(Organizer.data)){
             return (
                 <>
-                    <AccommodationDataGrid data={accommodation.data} setSelection={setRows}/>
+                    <OrganizerDataGrid data={Organizer.data} setSelection={setRows}/>
                 </>
             )
         }
-        if (accommodation.loading){
+        if (Organizer.loading){
             return <CircularProgress />
         }
 
-        if (accommodation.errorMsg !== ""){
-            return <p>{accommodation.errorMsg}</p>
+        if (Organizer.errorMsg !== ""){
+            return <p>{Organizer.errorMsg}</p>
         }
     }
 
@@ -96,4 +96,4 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     );
 }
 
-export default AddConferenceAccommodationDialog;
+export default AddConferenceOrganizerDialog;

@@ -115,10 +115,10 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("PresentationParticipant/delete/{id}")]
-        public async Task<IActionResult> DeletePresentationParticipant(int id, CancellationToken cancellationToken)
+        [HttpPost("PresentationParticipant/delete")]
+        public async Task<IActionResult> DeletePresentationParticipant([FromBody] PresentationParticipantRequest request, CancellationToken cancellationToken)
         {
-            await _presentationParticipantService.DeleteParticipantFromPresentationPermanentlyAsync(id, cancellationToken);
+            await _presentationParticipantService.DeleteParticipantFromPresentationPermanentlyAsync(request, cancellationToken);
 
             return NoContent();
         }

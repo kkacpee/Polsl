@@ -10,6 +10,6 @@ namespace Core.Interfaces.Services
     {
         Task<List<ConferenceAccommodationModel>> GetAllConferenceAccommodationsAsync(CancellationToken cancellationToken);
         Task AddAccommodationsToConferenceAsync(ConferenceAccommodationRequest request, CancellationToken cancellationToken);
-        Task DeleteAccommodationFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task DeleteAccommodationFromConferencePermanentlyAsync(ConferenceAccommodationRequest request, CancellationToken cancellationToken);
     }
 }

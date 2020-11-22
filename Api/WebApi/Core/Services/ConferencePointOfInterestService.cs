@@ -46,14 +46,20 @@ namespace Core.Services
             await _conferencePointOfInterestRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeletePointOfInterestFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeletePointOfInterestFromConferencePermanentlyAsync(ConferencePointOfInterestRequest request, CancellationToken cancellationToken)
         {
-            if (!await _conferencePointOfInterestRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _conferencePointOfInterestRepository.AnyAsync(x =>
+                        request.PointOfInterestIDs.Contains(x.PointOfInterestID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no ConferencePointOfInterest with given ID");
+                throw new InvalidOperationException("There is no point of interest with given id for given conference");
             }
 
-            await _conferencePointOfInterestRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _conferencePointOfInterestRepository.GetAsync(x =>
+                        request.PointOfInterestIDs.Contains(x.PointOfInterestID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken);
+
+            await _conferencePointOfInterestRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

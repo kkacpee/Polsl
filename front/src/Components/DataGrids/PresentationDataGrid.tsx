@@ -2,7 +2,7 @@ import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { useStyles, CustomPagination } from './GridStyles';
 import { Presentation } from '../../Types/PresentationTypes';
-import { Button, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const columns = [

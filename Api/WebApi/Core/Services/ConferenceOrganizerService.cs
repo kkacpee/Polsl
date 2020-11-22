@@ -46,14 +46,20 @@ namespace Core.Services
             await _conferenceOrganizerRepository.AddManyAsync(list, cancellationToken);
         }
 
-        public async Task DeleteOrganizerFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteOrganizerFromConferencePermanentlyAsync(ConferenceOrganizerRequest request, CancellationToken cancellationToken)
         {
-            if (!await _conferenceOrganizerRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            if (!await _conferenceOrganizerRepository.AnyAsync(x =>
+                        request.OrganizerIDs.Contains(x.OrganizerID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken))
             {
-                throw new InvalidOperationException("There is no ConferenceOrganizer with given ID");
+                throw new InvalidOperationException("There is no organizer with given id for given conference");
             }
 
-            await _conferenceOrganizerRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            var result = await _conferenceOrganizerRepository.GetAsync(x =>
+                        request.OrganizerIDs.Contains(x.OrganizerID) &&
+                        x.ConferenceID == request.ConferenceID, cancellationToken);
+
+            await _conferenceOrganizerRepository.DeleteManyPermanentlyAsync(result, cancellationToken);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Core.Interfaces.Services
     {
         Task<List<ConferenceSponsorModel>> GetAllConferenceSponsorsAsync(CancellationToken cancellationToken);
         Task AddSponsorsToConferenceAsync(ConferenceSponsorRequest request, CancellationToken cancellationToken);
-        Task DeleteSponsorFromConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
+        Task DeleteSponsorFromConferencePermanentlyAsync(ConferenceSponsorRequest request, CancellationToken cancellationToken);
     }
 }
