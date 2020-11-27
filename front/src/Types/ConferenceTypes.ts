@@ -18,6 +18,9 @@ export const CONFERENCE_DELETE_FAIL= "CONFERENCE_DELETE_FAIL"
 export const CONFERENCE_DETAILS_LOADING= "CONFERENCE_DETAILS_LOADING";
 export const CONFERENCE_DETAILS_SUCCESS= "CONFERENCE_DETAILS_SUCCESS";
 export const CONFERENCE_DETAILS_FAIL= "CONFERENCE_DETAILS_FAIL";
+export const CONFERENCE_EDIT= "CONFERENCE_EDIT";
+export const CONFERENCE_EDIT_SUCCESS= "CONFERENCE_EDIT_SUCCESS";
+export const CONFERENCE_EDIT_FAIL= "CONFERENCE_EDIT_FAIL";
 
 export type requestType = "Accommodation" | "Organizer" | "Sponsor" | "EmergencyNumber" | "PointOfInterest";
 
@@ -139,8 +142,21 @@ export interface ConferenceDeleteFailAction {
     payload: string
 }
 
+export interface ConferenceEditAction {
+    type: typeof CONFERENCE_EDIT,
+}
+export interface ConferenceEditSuccessAction {
+    type: typeof CONFERENCE_EDIT_SUCCESS,
+    payload: string
+}
+export interface ConferenceEditFailAction {
+    type: typeof CONFERENCE_EDIT_FAIL,
+    payload: string
+}
+
 export type ConferenceAction = 
 ConferenceListLoadingAction | ConferenceListFailAction | ConferenceListSuccessAction |
 ConferenceDetailsLoadingAction | ConferenceDetailsFailAction | ConferenceDetailsSuccessAction |
 ConferenceAddAction | ConferenceAddSuccessAction | ConferenceAddFailAction |
-ConferenceDeleteAction | ConferenceDeleteSuccessAction | ConferenceDeleteFailAction;
+ConferenceDeleteAction | ConferenceDeleteSuccessAction | ConferenceDeleteFailAction |
+ConferenceEditAction | ConferenceEditSuccessAction | ConferenceEditFailAction;

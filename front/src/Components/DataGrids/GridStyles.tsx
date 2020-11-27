@@ -105,18 +105,18 @@ import { ComponentProps} from '@material-ui/data-grid';
   )
   
   export function CustomPagination(props: ComponentProps) {
-    const { paginationProps } = props;
+    const { pagination } = props;
   
     return (
       <Pagination
         color='secondary'
         variant="outlined"
         shape="rounded"
-        page={paginationProps.page}
-        count={paginationProps.pageCount}
-        // @ts-expect-error
-        renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
-        onChange={(event, value) => paginationProps.setPage(value)}
+         page={pagination.page}
+         count={pagination.pageCount}
+        // // @ts-expect-error
+        // renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
+        // onChange={(event, value) => {pagination.page = value}}
       />
     );
   };

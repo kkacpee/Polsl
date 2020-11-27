@@ -27,12 +27,12 @@ const AddConferenceOrganizerDialog = (props:DialogProps) => {
     const [open, setOpen] = React.useState(false);
     const Organizer:OrganizerState = useSelector((state: RootState ) => state.Organizer);
     const dispatch = useDispatch();
-    const [rows, setRows] = useState<RowData[]>();
+    const [rows, setRows] = useState<(string | number)[] | undefined>();
 
   async function handleSubmit(){
     let array = Array<number>();
     rows?.forEach(element => {
-        array.push(parseInt(element.id.toString(), 10))
+        array.push(Number(element))
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Organizer"))

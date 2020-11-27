@@ -16,13 +16,13 @@ const PointOfInterestList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetPointOfInterestList())
+    async function FetchData () {
+       await dispatch(GetPointOfInterestList())
     }
 
     const ShowData = () => {
         
-        if (pointOfInterestState.errorMsg !== ""){
+        if (pointOfInterestState.errorMsg !== "" && pointOfInterestState.errorMsg !== "Created"){
             return <p>{pointOfInterestState.errorMsg}</p>
         }
 

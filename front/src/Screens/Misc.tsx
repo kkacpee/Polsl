@@ -9,6 +9,7 @@ import OrganizerList from './Organizer/OrganizerList';
 import EmergencyNumberList from './EmergencyNumber/EmergencyNumberList';
 import SponsorList from './Sponsor/SponsorList';
 import PointOfInterestList from './PointOfInterest/PointOfInterestList';
+import PointOfInterestTypeList from './PointOfInterest/PointOfInterestTypeList';
 import BuildingPlanList from './BuildingPlan/BuildingPlan';
 import ParticipantList from './Participant/ParticipantList';
 
@@ -70,7 +71,8 @@ export default function Misc() {
           <Tab value="four" label="Organizers" {...a11yProps('four')} />
           <Tab value="five" label="Building Plans" {...a11yProps('five')} />
           <Tab value="six" label="Points of Interest" {...a11yProps('six')} />
-          <Tab value="seven" label="Participants" {...a11yProps('seven')} />
+          <Tab value="seven" label="PoI Types" {...a11yProps('seven')} />
+          <Tab value="eight" label="Participants" {...a11yProps('eight')} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index="one">
@@ -92,6 +94,9 @@ export default function Misc() {
         {PointOfInterestList}
       </TabPanel>
       <TabPanel value={value} index="seven">
+        {PointOfInterestTypeList}
+      </TabPanel>
+      <TabPanel value={value} index="eight">
         {ParticipantList}
       </TabPanel>
     </div>

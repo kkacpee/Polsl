@@ -5,6 +5,7 @@ import { setAlert } from "../Actions/AlertActions";
 import { SignIn } from "../Actions/AuthActions";
 import { AuthRequest } from "../Types/AuthTypes";
 import {default as MyTheme } from "../Styles/ThemeProvider";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,7 +52,6 @@ const useStyles = makeStyles((theme: Theme) =>
               <CardContent>
                 <div>
                   <TextField
-                 //   error={state.isError}
                     fullWidth
                     id="username"
                     type="email"
@@ -59,33 +59,30 @@ const useStyles = makeStyles((theme: Theme) =>
                     placeholder="Username"
                     margin="normal"
                     onChange={(e) => setEmail(e.target.value)}
-                 //   onKeyPress={handleKeyPress}
                   />
                   <TextField
-                //    error={state.isError}
                     fullWidth
                     id="password"
                     type="password"
                     label="Password"
                     placeholder="Password"
                     margin="normal"
-                  //  helperText={state.helperText}
                     onChange={(e) => setPassword(e.target.value)}
-                   // onKeyPress={handleKeyPress}
                   />
                 </div>
               </CardContent>
               <CardActions>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="secondary"
-                  className={classes.loginBtn}
-                  onClick={handleSubmit}
-                  //disabled={state.isButtonDisabled}
-                  >
-                  Login
-                </Button>
+                <Link to="/conference">
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                    className={classes.loginBtn}
+                    onClick={handleSubmit}
+                    >
+                    Login
+                  </Button>
+                </Link>
               </CardActions>
             </Card>
           </form>

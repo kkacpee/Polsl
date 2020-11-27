@@ -9,9 +9,7 @@ namespace Persistence.EntityConfiguration
         public void Configure(EntityTypeBuilder<PointOfInterestIcon> builder)
         {
             builder.HasKey(x => x.ID);
-            builder.Property(x => x.XmlContent);
-            builder.Property(c => c.XmlContent).HasColumnType("xml");
-            builder.Ignore(c => c.XmlValueWrapper);
+            builder.Property(x => x.Path).HasMaxLength(512);
         }
     }
 }

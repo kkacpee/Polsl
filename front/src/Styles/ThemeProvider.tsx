@@ -55,6 +55,16 @@ const Theme = createMuiTheme({
         backgroundColor: '#97BBD1',
         color: '#2F2635'
       }
+    },
+    MuiButton: {
+      textPrimary: {
+        color: '#2F2635'
+      }
+    },
+    MuiSelect: {
+      icon: {
+        color: "#000"
+      }
     }
   },
 });

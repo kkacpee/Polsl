@@ -11,6 +11,7 @@ import { AddConferenceRequest } from '../../Types/ConferenceTypes';
 import { AddConference} from '../../Actions/ConferenceActions';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
 import { setAlert } from '../../Actions/AlertActions';
+import { Add } from '@material-ui/icons';
 
 interface DialogProps {
   dialogTitle: string,
@@ -66,10 +67,8 @@ const FormDialog = (props:DialogProps) => {
     <div>
         <FloatingContainer>
         <FloatingButton
-                tooltip="The big plus button!"
-                icon="fas fa-plus"
-                rotate={true}
-                onClick={handleClickOpen} />
+                tooltip="Add new conference"
+                onClick={handleClickOpen}> <Add /> </FloatingButton>
         </FloatingContainer>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
@@ -133,6 +132,7 @@ const FormDialog = (props:DialogProps) => {
               value={startDate}
               onChange={setStartDate}
               className="w-50 p-1"
+              showTodayButton
               onError={console.log}
               minDate={new Date("2018-01-01T00:00")}
               format="yyyy/MM/dd hh:mm a"
@@ -150,10 +150,10 @@ const FormDialog = (props:DialogProps) => {
             </div>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} >
             Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} color="secondary">
             Submit
             </Button>
         </DialogActions>

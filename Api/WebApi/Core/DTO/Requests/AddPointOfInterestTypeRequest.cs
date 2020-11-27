@@ -3,5 +3,6 @@
     public class AddPointOfInterestTypeRequest
     {
         public string Name { get; set; }
+        public int PointOfInterestIconID { get; set; }
     }
 }

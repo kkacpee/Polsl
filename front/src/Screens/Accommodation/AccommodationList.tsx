@@ -16,12 +16,13 @@ const AccommodationList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetAccommodationList())
+    async function FetchData () {
+      await dispatch(GetAccommodationList())
     }
 
     const ShowData = () => {
-        if (accommodationList.errorMsg !== ""){
+
+        if (accommodationList.errorMsg !== "" && accommodationList.errorMsg !== "Created"){
             return <p>{accommodationList.errorMsg}</p>
         }
 

@@ -16,12 +16,12 @@ const SponsorList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetSponsorList())
+    async function FetchData () {
+       await dispatch(GetSponsorList())
     }
 
     const ShowData = () => {
-        if (sponsorState.errorMsg !== ""){
+        if (sponsorState.errorMsg !== "" && sponsorState.errorMsg !== "Created"){
             return <p>{sponsorState.errorMsg}</p>
         }
 

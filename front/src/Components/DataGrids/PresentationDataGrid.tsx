@@ -32,7 +32,7 @@ const PresentationDataGrid = ({data}:GridProps) => {
     const classes = useStyles();
     return (
         <div style={{ height: 400, width: '100%' }}>
-        <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+        <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick
         autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection />
         </div> 
     )

@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
 import { AddParticipant } from '../../Actions/ParticipantActions';
 import { AddParticipantRequest } from '../../Types/ParticipantTypes';
+import { Add } from '@material-ui/icons';
 
 interface DialogProps {
   dialogTitle: string,
@@ -62,10 +63,8 @@ const FormDialog = (props:DialogProps) => {
     <div>
         <FloatingContainer>
         <FloatingButton
-                tooltip="The big plus button!"
-                icon="fas fa-plus"
-                rotate={true}
-                onClick={handleClickOpen} />
+                tooltip="Add new participant"
+                onClick={handleClickOpen}> <Add /> </FloatingButton>
         </FloatingContainer>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
@@ -134,10 +133,10 @@ const FormDialog = (props:DialogProps) => {
             />
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} >
             Cancel
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} color="secondary">
             Submit
             </Button>
         </DialogActions>

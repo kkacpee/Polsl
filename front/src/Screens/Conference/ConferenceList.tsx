@@ -5,7 +5,7 @@ import { RootState } from '../../Reducers/rootReducer'
 import _ from 'lodash';
 import { ConferenceState } from '../../Types/ConferenceTypes';
 import { GetConferenceList } from '../../Actions/ConferenceActions';
-import{ default as Card} from '../../Components/CardX';
+import{ default as Card} from '../../Components/Card';
 import Dialog from "./AddConferenceDialog"
 import { CircularProgress, Container, Grid } from '@material-ui/core';
 
@@ -17,8 +17,8 @@ const ConferenceList = () => {
         FetchData()
     },[]);
 
-    const FetchData = () => {
-        dispatch(GetConferenceList())
+    async function FetchData () {
+       await dispatch(GetConferenceList())
     }
 
     const ShowData = () => {

@@ -10,13 +10,12 @@ export const GetAccommodationList = (): ThunkAction<void, RootState, null, Accom
             type: ACCOMMODATION_LIST_LOADING
         });
         const result = await apiClient.get(`/api/Accommodation/get`)
-        
+
         dispatch({
             type: ACCOMMODATION_LIST_SUCCESS,
             payload: result.data
         })
     } catch (e){
-        
         dispatch({
             type: ACCOMMODATION_LIST_FAIL,
             payload: e.message
@@ -78,7 +77,7 @@ export const DeleteAccommodation = (key:number): ThunkAction<void, RootState, nu
                 type: ACCOMMODATION_DELETE
             });
             const response = await apiClient.delete(`/api/Accommodation/delete/${key}`)
-            
+
             dispatch({
                 type: ACCOMMODATION_DELETE_SUCCESS,
                 payload: response.statusText

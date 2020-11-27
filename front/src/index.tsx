@@ -11,10 +11,12 @@ import { ThemeProvider } from '@material-ui/core';
 import Theme from './Styles/ThemeProvider';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import LoadingScreen from './Screens/LoadingScreen';
+import history from './Helpers/HistoryHelper';
+import { Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router history={history}>
       <Provider store={Store}>
         <PersistGate loading={<LoadingScreen />} persistor={persistor}>
           <ThemeProvider theme={Theme}>
@@ -24,7 +26,7 @@ ReactDOM.render(
           </ThemeProvider>
         </PersistGate>
       </Provider>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

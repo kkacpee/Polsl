@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddConferenceRequest, AddToConferenceRequest, ConferenceAction, CONFERENCE_ADD, CONFERENCE_ADD_FAIL, CONFERENCE_ADD_SUCCESS, CONFERENCE_DELETE, CONFERENCE_DELETE_FAIL, CONFERENCE_DELETE_SUCCESS, CONFERENCE_DETAILS_FAIL, CONFERENCE_DETAILS_LOADING, CONFERENCE_DETAILS_SUCCESS, CONFERENCE_LIST_FAIL, CONFERENCE_LIST_LOADING, CONFERENCE_LIST_SUCCESS, DeleteFromConferenceRequest, requestType } from '../Types/ConferenceTypes';
+import { AddConferenceRequest, AddToConferenceRequest, Conference, ConferenceAction, CONFERENCE_ADD, CONFERENCE_ADD_FAIL, CONFERENCE_ADD_SUCCESS, CONFERENCE_DELETE, CONFERENCE_DELETE_FAIL, CONFERENCE_DELETE_SUCCESS, CONFERENCE_DETAILS_FAIL, CONFERENCE_DETAILS_LOADING, CONFERENCE_DETAILS_SUCCESS, CONFERENCE_EDIT, CONFERENCE_EDIT_FAIL, CONFERENCE_EDIT_SUCCESS, CONFERENCE_LIST_FAIL, CONFERENCE_LIST_LOADING, CONFERENCE_LIST_SUCCESS, DeleteFromConferenceRequest, requestType } from '../Types/ConferenceTypes';
 import { apiClient } from './ApiClient';
 
 
@@ -203,5 +203,28 @@ export const DeleteFromConference = (values:DeleteFromConferenceRequest, request
                 payload: e.message
             })
         }
+    }
+}
+
+export const EditConference = (values:Conference): ThunkAction<void, RootState, null, ConferenceAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: CONFERENCE_EDIT
+        });
+        const response = await apiClient.post(`/api/Conference/edit`, {
+            ...values
+            })
+        
+        dispatch({
+            type: CONFERENCE_EDIT_SUCCESS,
+            payload: response.statusText
+        })
+    } catch (e){
+        dispatch({
+            type: CONFERENCE_EDIT_FAIL,
+            payload: e.message
+        })
+    }
     }
 }

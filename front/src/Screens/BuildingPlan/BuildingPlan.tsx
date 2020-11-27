@@ -15,8 +15,8 @@ const BuildingPlanList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetBuildingPlanList())
+    async function FetchData () {
+      await dispatch(GetBuildingPlanList())
     }
 
     const ShowData = () => {

@@ -10,6 +10,7 @@ import { Button, createStyles, makeStyles, Theme, Toolbar } from "@material-ui/c
 import { AuthState } from "../Types/AuthTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../Reducers/rootReducer";
+import history from "../Helpers/HistoryHelper";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,13 +34,14 @@ function NavBar() {
   const handleLogout = () => {
     Auth.token = "";
     Auth.authenticated = false;
+    history.push('/login');
   }
 
   const renderLogout = () => {
     if (Auth.authenticated){
       return(
           <>
-          <Link to="/">
+          <Link to="/login">
             <Button onClick={handleLogout}>Logout</Button>
           </Link> 
           </>
@@ -51,11 +53,8 @@ function NavBar() {
       <AppBar position="static" color="transparent">
         <Toolbar>
         <Tabs value={value} onChange={handleChange} className={classes.tabs} centered>
-          <Tab label='Home' icon={ <HomeIcon />} component={Link} to="/" />
           <Tab label='Conference' icon={<CodeIcon />} component={Link} to="/conference" />
-          <Tab label='Misc' icon={<TimelineIcon />} component={Link} to="/misc" />
-          <Tab label='Sign In' icon={<TimelineIcon />} component={Link} to="/sign-in" />
-          
+          <Tab label='Misc' icon={<TimelineIcon />} component={Link} to="/misc" />    
         </Tabs>
         {renderLogout()}
         </Toolbar>

@@ -398,8 +398,9 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("XmlContent")
-                        .HasColumnType("xml");
+                    b.Property<string>("Path")
+                        .HasColumnType("character varying(512)")
+                        .HasMaxLength(512);
 
                     b.HasKey("ID");
 

@@ -7,6 +7,9 @@ export const POINTOFINTEREST_ADD_FAIL= "POINTOFINTEREST_ADD_FAIL";
 export const POINTOFINTEREST_DELETE="POINTOFINTEREST_DELETE";
 export const POINTOFINTEREST_DELETE_SUCCESS= "POINTOFINTEREST_DELETE_SUCCESS";
 export const POINTOFINTEREST_DELETE_FAIL= "POINTOFINTEREST_DELETE_FAIL"
+export const POINTOFINTEREST_TYPE_LIST= "POINTOFINTEREST_TYPE_LIST";
+export const POINTOFINTEREST_TYPE_LIST_SUCCESS= "POINTOFINTEREST_TYPE_LIST_SUCCESS";
+export const POINTOFINTEREST_TYPE_LIST_FAIL= "POINTOFINTEREST_TYPE_LIST_FAIL";
 
 export interface PointOfInterest {
     id: number,
@@ -14,8 +17,14 @@ export interface PointOfInterest {
     address: string,
     description: string,
     contact: string,
-    pointOfInterestTypeID: number
+    pointOfInterestTypeID: number,
     pointOfInterestTypeName: number
+}
+
+export interface PointOfInterestType {
+    id: number,
+    name: string,
+    path: string
 }
 
 export interface AddPointOfInterestRequest {
@@ -29,7 +38,8 @@ export interface AddPointOfInterestRequest {
 export interface PointOfInterestState {
     data: PointOfInterest[],
     loading: boolean,
-    errorMsg: string
+    errorMsg: string,
+    types: PointOfInterestType[] | undefined
 }
 
 export interface PointOfInterestError {
@@ -73,7 +83,20 @@ export interface PointOfInterestDeleteFailAction {
     payload: string
 }
 
+export interface PointOfInterestTypeLoadingAction {
+    type: typeof POINTOFINTEREST_TYPE_LIST,
+}
+export interface PointOfInterestTypeSuccessAction {
+    type: typeof POINTOFINTEREST_TYPE_LIST_SUCCESS,
+    payload: PointOfInterestType
+}
+export interface PointOfInterestTypeFailAction {
+    type: typeof POINTOFINTEREST_TYPE_LIST_FAIL,
+    payload: string
+}
+
 export type PointOfInterestAction = 
 PointOfInterestListLoadingAction | PointOfInterestListFailAction | PointOfInterestListSuccessAction |
 PointOfInterestAddAction | PointOfInterestAddSuccessAction | PointOfInterestAddFailAction |
-PointOfInterestDeleteAction | PointOfInterestDeleteSuccessAction | PointOfInterestDeleteFailAction;
+PointOfInterestDeleteAction | PointOfInterestDeleteSuccessAction | PointOfInterestDeleteFailAction |
+PointOfInterestTypeLoadingAction | PointOfInterestTypeSuccessAction | PointOfInterestTypeFailAction;

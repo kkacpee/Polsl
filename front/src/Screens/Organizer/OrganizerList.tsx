@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
@@ -7,21 +7,25 @@ import { GetOrganizerList } from '../../Actions/OrganizerActions';
 import Dialog from './AddOrganizerDialog';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
 import { CircularProgress, Container, Grid } from '@material-ui/core';
+import axios from 'axios';
+import { apiClient } from '../../Actions/ApiClient';
 
 const OrganizerList = () => {
     const dispatch = useDispatch();
     const organizerState:OrganizerState = useSelector((state: RootState ) => state.Organizer);
     
+   
+
     React.useEffect( () => {
-        FetchData()
+        FetchData();
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetOrganizerList())
+    async function FetchData () {
+       await dispatch(GetOrganizerList())
     }
 
     const ShowData = () => {
-        if (organizerState.errorMsg !== ""){
+        if (organizerState.errorMsg !== "" && organizerState.errorMsg !== "Created"){
             return <p>{organizerState.errorMsg}</p>
         }
 
@@ -45,6 +49,7 @@ const OrganizerList = () => {
     
     return(
         <div> {ShowData()}</div>
+    
     )
 };
 

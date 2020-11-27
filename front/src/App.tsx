@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import AccommodationList from './Screens/Accommodation/AccommodationList';
-import AccommodationDetails from './Screens/Accommodation/AccommodationDetails';
 import ConferenceList from './Screens/Conference/ConferenceList';
 import SignIn from './Screens/SignIn';
 import NavBar from './Components/Navbar';
@@ -25,7 +24,6 @@ const App = () => {
                   <PrivateRoute path={'/conference'} exact component={ConferenceList} />
                   <PrivateRoute path={'/misc'} exact component={Misc} />
                   <PrivateRoute path={'/accommodation'} exact component={AccommodationList} />
-                  <PrivateRoute path={'/accommodation/:id'} exact component={AccommodationDetails} />
                   <PrivateRoute path={'/conference/:id'} exact component={ConferenceDetails} />
                   <Route path={'/presentation/:id'} exact component={PresentationDetails} />
                   <Redirect to={'/'}></Redirect>

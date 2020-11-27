@@ -8,7 +8,10 @@ import {ConferenceState,
     CONFERENCE_ADD_FAIL,
     CONFERENCE_DETAILS_LOADING,
     CONFERENCE_DETAILS_FAIL,
-    CONFERENCE_DETAILS_SUCCESS} from '../Types/ConferenceTypes'
+    CONFERENCE_DETAILS_SUCCESS,
+    CONFERENCE_EDIT,
+    CONFERENCE_EDIT_FAIL,
+    CONFERENCE_EDIT_SUCCESS} from '../Types/ConferenceTypes'
     
 const DefaultState: ConferenceState  = {
     loading: false,
@@ -70,6 +73,24 @@ const ConferenceReducer = (state = DefaultState, action: ConferenceAction) => {
                 errorMsg: action.payload
             };
         case CONFERENCE_ADD_FAIL:
+        return {
+            ...state,
+            loading: false,
+            errorMsg: action.payload
+        };
+        case CONFERENCE_EDIT:
+            return {
+                ...state,
+                loading: true,
+                errorMsg: ""
+            };
+        case CONFERENCE_EDIT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                errorMsg: action.payload
+            };
+        case CONFERENCE_EDIT_FAIL:
         return {
             ...state,
             loading: false,

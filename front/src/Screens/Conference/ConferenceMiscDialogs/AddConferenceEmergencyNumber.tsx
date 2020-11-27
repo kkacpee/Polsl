@@ -27,12 +27,12 @@ const AddConferenceEmergencyNumberDialog = (props:DialogProps) => {
     const [open, setOpen] = React.useState(false);
     const EmergencyNumber:EmergencyNumberState = useSelector((state: RootState ) => state.EmergencyNumber);
     const dispatch = useDispatch();
-    const [rows, setRows] = useState<RowData[]>();
+    const [rows, setRows] = useState<(string | number)[] | undefined>();
 
     async function handleSubmit(){
     let array = Array<number>();
     rows?.forEach(element => {
-        array.push(parseInt(element.id.toString(), 10))
+        array.push(Number(element))
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "EmergencyNumber"))

@@ -43,16 +43,16 @@ const ConferenceDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const Conference:ConferenceState = useSelector((state: RootState ) => state.Conference);
-    const [accommodationRows, setAccommodationRows] = useState<RowData[]>();
-    const [organizerRows, setOrganizerRows] = useState<RowData[]>();
-    const [emergencyNumberRows, setEmergencyNumberRows] = useState<RowData[]>();
-    const [pointOfInterestRows, setPointOfInterestRows] = useState<RowData[]>();
-    const [sponsorRows, setSponsorRows] = useState<RowData[]>();
+    const [accommodationRows, setAccommodationRows] = useState<(string | number)[]>();
+    const [organizerRows, setOrganizerRows] = useState<(string | number)[]>();
+    const [emergencyNumberRows, setEmergencyNumberRows] = useState<(string | number)[]>();
+    const [pointOfInterestRows, setPointOfInterestRows] = useState<(string | number)[]>();
+    const [sponsorRows, setSponsorRows] = useState<(string | number)[]>();
 
-    async function handleDelete(rows: RowData[] | undefined, requestType: requestType){
+    async function handleDelete(rows: (string | number)[] | undefined, requestType: requestType){
         let array = Array<number>();
         rows?.forEach(element => {
-            array.push(parseInt(element.id.toString(), 10))
+            array.push(Number(element))
         });
     
         await dispatch(DeleteFromConference({conferenceID: id, arrayOfIDs: array}, requestType))
@@ -72,7 +72,7 @@ const ConferenceDetails = () => {
                 return(
                     <Container>
                     <Grid container direction="column" justify='center' alignItems='stretch' >
-                        <Details details={Conference.details!}></Details>
+                        <Details details={Conference.details!} fetch={() => {FetchData()}}></Details>
                         <Accordion>
                         <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

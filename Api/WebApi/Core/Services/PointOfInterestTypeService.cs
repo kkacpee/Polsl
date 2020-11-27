@@ -6,6 +6,7 @@ using Core.Models;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,9 +25,23 @@ namespace Core.Services
 
         public async Task<List<PointOfInterestTypeModel>> GetAllPointOfInterestTypesAsync(CancellationToken cancellationToken)
         {
-            var result = await _pointOfInterestTypeRepository.GetAllAsync(cancellationToken);
+            var result = await _pointOfInterestTypeRepository.SelectAsync(x => x.ID != 0, x=> new { x.ID, x.Name, x.PointOfInterestIcon.Path}, cancellationToken);
 
-            return _mapper.Map<List<PointOfInterestTypeModel>>(result);
+            var folderName = Path.Combine("Resources", "Icons");
+            var path = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            var mapped =new List<PointOfInterestTypeModel>();
+            foreach(var element in result)
+            {
+                byte[] b = System.IO.File.ReadAllBytes(Path.Combine(path,element.Path));
+                mapped.Add(new PointOfInterestTypeModel
+                {
+                    Path = "data:;base64," + Convert.ToBase64String(b),
+                    Name = element.Name,
+                    ID = element.ID
+                });
+            }
+            return mapped;
         }
 
         public async Task EditPointOfInterestTypeAsync(PointOfInterestTypeModel model, CancellationToken cancellationToken)

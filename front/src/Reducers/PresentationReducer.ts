@@ -5,12 +5,16 @@ import {PresentationState,
     PRESENTATION_ADD_FAIL,
     PRESENTATION_DETAILS_LOADING,
     PRESENTATION_DETAILS_FAIL,
-    PRESENTATION_DETAILS_SUCCESS} from '../Types/PresentationTypes'
+    PRESENTATION_DETAILS_SUCCESS,
+    PRESENTATION_TYPE_LIST,
+    PRESENTATION_TYPE_LIST_FAIL,
+    PRESENTATION_TYPE_LIST_SUCCESS} from '../Types/PresentationTypes'
     
 const DefaultState: PresentationState  = {
     loading: false,
     errorMsg: "",
-    details: undefined
+    details: undefined,
+    types: undefined
 };
 
 const PresentationReducer = (state = DefaultState, action: PresentationAction) => {
@@ -47,6 +51,24 @@ const PresentationReducer = (state = DefaultState, action: PresentationAction) =
                 errorMsg: action.payload
             };
         case PRESENTATION_ADD_FAIL:
+        return {
+            ...state,
+            loading: false,
+            errorMsg: action.payload
+        };
+        case PRESENTATION_TYPE_LIST:
+            return {
+                ...state,
+                loading: true,
+                errorMsg: ""
+            };
+        case PRESENTATION_TYPE_LIST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                types: action.payload
+            };
+        case PRESENTATION_TYPE_LIST_FAIL:
         return {
             ...state,
             loading: false,

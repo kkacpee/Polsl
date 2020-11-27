@@ -30,7 +30,7 @@ const BuildingPlanDataGrid = ({data, dataNoConferenceId, type}:GridProps) => {
         if (type === 'id'){
             return(
                 <div style={{ height: 400, width: '100%' }}>
-                <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+                <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick
                 autoHeight rows={data!} columns={columns} pageSize={5} checkboxSelection />
                 </div>
             )
@@ -38,7 +38,7 @@ const BuildingPlanDataGrid = ({data, dataNoConferenceId, type}:GridProps) => {
         else if (type === 'noId') {
             return(
                 <div style={{ height: 400, width: '100%' }}>
-                <DataGrid className={classes.root} components={{pagination: CustomPagination}}
+                <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]}
                 autoHeight rows={dataNoConferenceId!} columns={columnsNoID} pageSize={5} checkboxSelection />
                 </div>
             )

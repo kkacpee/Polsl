@@ -16,12 +16,12 @@ const ParticipantList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetParticipantList())
+    async function FetchData () {
+       await dispatch(GetParticipantList())
     }
 
     const ShowData = () => {
-        if (participantState.errorMsg !== ""){
+        if (participantState.errorMsg !== "" && participantState.errorMsg !== "Created"){
             return <p>{participantState.errorMsg}</p>
         }
 

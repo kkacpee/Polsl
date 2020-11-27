@@ -10,7 +10,6 @@ const  PrivateRoute: React.FC<{
     const state = Store.getState();
     const condition = state.Auth.authenticated;
     if( !condition && props.path === "/login"){
-        console.log(state.Auth.token);
         <Redirect  to="/"  />
     }
     if(props.path === "/login"){

@@ -16,7 +16,7 @@ const columns = [
 
   interface GridProps {
       data: Participant[],
-      setSelection?: React.Dispatch<React.SetStateAction<RowData[] | undefined>>
+      setSelection?: React.Dispatch<React.SetStateAction<(string | number)[] | undefined>>
   }
 
 const ParticipantDataGrid = ({data, setSelection}:GridProps) => {
@@ -24,7 +24,7 @@ const ParticipantDataGrid = ({data, setSelection}:GridProps) => {
     if(_.isUndefined(setSelection)){
         return (
             <div style={{ height: 400, width: '100%' }}>
-            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick
             autoHeight rows={data} columns={columns} pageSize={5} />
             </div> 
         )
@@ -32,9 +32,9 @@ const ParticipantDataGrid = ({data, setSelection}:GridProps) => {
     else{
         return (
             <div style={{ height: 400, width: '100%' }}>
-            <DataGrid className={classes.root} components={{pagination: CustomPagination}} disableSelectionOnClick
+            <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick
             autoHeight rows={data} columns={columns} pageSize={5} checkboxSelection 
-            onSelectionChange={(newSelection) => {setSelection(newSelection.rows);}}/>
+            onSelectionChange={(newSelection) => {setSelection(newSelection.rowIds);}}/>
             </div> 
         )
     }

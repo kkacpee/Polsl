@@ -16,12 +16,12 @@ const EmergencyNumberList = () => {
         FetchData()
     }, []);
 
-    const FetchData = () => {
-        dispatch(GetEmergencyNumberList())
+    async function FetchData () {
+       await dispatch(GetEmergencyNumberList())
     }
 
     const ShowData = () => {
-        if (emergencyNumberState.errorMsg !== ""){
+        if (emergencyNumberState.errorMsg !== "" && emergencyNumberState.errorMsg !== "Created"){
             return <p>{emergencyNumberState.errorMsg}</p>
         }
 
