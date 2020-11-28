@@ -8,35 +8,33 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
-import { AddSponsor } from '../../Actions/SponsorActions';
-import { AddSponsorRequest } from '../../Types/SponsorTypes';
+import { AddSponsor, EditSponsor } from '../../Actions/SponsorActions';
+import { AddSponsorRequest, Sponsor } from '../../Types/SponsorTypes';
 import { Add } from '@material-ui/icons';
 
 interface DialogProps {
   dialogTitle: string,
+  data: Sponsor,
   fetch: () => void
 }
 
-const initial:AddSponsorRequest = {
-    name: '',
-    country: '',
-    description: '',
-    logoPath: '',
-    website: ''
-}
-
-const FormDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const EditSponsorDialog = (props:DialogProps) => {
+    const {dialogTitle, data, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState(initial.name);
-  const [country, setCountry] = React.useState(initial.country);
-  const [description, setDescription] = React.useState(initial.description);
-  const [logoPath, setLogoPath] = React.useState(initial.logoPath);
-  const [website, setWebsite] = React.useState(initial.website);
+  const [name, setName] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [logoPath, setLogoPath] = React.useState('');
+  const [website, setWebsite] = React.useState('');
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    setName(data.name);
+    setCountry(data.country);
+    setDescription(data.description);
+    setLogoPath(data.logoPath);
+    setWebsite(data.website);
     setOpen(true);
   };
 
@@ -45,24 +43,24 @@ const FormDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddSponsorRequest = {
+    const request:Sponsor = {
+        id: data.id,
         name: name,
         country: country,
         description: description,
         logoPath: logoPath,
         website: website
     }
-    await dispatch(AddSponsor(request));  
-    dispatch(setAlert(true, "success", "Added sponsor successfully"));
+    await dispatch(EditSponsor(request));  
+    dispatch(setAlert(true, "success", "Edited sponsor successfully"));
     setOpen(false);
   }
   return (
     <div>
-        <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new sponsor"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
+        <Button
+        onClick={handleClickOpen}> 
+            Edit 
+        </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
@@ -133,4 +131,4 @@ const FormDialog = (props:DialogProps) => {
     );
 }
 
-export default FormDialog;
+export default EditSponsorDialog;

@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddEmergencyNumberRequest, EmergencyNumberAction, EMERGENCYNUMBER_ADD, EMERGENCYNUMBER_ADD_FAIL, EMERGENCYNUMBER_ADD_SUCCESS, EMERGENCYNUMBER_DELETE, EMERGENCYNUMBER_DELETE_FAIL, EMERGENCYNUMBER_DELETE_SUCCESS, EMERGENCYNUMBER_LIST_FAIL, EMERGENCYNUMBER_LIST_LOADING, EMERGENCYNUMBER_LIST_SUCCESS } from '../Types/EmergencyNumberTypes';
+import { AddEmergencyNumberRequest, EmergencyNumber, EmergencyNumberAction, EMERGENCYNUMBER_ADD, EMERGENCYNUMBER_ADD_FAIL, EMERGENCYNUMBER_ADD_SUCCESS, EMERGENCYNUMBER_DELETE, EMERGENCYNUMBER_DELETE_FAIL, EMERGENCYNUMBER_DELETE_SUCCESS, EMERGENCYNUMBER_EDIT, EMERGENCYNUMBER_EDIT_FAIL, EMERGENCYNUMBER_EDIT_SUCCESS, EMERGENCYNUMBER_LIST_FAIL, EMERGENCYNUMBER_LIST_LOADING, EMERGENCYNUMBER_LIST_SUCCESS } from '../Types/EmergencyNumberTypes';
 import { apiClient } from './ApiClient';
 
 
@@ -88,5 +88,28 @@ export const DeleteEmergencyNumber = (key:number): ThunkAction<void, RootState, 
                 payload: e.message
             })
         }
+    }
+}
+
+export const EditEmergencyNumber = (values:EmergencyNumber): ThunkAction<void, RootState, null, EmergencyNumberAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: EMERGENCYNUMBER_EDIT
+        });
+        const response = await apiClient.post(`/api/EmergencyNumber/edit`, {
+            ...values
+            })
+        
+        dispatch({
+            type: EMERGENCYNUMBER_EDIT_SUCCESS,
+            payload: response.statusText
+        })
+    } catch (e){
+        dispatch({
+            type: EMERGENCYNUMBER_EDIT_FAIL,
+            payload: e.message
+        })
+    }
     }
 }

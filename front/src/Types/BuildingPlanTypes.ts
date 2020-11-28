@@ -6,7 +6,10 @@ export const BUILDINGPLAN_ADD_SUCCESS= "BUILDINGPLAN_ADD_SUCCESS";
 export const BUILDINGPLAN_ADD_FAIL= "BUILDINGPLAN_ADD_FAIL";
 export const BUILDINGPLAN_DELETE="BUILDINGPLAN_DELETE";
 export const BUILDINGPLAN_DELETE_SUCCESS= "BUILDINGPLAN_DELETE_SUCCESS";
-export const BUILDINGPLAN_DELETE_FAIL= "BUILDINGPLAN_DELETE_FAIL"
+export const BUILDINGPLAN_DELETE_FAIL= "BUILDINGPLAN_DELETE_FAIL";
+export const BUILDINGPLAN_EDIT="BUILDINGPLAN_EDIT";
+export const BUILDINGPLAN_EDIT_SUCCESS= "BUILDINGPLAN_EDIT_SUCCESS";
+export const BUILDINGPLAN_EDIT_FAIL= "BUILDINGPLAN_EDIT_FAIL";
 
 export interface BuildingPlan {
     id: number,
@@ -77,7 +80,20 @@ export interface BuildingPlanDeleteFailAction {
     payload: string
 }
 
+export interface BuildingPlanEditAction {
+    type: typeof BUILDINGPLAN_EDIT,
+}
+export interface BuildingPlanEditSuccessAction {
+    type: typeof BUILDINGPLAN_EDIT_SUCCESS,
+    payload: string
+}
+export interface BuildingPlanEditFailAction {
+    type: typeof BUILDINGPLAN_EDIT_FAIL,
+    payload: string
+}
+
 export type BuildingPlanAction = 
 BuildingPlanListLoadingAction | BuildingPlanListFailAction | BuildingPlanListSuccessAction |
 BuildingPlanAddAction | BuildingPlanAddSuccessAction | BuildingPlanAddFailAction |
-BuildingPlanDeleteAction | BuildingPlanDeleteSuccessAction | BuildingPlanDeleteFailAction;
+BuildingPlanDeleteAction | BuildingPlanDeleteSuccessAction | BuildingPlanDeleteFailAction |
+BuildingPlanEditAction | BuildingPlanEditSuccessAction | BuildingPlanEditFailAction;

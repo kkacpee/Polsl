@@ -6,7 +6,10 @@ export const PARTICIPANT_ADD_SUCCESS= "PARTICIPANT_ADD_SUCCESS";
 export const PARTICIPANT_ADD_FAIL= "PARTICIPANT_ADD_FAIL";
 export const PARTICIPANT_DELETE="PARTICIPANT_DELETE";
 export const PARTICIPANT_DELETE_SUCCESS= "PARTICIPANT_DELETE_SUCCESS";
-export const PARTICIPANT_DELETE_FAIL= "PARTICIPANT_DELETE_FAIL"
+export const PARTICIPANT_DELETE_FAIL= "PARTICIPANT_DELETE_FAIL";
+export const PARTICIPANT_EDIT="PARTICIPANT_EDIT";
+export const PARTICIPANT_EDIT_SUCCESS= "PARTICIPANT_EDIT_SUCCESS";
+export const PARTICIPANT_EDIT_FAIL= "PARTICIPANT_EDIT_FAIL";
 
 export interface Participant {
     id: number,
@@ -74,7 +77,20 @@ export interface ParticipantDeleteFailAction {
     payload: string
 }
 
+export interface ParticipantEditAction {
+    type: typeof PARTICIPANT_EDIT,
+}
+export interface ParticipantEditSuccessAction {
+    type: typeof PARTICIPANT_EDIT_SUCCESS,
+    payload: string
+}
+export interface ParticipantEditFailAction {
+    type: typeof PARTICIPANT_EDIT_FAIL,
+    payload: string
+}
+
 export type ParticipantAction = 
 ParticipantListLoadingAction | ParticipantListFailAction | ParticipantListSuccessAction |
 ParticipantAddAction | ParticipantAddSuccessAction | ParticipantAddFailAction |
-ParticipantDeleteAction | ParticipantDeleteSuccessAction | ParticipantDeleteFailAction;
+ParticipantDeleteAction | ParticipantDeleteSuccessAction | ParticipantDeleteFailAction |
+ParticipantEditAction | ParticipantEditSuccessAction | ParticipantEditFailAction;

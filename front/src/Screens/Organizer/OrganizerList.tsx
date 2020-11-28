@@ -36,7 +36,7 @@ const OrganizerList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <OrganizerDataGrid data={organizerState.data} /> 
+                <OrganizerDataGrid data={organizerState.data} fetch={() => {FetchData()}}/> 
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>

@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddOrganizerRequest, OrganizerAction, ORGANIZER_ADD, ORGANIZER_ADD_FAIL, ORGANIZER_ADD_SUCCESS, ORGANIZER_DELETE, ORGANIZER_DELETE_FAIL, ORGANIZER_DELETE_SUCCESS, ORGANIZER_LIST_FAIL, ORGANIZER_LIST_LOADING, ORGANIZER_LIST_SUCCESS } from '../Types/OrganizerTypes';
+import { AddOrganizerRequest, Organizer, OrganizerAction, ORGANIZER_ADD, ORGANIZER_ADD_FAIL, ORGANIZER_ADD_SUCCESS, ORGANIZER_DELETE, ORGANIZER_DELETE_FAIL, ORGANIZER_DELETE_SUCCESS, ORGANIZER_EDIT, ORGANIZER_EDIT_FAIL, ORGANIZER_EDIT_SUCCESS, ORGANIZER_LIST_FAIL, ORGANIZER_LIST_LOADING, ORGANIZER_LIST_SUCCESS } from '../Types/OrganizerTypes';
 import { apiClient } from './ApiClient';
 
 
@@ -88,5 +88,28 @@ export const DeleteOrganizer = (key:number): ThunkAction<void, RootState, null, 
                 payload: e.message
             })
         }
+    }
+}
+
+export const EditOrganizer = (values:Organizer): ThunkAction<void, RootState, null, OrganizerAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: ORGANIZER_EDIT
+        });
+        const response = await apiClient.post(`/api/Organizer/edit`, {
+            ...values
+            })
+        
+        dispatch({
+            type: ORGANIZER_EDIT_SUCCESS,
+            payload: response.statusText
+        })
+    } catch (e){
+        dispatch({
+            type: ORGANIZER_EDIT_FAIL,
+            payload: e.message
+        })
+    }
     }
 }

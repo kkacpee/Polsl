@@ -57,7 +57,7 @@ const AddConferenceOrganizerDialog = (props:DialogProps) => {
         if (!_.isEmpty(Organizer.data)){
             return (
                 <>
-                    <OrganizerDataGrid data={Organizer.data} setSelection={setRows}/>
+                    <OrganizerDataGrid data={Organizer.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

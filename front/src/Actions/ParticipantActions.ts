@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddParticipantRequest, ParticipantAction, PARTICIPANT_ADD, PARTICIPANT_ADD_FAIL, PARTICIPANT_ADD_SUCCESS, PARTICIPANT_DELETE, PARTICIPANT_DELETE_FAIL, PARTICIPANT_DELETE_SUCCESS, PARTICIPANT_LIST_FAIL, PARTICIPANT_LIST_LOADING, PARTICIPANT_LIST_SUCCESS } from '../Types/ParticipantTypes';
+import { AddParticipantRequest, Participant, ParticipantAction, PARTICIPANT_ADD, PARTICIPANT_ADD_FAIL, PARTICIPANT_ADD_SUCCESS, PARTICIPANT_DELETE, PARTICIPANT_DELETE_FAIL, PARTICIPANT_DELETE_SUCCESS, PARTICIPANT_EDIT, PARTICIPANT_EDIT_FAIL, PARTICIPANT_EDIT_SUCCESS, PARTICIPANT_LIST_FAIL, PARTICIPANT_LIST_LOADING, PARTICIPANT_LIST_SUCCESS } from '../Types/ParticipantTypes';
 import { apiClient } from './ApiClient';
 
 
@@ -88,5 +88,28 @@ export const DeleteParticipant = (key:number): ThunkAction<void, RootState, null
                 payload: e.message
             })
         }
+    }
+}
+
+export const EditParticipant = (values:Participant): ThunkAction<void, RootState, null, ParticipantAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: PARTICIPANT_EDIT
+        });
+        const response = await apiClient.post(`/api/Participant/edit`, {
+            ...values
+            })
+        
+        dispatch({
+            type: PARTICIPANT_EDIT_SUCCESS,
+            payload: response.statusText
+        })
+    } catch (e){
+        dispatch({
+            type: PARTICIPANT_EDIT_FAIL,
+            payload: e.message
+        })
+    }
     }
 }

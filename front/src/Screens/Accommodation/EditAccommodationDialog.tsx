@@ -5,38 +5,32 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
-import { AddSponsor } from '../../Actions/SponsorActions';
-import { AddSponsorRequest } from '../../Types/SponsorTypes';
-import { Add } from '@material-ui/icons';
+import { EditAccommodation } from '../../Actions/AccommodationActions';
+import { Accommodation} from '../../Types/AccommodationTypes';
 
 interface DialogProps {
   dialogTitle: string,
+  data: Accommodation,
   fetch: () => void
 }
 
-const initial:AddSponsorRequest = {
-    name: '',
-    country: '',
-    description: '',
-    logoPath: '',
-    website: ''
-}
-
-const FormDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const EditAccommodationDialog = (props:DialogProps) => {
+    const {dialogTitle, data, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState(initial.name);
-  const [country, setCountry] = React.useState(initial.country);
-  const [description, setDescription] = React.useState(initial.description);
-  const [logoPath, setLogoPath] = React.useState(initial.logoPath);
-  const [website, setWebsite] = React.useState(initial.website);
+  const [name, setName] = React.useState("");
+  const [number, setNumber] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [website, setWebsite] = React.useState("");
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+      setName(data.name);
+      setNumber(data.number);
+      setAddress(data.address);
+      setWebsite(data.website);
     setOpen(true);
   };
 
@@ -45,24 +39,24 @@ const FormDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddSponsorRequest = {
+    const request:Accommodation = {
+        id: data.id,
         name: name,
-        country: country,
-        description: description,
-        logoPath: logoPath,
+        number: number,
+        address: address,
         website: website
     }
-    await dispatch(AddSponsor(request));  
-    dispatch(setAlert(true, "success", "Added sponsor successfully"));
+    await dispatch(EditAccommodation(request));  
+    dispatch(setAlert(true, "success", "Edited accommodation successfully"));
+    fetch();
     setOpen(false);
   }
   return (
     <div>
-        <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new sponsor"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
+        <Button
+        onClick={handleClickOpen}> 
+            Edit 
+        </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
@@ -81,21 +75,21 @@ const FormDialog = (props:DialogProps) => {
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="country"
-            label="Country"
+            id="number"
+            label="Number"
             variant="outlined"
-            value={country} 
-            onChange={(e) => setCountry(e.target.value)}
+            value={number} 
+            onChange={(e) => setNumber(e.target.value)}
             />
             <TextField
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="logoPath"
-            label="LogoPath"
+            id="address"
+            label="Address"
             variant="outlined"
-            value={logoPath} 
-            onChange={(e) => setLogoPath(e.target.value)}
+            value={address} 
+            onChange={(e) => setAddress(e.target.value)}
             />
             <TextField
             required
@@ -106,17 +100,6 @@ const FormDialog = (props:DialogProps) => {
             variant="outlined"
             value={website} 
             onChange={(e) => setWebsite(e.target.value)}
-            />
-            <TextField
-            required
-            fullWidth
-            style={{ marginBottom: 8 }}
-            multiline
-            id="description"
-            label="Description"
-            variant="outlined"
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)}
             />
         </DialogContent>
         <DialogActions>
@@ -133,4 +116,4 @@ const FormDialog = (props:DialogProps) => {
     );
 }
 
-export default FormDialog;
+export default EditAccommodationDialog;

@@ -32,7 +32,7 @@ const ParticipantList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <ParticipantDataGrid data={participantState.data} />
+                <ParticipantDataGrid data={participantState.data} fetch={() => {FetchData()}}/>
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>

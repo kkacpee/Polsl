@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../Reducers/rootReducer';
-import { AddBuildingPlanRequest, BuildingPlanAction, BUILDINGPLAN_ADD, BUILDINGPLAN_ADD_FAIL, BUILDINGPLAN_ADD_SUCCESS, BUILDINGPLAN_DELETE, BUILDINGPLAN_DELETE_FAIL, BUILDINGPLAN_DELETE_SUCCESS, BUILDINGPLAN_LIST_FAIL, BUILDINGPLAN_LIST_LOADING, BUILDINGPLAN_LIST_SUCCESS } from '../Types/BuildingPlanTypes';
+import { AddBuildingPlanRequest, BuildingPlan, BuildingPlanAction, BUILDINGPLAN_ADD, BUILDINGPLAN_ADD_FAIL, BUILDINGPLAN_ADD_SUCCESS, BUILDINGPLAN_DELETE, BUILDINGPLAN_DELETE_FAIL, BUILDINGPLAN_DELETE_SUCCESS, BUILDINGPLAN_EDIT, BUILDINGPLAN_EDIT_FAIL, BUILDINGPLAN_EDIT_SUCCESS, BUILDINGPLAN_LIST_FAIL, BUILDINGPLAN_LIST_LOADING, BUILDINGPLAN_LIST_SUCCESS } from '../Types/BuildingPlanTypes';
 import { apiClient } from './ApiClient';
 
 
@@ -67,5 +67,28 @@ export const DeleteBuildingPlan = (key:number): ThunkAction<void, RootState, nul
                 payload: e.message
             })
         }
+    }
+}
+
+export const EditBuildingPlan = (values:BuildingPlan): ThunkAction<void, RootState, null, BuildingPlanAction> => 
+{ return async dispatch => {
+    try{
+        dispatch({
+            type: BUILDINGPLAN_EDIT
+        });
+        const response = await apiClient.post(`/api/BuildingPlan/edit`, {
+            ...values
+            })
+        
+        dispatch({
+            type: BUILDINGPLAN_EDIT_SUCCESS,
+            payload: response.statusText
+        })
+    } catch (e){
+        dispatch({
+            type: BUILDINGPLAN_EDIT_FAIL,
+            payload: e.message
+        })
+    }
     }
 }

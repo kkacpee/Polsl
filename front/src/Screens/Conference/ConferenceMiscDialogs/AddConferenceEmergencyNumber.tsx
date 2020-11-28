@@ -57,7 +57,7 @@ const AddConferenceEmergencyNumberDialog = (props:DialogProps) => {
         if (!_.isEmpty(EmergencyNumber.data)){
             return (
                 <>
-                    <EmergencyNumberDataGrid data={EmergencyNumber.data} setSelection={setRows}/>
+                    <EmergencyNumberDataGrid data={EmergencyNumber.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

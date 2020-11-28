@@ -57,7 +57,7 @@ const AddConferenceSponsorDialog = (props:DialogProps) => {
         if (!_.isEmpty(Sponsor.data)){
             return (
                 <>
-                    <SponsorDataGrid data={Sponsor.data} setSelection={setRows}/>
+                    <SponsorDataGrid data={Sponsor.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

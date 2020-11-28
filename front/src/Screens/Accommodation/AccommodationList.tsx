@@ -33,7 +33,7 @@ const AccommodationList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <AccommodationDataGrid data={accommodationList.data} />
+                <AccommodationDataGrid data={accommodationList.data} fetch={() => {FetchData()}} />
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>

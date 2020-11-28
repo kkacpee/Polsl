@@ -57,7 +57,7 @@ const AddPresentationParticipantDialog = (props:DialogProps) => {
         if (!_.isEmpty(Participant.data)){
             return (
                 <>
-                    <ParticipantDataGrid data={Participant.data} setSelection={setRows}/>
+                    <ParticipantDataGrid data={Participant.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

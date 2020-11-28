@@ -6,7 +6,10 @@ export const ACCOMMODATION_ADD_SUCCESS= "ACCOMMODATION_ADD_SUCCESS";
 export const ACCOMMODATION_ADD_FAIL= "ACCOMMODATION_ADD_FAIL";
 export const ACCOMMODATION_DELETE="ACCOMMODATION_DELETE";
 export const ACCOMMODATION_DELETE_SUCCESS= "ACCOMMODATION_DELETE_SUCCESS";
-export const ACCOMMODATION_DELETE_FAIL= "ACCOMMODATION_DELETE_FAIL"
+export const ACCOMMODATION_DELETE_FAIL= "ACCOMMODATION_DELETE_FAIL";
+export const ACCOMMODATION_EDIT="ACCOMMODATION_EDIT";
+export const ACCOMMODATION_EDIT_SUCCESS= "ACCOMMODATION_EDIT_SUCCESS";
+export const ACCOMMODATION_EDIT_FAIL= "ACCOMMODATION_EDIT_FAIL";
 
 export interface Accommodation {
     id: number,
@@ -70,7 +73,20 @@ export interface AccommodationDeleteFailAction {
     payload: string
 }
 
+export interface AccommodationEditAction {
+    type: typeof ACCOMMODATION_EDIT,
+}
+export interface AccommodationEditSuccessAction {
+    type: typeof ACCOMMODATION_EDIT_SUCCESS,
+    payload: string
+}
+export interface AccommodationEditFailAction {
+    type: typeof ACCOMMODATION_EDIT_FAIL,
+    payload: string
+}
+
 export type AccommodationAction = 
 AccommodationListLoadingAction | AccommodationListFailAction | AccommodationListSuccessAction |
 AccommodationAddAction | AccommodationAddSuccessAction | AccommodationAddFailAction |
-AccommodationDeleteAction | AccommodationDeleteSuccessAction | AccommodationDeleteFailAction;
+AccommodationDeleteAction | AccommodationDeleteSuccessAction | AccommodationDeleteFailAction |
+AccommodationEditAction | AccommodationEditSuccessAction | AccommodationEditFailAction;

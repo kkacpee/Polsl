@@ -57,7 +57,7 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
         if (!_.isEmpty(accommodation.data)){
             return (
                 <>
-                    <AccommodationDataGrid data={accommodation.data} setSelection={setRows}/>
+                    <AccommodationDataGrid data={accommodation.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

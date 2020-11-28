@@ -32,7 +32,7 @@ const SponsorList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <SponsorDataGrid data={sponsorState.data} />
+                <SponsorDataGrid data={sponsorState.data} fetch={() => {FetchData()}} />
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>

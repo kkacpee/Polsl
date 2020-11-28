@@ -54,7 +54,7 @@ const PresentationDetails = () => {
                             <Typography className={classes.heading}>Participants</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <ParticipantDataGrid data={Presentation.details!.participants} />
+                            <ParticipantDataGrid data={Presentation.details!.participants} fetch={() => {FetchData()}}/>
                         </AccordionDetails>
                         <Divider />
                         <AccordionActions>

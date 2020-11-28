@@ -8,35 +8,35 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
-import { AddSponsor } from '../../Actions/SponsorActions';
-import { AddSponsorRequest } from '../../Types/SponsorTypes';
+import { AddParticipant, EditParticipant } from '../../Actions/ParticipantActions';
+import { AddParticipantRequest, Participant } from '../../Types/ParticipantTypes';
 import { Add } from '@material-ui/icons';
 
 interface DialogProps {
   dialogTitle: string,
+  data: Participant,
   fetch: () => void
 }
 
-const initial:AddSponsorRequest = {
-    name: '',
-    country: '',
-    description: '',
-    logoPath: '',
-    website: ''
-}
-
-const FormDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const EditParticipantDialog = (props:DialogProps) => {
+    const {dialogTitle, data, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState(initial.name);
-  const [country, setCountry] = React.useState(initial.country);
-  const [description, setDescription] = React.useState(initial.description);
-  const [logoPath, setLogoPath] = React.useState(initial.logoPath);
-  const [website, setWebsite] = React.useState(initial.website);
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [company, setCompany] = React.useState('');
+  const [affiliation, setAffiliation] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    setFirstName(data.firstName);
+    setLastName(data.lastName);
+    setCompany(data.company);
+    setAffiliation(data.affiliation);
+    setCountry(data.country);
+    setDescription(data.description);
     setOpen(true);
   };
 
@@ -45,24 +45,25 @@ const FormDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddSponsorRequest = {
-        name: name,
+    const request:Participant = {
+        id: data.id,
+        firstName: firstName,
+        lastName: lastName,
+        affiliation: affiliation,
+        company: company,
         country: country,
-        description: description,
-        logoPath: logoPath,
-        website: website
+        description: description
     }
-    await dispatch(AddSponsor(request));  
-    dispatch(setAlert(true, "success", "Added sponsor successfully"));
+    await dispatch(EditParticipant(request));  
+    dispatch(setAlert(true, "success", "Edited participant successfully"));
     setOpen(false);
   }
   return (
     <div>
-        <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new sponsor"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
+        <Button
+        onClick={handleClickOpen}> 
+            Edit 
+        </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
@@ -71,11 +72,41 @@ const FormDialog = (props:DialogProps) => {
             required
             fullWidth
             style={{ marginBottom: 8 }}
-            id="name"
-            label="Name"
+            id="firstName"
+            label="First Name"
             variant="outlined"
-            value={name} 
-            onChange={(e) => setName(e.target.value)}
+            value={firstName} 
+            onChange={(e) => setFirstName(e.target.value)}
+            />
+            <TextField
+            required
+            fullWidth
+            style={{ marginBottom: 8 }}
+            id="lastName"
+            label="Last Name"
+            variant="outlined"
+            value={lastName} 
+            onChange={(e) => setLastName(e.target.value)}
+            />
+            <TextField
+            required
+            fullWidth
+            style={{ marginBottom: 8 }}
+            id="company"
+            label="Company"
+            variant="outlined"
+            value={company} 
+            onChange={(e) => setCompany(e.target.value)}
+            />
+            <TextField
+            required
+            fullWidth
+            style={{ marginBottom: 8 }}
+            id="affiliation"
+            label="Affiliation"
+            variant="outlined"
+            value={affiliation} 
+            onChange={(e) => setAffiliation(e.target.value)}
             />
             <TextField
             required
@@ -90,28 +121,8 @@ const FormDialog = (props:DialogProps) => {
             <TextField
             required
             fullWidth
-            style={{ marginBottom: 8 }}
-            id="logoPath"
-            label="LogoPath"
-            variant="outlined"
-            value={logoPath} 
-            onChange={(e) => setLogoPath(e.target.value)}
-            />
-            <TextField
-            required
-            fullWidth
-            style={{ marginBottom: 8 }}
-            id="website"
-            label="Website"
-            variant="outlined"
-            value={website} 
-            onChange={(e) => setWebsite(e.target.value)}
-            />
-            <TextField
-            required
-            fullWidth
-            style={{ marginBottom: 8 }}
             multiline
+            style={{ marginBottom: 8 }}
             id="description"
             label="Description"
             variant="outlined"
@@ -120,7 +131,7 @@ const FormDialog = (props:DialogProps) => {
             />
         </DialogContent>
         <DialogActions>
-           <Button onClick={handleClose} >
+            <Button onClick={handleClose} >
             Cancel
             </Button>
             <Button onClick={handleSubmit} color="secondary">
@@ -133,4 +144,4 @@ const FormDialog = (props:DialogProps) => {
     );
 }
 
-export default FormDialog;
+export default EditParticipantDialog;

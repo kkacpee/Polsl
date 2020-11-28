@@ -91,6 +91,14 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
+        [HttpGet("PointOfInterestType/edit")]
+        public async Task<IActionResult> EditPointOfInterestType([FromBody] PointOfInterestTypeModel model, CancellationToken cancellationToken)
+        {
+            await _pointOfInterestTypeService.EditPointOfInterestTypeAsync(model, cancellationToken);
+
+            return Ok();
+        }
+
         [HttpDelete("PointOfInterestType/delete/{id}")]
         public async Task<IActionResult> DeletePointOfInterestType(int id, CancellationToken cancellationToken)
         {

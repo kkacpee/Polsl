@@ -6,7 +6,10 @@ export const EMERGENCYNUMBER_ADD_SUCCESS= "EMERGENCYNUMBER_ADD_SUCCESS";
 export const EMERGENCYNUMBER_ADD_FAIL= "EMERGENCYNUMBER_ADD_FAIL";
 export const EMERGENCYNUMBER_DELETE="EMERGENCYNUMBER_DELETE";
 export const EMERGENCYNUMBER_DELETE_SUCCESS= "EMERGENCYNUMBER_DELETE_SUCCESS";
-export const EMERGENCYNUMBER_DELETE_FAIL= "EMERGENCYNUMBER_DELETE_FAIL"
+export const EMERGENCYNUMBER_DELETE_FAIL= "EMERGENCYNUMBER_DELETE_FAIL";
+export const EMERGENCYNUMBER_EDIT="EMERGENCYNUMBER_EDIT";
+export const EMERGENCYNUMBER_EDIT_SUCCESS= "EMERGENCYNUMBER_EDIT_SUCCESS";
+export const EMERGENCYNUMBER_EDIT_FAIL= "EMERGENCYNUMBER_EDIT_FAIL";
 
 export interface EmergencyNumber {
     id: number,
@@ -66,7 +69,20 @@ export interface EmergencyNumberDeleteFailAction {
     payload: string
 }
 
+export interface EmergencyNumberEditAction {
+    type: typeof EMERGENCYNUMBER_EDIT,
+}
+export interface EmergencyNumberEditSuccessAction {
+    type: typeof EMERGENCYNUMBER_EDIT_SUCCESS,
+    payload: string
+}
+export interface EmergencyNumberEditFailAction {
+    type: typeof EMERGENCYNUMBER_EDIT_FAIL,
+    payload: string
+}
+
 export type EmergencyNumberAction = 
 EmergencyNumberListLoadingAction | EmergencyNumberListFailAction | EmergencyNumberListSuccessAction |
 EmergencyNumberAddAction | EmergencyNumberAddSuccessAction | EmergencyNumberAddFailAction |
-EmergencyNumberDeleteAction | EmergencyNumberDeleteSuccessAction | EmergencyNumberDeleteFailAction;
+EmergencyNumberDeleteAction | EmergencyNumberDeleteSuccessAction | EmergencyNumberDeleteFailAction |
+EmergencyNumberEditAction | EmergencyNumberEditSuccessAction | EmergencyNumberEditFailAction;

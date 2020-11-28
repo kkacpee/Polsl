@@ -9,9 +9,22 @@ export const PRESENTATION_ADD_FAIL= "PRESENTATION_ADD_FAIL";
 export const PRESENTATION_DELETE="PRESENTATION_DELETE";
 export const PRESENTATION_DELETE_SUCCESS= "PRESENTATION_DELETE_SUCCESS";
 export const PRESENTATION_DELETE_FAIL= "PRESENTATION_DELETE_FAIL";
+export const PRESENTATION_EDIT="PRESENTATION_EDIT";
+export const PRESENTATION_EDIT_SUCCESS= "PRESENTATION_EDIT_SUCCESS";
+export const PRESENTATION_EDIT_FAIL= "PRESENTATION_EDIT_FAIL";
+
 export const PRESENTATION_TYPE_LIST= "PRESENTATION_TYPE_LIST";
 export const PRESENTATION_TYPE_LIST_SUCCESS= "PRESENTATION_TYPE_LIST_SUCCESS";
 export const PRESENTATION_TYPE_LIST_FAIL= "PRESENTATION_TYPE_LIST_FAIL";
+export const PRESENTATION_TYPE_ADD= "PRESENTATION_TYPE_ADD";
+export const PRESENTATION_TYPE_ADD_SUCCESS= "PRESENTATION_TYPE_ADD_SUCCESS";
+export const PRESENTATION_TYPE_ADD_FAIL= "PRESENTATION_TYPE_ADD_FAIL";
+export const PRESENTATION_TYPE_DELETE="PRESENTATION_TYPE_DELETE";
+export const PRESENTATION_TYPE_DELETE_SUCCESS= "PRESENTATION_TYPE_DELETE_SUCCESS";
+export const PRESENTATION_TYPE_DELETE_FAIL= "PRESENTATION_TYPE_DELETE_FAIL";
+export const PRESENTATION_TYPE_EDIT="PRESENTATION_TYPE_EDIT";
+export const PRESENTATION_TYPE_EDIT_SUCCESS= "PRESENTATION_TYPE_EDIT_SUCCESS";
+export const PRESENTATION_TYPE_EDIT_FAIL= "PRESENTATION_TYPE_EDIT_FAIL";
 
 export interface Presentation{
     id: number,
@@ -110,20 +123,71 @@ export interface PresentationDeleteFailAction {
     payload: string
 }
 
-export interface PresentationTypeLoadingAction {
+export interface PresentationEditAction {
+    type: typeof PRESENTATION_EDIT,
+}
+export interface PresentationEditSuccessAction {
+    type: typeof PRESENTATION_EDIT_SUCCESS,
+    payload: string
+}
+export interface PresentationEditFailAction {
+    type: typeof PRESENTATION_EDIT_FAIL,
+    payload: string
+}
+
+export interface PresentationTypeListLoadingAction {
     type: typeof PRESENTATION_TYPE_LIST,
 }
-export interface PresentationTypeSuccessAction {
+export interface PresentationTypeListSuccessAction {
     type: typeof PRESENTATION_TYPE_LIST_SUCCESS,
-    payload: PresentationType
+    payload: PresentationType[]
 }
-export interface PresentationTypeFailAction {
+export interface PresentationTypeListFailAction {
     type: typeof PRESENTATION_TYPE_LIST_FAIL,
     payload: string
 }
 
+export interface PresentationTypeAddAction {
+    type: typeof PRESENTATION_TYPE_ADD,
+}
+export interface PresentationTypeAddSuccessAction {
+    type: typeof PRESENTATION_TYPE_ADD_SUCCESS,
+    payload: string
+}
+export interface PresentationTypeAddFailAction {
+    type: typeof PRESENTATION_TYPE_ADD_FAIL,
+    payload: string
+}
+
+export interface PresentationTypeDeleteAction {
+    type: typeof PRESENTATION_TYPE_DELETE,
+}
+export interface PresentationTypeDeleteSuccessAction {
+    type: typeof PRESENTATION_TYPE_DELETE_SUCCESS,
+    payload: string
+}
+export interface PresentationTypeDeleteFailAction {
+    type: typeof PRESENTATION_TYPE_DELETE_FAIL,
+    payload: string
+}
+
+export interface PresentationTypeEditAction {
+    type: typeof PRESENTATION_TYPE_EDIT,
+}
+export interface PresentationTypeEditSuccessAction {
+    type: typeof PRESENTATION_TYPE_EDIT_SUCCESS,
+    payload: string
+}
+export interface PresentationTypeEditFailAction {
+    type: typeof PRESENTATION_TYPE_EDIT_FAIL,
+    payload: string
+}
 export type PresentationAction = 
 PresentationDetailsLoadingAction | PresentationDetailsFailAction | PresentationDetailsSuccessAction |
 PresentationAddAction | PresentationAddSuccessAction | PresentationAddFailAction |
 PresentationDeleteAction | PresentationDeleteSuccessAction | PresentationDeleteFailAction | 
-PresentationTypeLoadingAction | PresentationTypeSuccessAction | PresentationTypeFailAction;
+PresentationEditAction | PresentationEditSuccessAction | PresentationEditFailAction | 
+PresentationTypeListLoadingAction | PresentationTypeListFailAction | PresentationTypeListSuccessAction |
+PresentationTypeAddAction | PresentationTypeAddSuccessAction | PresentationTypeAddFailAction |
+PresentationTypeDeleteAction | PresentationTypeDeleteSuccessAction | PresentationTypeDeleteFailAction | 
+PresentationTypeEditAction | PresentationTypeEditSuccessAction | PresentationTypeEditFailAction;

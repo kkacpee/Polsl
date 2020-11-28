@@ -6,7 +6,10 @@ export const ORGANIZER_ADD_SUCCESS= "ORGANIZER_ADD_SUCCESS";
 export const ORGANIZER_ADD_FAIL= "ORGANIZER_ADD_FAIL";
 export const ORGANIZER_DELETE="ORGANIZER_DELETE";
 export const ORGANIZER_DELETE_SUCCESS= "ORGANIZER_DELETE_SUCCESS";
-export const ORGANIZER_DELETE_FAIL= "ORGANIZER_DELETE_FAIL"
+export const ORGANIZER_DELETE_FAIL= "ORGANIZER_DELETE_FAIL";
+export const ORGANIZER_EDIT="ORGANIZER_EDIT";
+export const ORGANIZER_EDIT_SUCCESS= "ORGANIZER_EDIT_SUCCESS";
+export const ORGANIZER_EDIT_FAIL= "ORGANIZER_EDIT_FAIL";
 
 export interface Organizer {
     id: number,
@@ -72,7 +75,20 @@ export interface OrganizerDeleteFailAction {
     payload: string
 }
 
+export interface OrganizerEditAction {
+    type: typeof ORGANIZER_EDIT,
+}
+export interface OrganizerEditSuccessAction {
+    type: typeof ORGANIZER_EDIT_SUCCESS,
+    payload: string
+}
+export interface OrganizerEditFailAction {
+    type: typeof ORGANIZER_EDIT_FAIL,
+    payload: string
+}
+
 export type OrganizerAction = 
 OrganizerListLoadingAction | OrganizerListFailAction | OrganizerListSuccessAction |
 OrganizerAddAction | OrganizerAddSuccessAction | OrganizerAddFailAction |
-OrganizerDeleteAction | OrganizerDeleteSuccessAction | OrganizerDeleteFailAction;
+OrganizerDeleteAction | OrganizerDeleteSuccessAction | OrganizerDeleteFailAction | 
+OrganizerEditAction | OrganizerEditSuccessAction | OrganizerEditFailAction;

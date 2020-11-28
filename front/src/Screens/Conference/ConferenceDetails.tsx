@@ -101,7 +101,7 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Accommodations</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <AccommodationDataGrid data={Conference.details!.accommodations} setSelection={setAccommodationRows} />
+                                <AccommodationDataGrid data={Conference.details!.accommodations} fetch={() => {FetchData()}} setSelection={setAccommodationRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
@@ -137,7 +137,7 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Emergency Numbers</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <EmergencyNumberDataGrid data={Conference.details!.emergencyNumbers} setSelection={setEmergencyNumberRows} />
+                                <EmergencyNumberDataGrid data={Conference.details!.emergencyNumbers} fetch={() => {FetchData()}} setSelection={setEmergencyNumberRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
@@ -154,7 +154,7 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Organizer</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <OrganizerDataGrid data={Conference.details!.organizers} setSelection={setOrganizerRows} />
+                                <OrganizerDataGrid data={Conference.details!.organizers} fetch={() => {FetchData()}} setSelection={setOrganizerRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
@@ -188,7 +188,7 @@ const ConferenceDetails = () => {
                             <Typography className={classes.heading}>Sponsor</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <SponsorDataGrid data={Conference.details!.sponsors} setSelection={setSponsorRows} />
+                            <SponsorDataGrid data={Conference.details!.sponsors} fetch={() => {FetchData()}} setSelection={setSponsorRows} />
                         </AccordionDetails>
                         <Divider />
                             <AccordionActions>
