@@ -10,6 +10,8 @@ import PointOfInterestReducer from './PointOfInterestReducer';
 import SponsorReducer from './SponsorReducer';
 import AuthReducer from './AuthReducer';
 import PresentationReducer from './PresentationReducer';
+import MessageReducer from './MessageReducer';
+import RateReducer from './RateReducer';
 
 const RootReducer = combineReducers({
     Accommodation: AccommodationReducer,
@@ -22,6 +24,8 @@ const RootReducer = combineReducers({
     PointOfInterest: PointOfInterestReducer,
     Sponsor: SponsorReducer,
     Presentation: PresentationReducer,
+    Rate: RateReducer,
+    Message: MessageReducer,
     Auth: AuthReducer
 });
 

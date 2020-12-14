@@ -14,7 +14,7 @@ const DefaultState: PresentationState  = {
     loading: false,
     errorMsg: "",
     details: undefined,
-    types: undefined
+    types: []
 };
 
 const PresentationReducer = (state = DefaultState, action: PresentationAction) => {

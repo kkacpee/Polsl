@@ -22,5 +22,6 @@ namespace Core.DTO.Response
         public virtual ICollection<RateResponse> Rates { get; set; }
         public virtual ICollection<PresentationResponse> Presentations { get; set; }
         public virtual ICollection<OrganizerResponse> Organizers { get; set; }
+        public virtual ICollection<ConferencePhotoResponse> Photos { get; set; }
     }
 }

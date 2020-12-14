@@ -12,7 +12,6 @@ import { RootState } from '../../../Reducers/rootReducer';
 import { GetPointsOfInterestForConferenceList } from '../../../Actions/PointOfInterestActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
-import { RowData } from '@material-ui/data-grid';
 import { AddToConference } from '../../../Actions/ConferenceActions';
 import { setAlert } from '../../../Actions/AlertActions';
 
@@ -57,7 +56,7 @@ const AddConferencePointOfInterestDialog = (props:DialogProps) => {
         if (!_.isEmpty(PointOfInterest.data)){
             return (
                 <>
-                    <PointOfInterestDataGrid data={PointOfInterest.data} setSelection={setRows}/>
+                    <PointOfInterestDataGrid data={PointOfInterest.data} fetch={fetch} setSelection={setRows}/>
                 </>
             )
         }

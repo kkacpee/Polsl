@@ -28,7 +28,7 @@ export interface ConferenceBuildngPlan {
 
 export interface AddBuildingPlanRequest {
     name: string,
-    path: string,
+    file: File,
     description: string,
     conferenceId: number
 }

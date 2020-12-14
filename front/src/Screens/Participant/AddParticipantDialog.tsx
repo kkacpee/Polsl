@@ -17,34 +17,37 @@ interface DialogProps {
   fetch: () => void
 }
 
-const initial:AddParticipantRequest = {
-    firstName: '',
-    lastName: '',
-    affiliation: '',
-    company: '',
-    country: '',
-    description: ''
-}
-
 const FormDialog = (props:DialogProps) => {
     const {dialogTitle, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [firstName, setFirstName] = React.useState(initial.firstName);
-  const [lastName, setLastName] = React.useState(initial.lastName);
-  const [company, setCompany] = React.useState(initial.company);
-  const [affiliation, setAffiliation] = React.useState(initial.affiliation);
-  const [country, setCountry] = React.useState(initial.country);
-  const [description, setDescription] = React.useState(initial.description);
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [company, setCompany] = React.useState('');
+  const [affiliation, setAffiliation] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [file, setFile] = React.useState<File | undefined>(undefined);
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    setFirstName('');
+    setLastName('');
+    setCompany('');
+    setAffiliation('');
+    setCountry('');
+    setDescription('');
+    setFile(undefined);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleCapture = ({ target }: any) => {
+    setFile(target.files[0]);
+  }
 
   async function handleSubmit(){
     const request:AddParticipantRequest = {
@@ -53,7 +56,8 @@ const FormDialog = (props:DialogProps) => {
         affiliation: affiliation,
         company: company,
         country: country,
-        description: description
+        description: description,
+        file: file
     }
     await dispatch(AddParticipant(request));  
     dispatch(setAlert(true, "success", "Added conference successfully"));
@@ -131,6 +135,20 @@ const FormDialog = (props:DialogProps) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)}
             />
+            <Button
+            variant="contained"
+            component="label"
+            >
+            Upload File
+            <input
+                type="file"
+                hidden
+                required
+                onChange={handleCapture}
+                accept=".jpg, .png"
+            />
+            </Button>
+            <span style={{marginLeft: 10}}>{file?.name}</span>
         </DialogContent>
         <DialogActions>
             <Button onClick={handleClose} >

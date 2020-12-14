@@ -31,12 +31,7 @@ const BuildingPlanList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <BuildingPlanDataGrid type='id' data={buildingPlanState.data} />
-                </Grid>
-                <Grid container direction="row" justify='center' alignItems='flex-end' >
-                    <div>
-                    {/* <Dialog dialogTitle="Add new Accommodation" fetch={() => {FetchData()}}></Dialog> */}
-                    </div>
+                <BuildingPlanDataGrid type='id' data={buildingPlanState.data} fetch={() => {FetchData()}}/>
                 </Grid>
             </Container>
         )

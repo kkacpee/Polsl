@@ -4,6 +4,8 @@ using Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddBuildingPlan([FromBody] AddBuildingPlanRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddBuildingPlan([FromForm] AddBuildingPlanRequest request, CancellationToken cancellationToken)
         {
             var result = await _buildingPlanService.AddBuildingPlanAsync(request, cancellationToken);
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { DataGrid, RowData, ValueFormatterParams } from '@material-ui/data-grid';
+import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { Organizer } from '../../Types/OrganizerTypes';
 import { useStyles, CustomPagination } from './GridStyles';
 import _ from 'lodash';
@@ -25,19 +25,19 @@ const OrganizerDataGrid = ({data, fetch, setSelection}:GridProps) => {
             { field: 'id', headerName: 'Edit', width: 100,
             renderCell: (params: ValueFormatterParams) => {
                 const data:Organizer = {
-                    id:Number(params.data.id),
-                    firstName: params.data.firstName,
-                    lastName: params.data.lastName,
-                    affiliation: params.data.affiliation,
-                    company: params.data.company,
-                    contact: params.data.contact
+                    id:Number(params.row.id),
+                    firstName: params.row.firstName,
+                    lastName: params.row.lastName,
+                    affiliation: params.row.affiliation,
+                    company: params.row.company,
+                    contact: params.row.contact
                 }
                 return(
                     <EditOrganizerDialog dialogTitle="Edit accommodation" fetch={fetch} data={data}/>
                 )}},
             { field: 'id', headerName: 'Delete', width: 80,
             renderCell: (params:ValueFormatterParams) => (
-                <DeleteOrganizerDialog fetch={fetch} id={Number(params.data.id)} />
+                <DeleteOrganizerDialog fetch={fetch} id={Number(params.row.id)} />
             )}
           ];
 

@@ -27,13 +27,22 @@ namespace Persistence
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public ApiDbContext()
+        {
+        }
+
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"host=localhost;database=apidb;user id=postgres;password=admin");
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

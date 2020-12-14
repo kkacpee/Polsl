@@ -269,6 +269,28 @@ namespace Persistence.Migrations
                     b.ToTable("EmergencyNumbers");
                 });
 
+            modelBuilder.Entity("Persistence.Models.Message", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("character varying(512)")
+                        .HasMaxLength(512);
+
+                    b.Property<int>("MobileUserID")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("Persistence.Models.Organizer", b =>
                 {
                     b.Property<int>("ID")
@@ -353,7 +375,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ParticipantID");
+                    b.HasIndex("ParticipantID")
+                        .IsUnique();
 
                     b.ToTable("ParticipantPhotos");
                 });
@@ -783,8 +806,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Persistence.Models.ParticipantPhoto", b =>
                 {
                     b.HasOne("Persistence.Models.Participant", "Participant")
-                        .WithMany("ParticipantPhotos")
-                        .HasForeignKey("ParticipantID")
+                        .WithOne("ParticipantPhoto")
+                        .HasForeignKey("Persistence.Models.ParticipantPhoto", "ParticipantID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

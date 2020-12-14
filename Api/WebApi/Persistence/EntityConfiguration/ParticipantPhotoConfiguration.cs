@@ -12,8 +12,8 @@ namespace Persistence.Persistence.EntityConfiguration
             builder.Property(x => x.Path)
                 .HasMaxLength(128);
             builder.HasOne(x => x.Participant)
-                .WithMany(x => x.ParticipantPhotos)
-                .HasForeignKey(x => x.ParticipantID)
+                .WithOne(x => x.ParticipantPhoto)
+                .HasForeignKey<ParticipantPhoto>(x => x.ParticipantID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

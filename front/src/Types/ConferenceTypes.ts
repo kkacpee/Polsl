@@ -32,7 +32,8 @@ export interface Conference {
     startDate:Date,
     endDate:Date,
     title: string,
-    socialMedia: string
+    socialMedia: string,
+    photo?: string
 }
 
 export interface AddConferenceRequest {
@@ -79,8 +80,25 @@ export interface ConferenceDetails {
       }
     ],
     presentations: Presentation[],
-    organizers: Organizer[]
+    organizers: Organizer[],
+    photos: ConferencePhoto[]
 } 
+
+export interface ConferencePhoto {
+    id: number,
+    path: string,
+    isMain: boolean
+}
+
+export interface AddConferencePhotoRequest {
+    file: File,
+    conferenceId: number
+}
+
+export interface ChangeConferenceMainPhotoRequest {
+    photoId: number,
+    conferenceId: number
+}
 
 export interface ConferenceState {
     data: Conference[],

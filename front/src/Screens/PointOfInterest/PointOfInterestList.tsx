@@ -5,7 +5,7 @@ import { RootState } from '../../Reducers/rootReducer'
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
 import { GetPointOfInterestList } from '../../Actions/PointOfInterestActions';
 import { Container, Grid } from '@material-ui/core';
-import Dialog from './AddPointOfInterestDialog';
+import Dialog from './PointOfInterestDialogs/AddPointOfInterestDialog';
 import PointOfInterestDataGrid from '../../Components/DataGrids/PointOfInterestDataGrid';
 
 const PointOfInterestList = () => {
@@ -33,7 +33,7 @@ const PointOfInterestList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <PointOfInterestDataGrid data={pointOfInterestState.data} />
+                <PointOfInterestDataGrid data={pointOfInterestState.data} fetch={() => {FetchData()}} />
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>

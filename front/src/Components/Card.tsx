@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { DeleteConference } from '../Actions/ConferenceActions';
 import { Link } from 'react-router-dom';
 import {default as MyTheme} from '../Styles/ThemeProvider'
+import Image from 'material-ui-image';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({ 
@@ -78,10 +79,15 @@ const CustomCard = ({data, onRowClick}: Props) => {
         title={data.title}
         subheader={SubHeader()}
       />
-      <CardMedia
-        image="https://images.unsplash.com/photo-1580953870233-4c7f485628d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+      {/* <CardMedia
+        image={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${data.photo as string}`}
         title="Paella dish"
+      /> */}
+      <CardContent style={{padding: 0}}>
+      <Image
+      src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${data.photo as string}`}
       />
+      </CardContent>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {data.description}
@@ -106,7 +112,6 @@ const CustomCard = ({data, onRowClick}: Props) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>More Info:</Typography>
           <Typography paragraph>
             Address: {data.address}
           </Typography>

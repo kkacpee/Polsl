@@ -42,9 +42,28 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddParticipants([FromBody] AddParticipantRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddParticipant([FromForm] AddParticipantWithPhotoRequest request, CancellationToken cancellationToken)
         {
-            var result = await _participantService.AddParticipantAsync(request, cancellationToken);
+            var participant = new AddParticipantRequest
+            {
+                Affiliation = request.Affiliation,
+                Company = request.Company,
+                Country = request.Country,
+                Description = request.Description,
+                FirstName = request.FirstName,
+                LastName = request.LastName
+            };
+
+            var result = await _participantService.AddParticipantAsync(participant, cancellationToken);
+
+            var participantPhoto = new AddParticipantPhotoRequest
+            {
+                ParticipantID = result,
+                File = request.File
+            };
+           
+
+            await _participantPhotoService.AddParticipantPhotoAsync(participantPhoto, cancellationToken);
 
             return Created($"details/{result}", result);
         }
@@ -60,14 +79,15 @@ namespace WebApi.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteParticipants(int id, CancellationToken cancellationToken)
         {
+            await _participantPhotoService.DeleteParticipantPhotoPermanentlyAsync(id, cancellationToken);
             await _participantService.DeleteParticipantPermanentlyAsync(id, cancellationToken);
 
             return NoContent();
         }
         #endregion
 
-        #region PresentationPhoto
-        [HttpGet("PresentationPhoto/get")]
+        #region ParticipantPhoto
+        [HttpGet("ParticipantPhoto/get")]
         public async Task<IActionResult> GetParticipantPhotos(CancellationToken cancellationToken)
         {
             var result = await _participantPhotoService.GetAllParticipantPhotosAsync(cancellationToken);
@@ -75,15 +95,15 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("PresentationPhoto/add")]
-        public async Task<IActionResult> AddParticipantPhotos([FromBody] AddParticipantPhotoRequest request, CancellationToken cancellationToken)
+        [HttpPost("ParticipantPhoto/edit")]
+        public async Task<IActionResult> EditParticipantPhotos([FromForm] AddParticipantPhotoRequest request, CancellationToken cancellationToken)
         {
-            var result = await _participantPhotoService.AddParticipantPhotoAsync(request, cancellationToken);
+            await _participantPhotoService.EditParticipantPhotoAsync(request, cancellationToken);
 
-            return Created($"details/{result}", result);
+            return Ok();
         }
 
-        [HttpDelete("PresentationPhoto/delete/{id}")]
+        [HttpDelete("ParticipantPhoto/delete/{id}")]
         public async Task<IActionResult> DeleteParticipantPhotos(int id, CancellationToken cancellationToken)
         {
             await _participantPhotoService.DeleteParticipantPhotoPermanentlyAsync(id, cancellationToken);

@@ -112,8 +112,8 @@ import { ComponentProps} from '@material-ui/data-grid';
         color='secondary'
         variant="outlined"
         shape="rounded"
-         page={pagination.page}
-         count={pagination.pageCount}
+        // page={pagination.page}
+        // count={pagination.pageCount}
         // // @ts-expect-error
         // renderItem={(props2) => <PaginationItem {...props2} disableRipple />}
         // onChange={(event, value) => {pagination.page = value}}

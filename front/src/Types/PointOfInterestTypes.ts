@@ -24,6 +24,16 @@ export const POINTOFINTEREST_TYPE_EDIT="POINTOFINTEREST_TYPE_EDIT";
 export const POINTOFINTEREST_TYPE_EDIT_SUCCESS= "POINTOFINTEREST_TYPE_EDIT_SUCCESS";
 export const POINTOFINTEREST_TYPE_EDIT_FAIL= "POINTOFINTEREST_TYPE_EDIT_FAIL";
 
+export const POINTOFINTEREST_ICON_LIST= "POINTOFINTEREST_ICON_LIST";
+export const POINTOFINTEREST_ICON_LIST_SUCCESS= "POINTOFINTEREST_ICON_LIST_SUCCESS";
+export const POINTOFINTEREST_ICON_LIST_FAIL= "POINTOFINTEREST_ICON_LIST_FAIL";
+export const POINTOFINTEREST_ICON_ADD= "POINTOFINTEREST_ICON_ADD";
+export const POINTOFINTEREST_ICON_ADD_SUCCESS= "POINTOFINTEREST_ICON_ADD_SUCCESS";
+export const POINTOFINTEREST_ICON_ADD_FAIL= "POINTOFINTEREST_ICON_ADD_FAIL";
+export const POINTOFINTEREST_ICON_DELETE="POINTOFINTEREST_ICON_DELETE";
+export const POINTOFINTEREST_ICON_DELETE_SUCCESS= "POINTOFINTEREST_ICON_DELETE_SUCCESS";
+export const POINTOFINTEREST_ICON_DELETE_FAIL= "POINTOFINTEREST_ICON_DELETE_FAIL";
+
 export interface PointOfInterest {
     id: number,
     name: string,
@@ -31,13 +41,13 @@ export interface PointOfInterest {
     description: string,
     contact: string,
     pointOfInterestTypeID: number,
-    pointOfInterestTypeName: number
+    pointOfInterestTypeName: string
 }
 
 export interface PointOfInterestType {
     id: number,
     name: string,
-    path: string
+    pointOfInterestIconID: number
 }
 
 export interface AddPointOfInterestRequest {
@@ -48,11 +58,26 @@ export interface AddPointOfInterestRequest {
     pointOfInterestTypeID: number
 }
 
+export interface AddPointOfInterestTypeRequest {
+    name: string,
+    pointOfInterestIconID: number
+}
+
+export interface AddPointOfInterestIconRequest {
+    photo: File
+}
+
 export interface PointOfInterestState {
     data: PointOfInterest[],
     loading: boolean,
     errorMsg: string,
-    types: PointOfInterestType[] | undefined
+    types: PointOfInterestType[],
+    icons: PointOfInterestIcon[]
+}
+
+export interface PointOfInterestIcon {
+    id: number,
+    path: string
 }
 
 export interface PointOfInterestError {
@@ -156,12 +181,54 @@ export interface PointOfInterestTypeEditFailAction {
     payload: string
 }
 
+
+export interface PointOfInterestIconListLoadingAction {
+    type: typeof POINTOFINTEREST_ICON_LIST,
+}
+export interface PointOfInterestIconListSuccessAction {
+    type: typeof POINTOFINTEREST_ICON_LIST_SUCCESS,
+    payload: PointOfInterestIcon[]
+}
+export interface PointOfInterestIconListFailAction {
+    type: typeof POINTOFINTEREST_ICON_LIST_FAIL,
+    payload: string
+}
+
+export interface PointOfInterestIconAddAction {
+    type: typeof POINTOFINTEREST_ICON_ADD,
+}
+export interface PointOfInterestIconAddSuccessAction {
+    type: typeof POINTOFINTEREST_ICON_ADD_SUCCESS,
+    payload: string
+}
+export interface PointOfInterestIconAddFailAction {
+    type: typeof POINTOFINTEREST_ICON_ADD_FAIL,
+    payload: string
+}
+
+export interface PointOfInterestIconDeleteAction {
+    type: typeof POINTOFINTEREST_ICON_DELETE,
+}
+export interface PointOfInterestIconDeleteSuccessAction {
+    type: typeof POINTOFINTEREST_ICON_DELETE_SUCCESS,
+    payload: string
+}
+export interface PointOfInterestIconDeleteFailAction {
+    type: typeof POINTOFINTEREST_ICON_DELETE_FAIL,
+    payload: string
+}
+
 export type PointOfInterestAction = 
 PointOfInterestListLoadingAction | PointOfInterestListFailAction | PointOfInterestListSuccessAction |
 PointOfInterestAddAction | PointOfInterestAddSuccessAction | PointOfInterestAddFailAction |
 PointOfInterestDeleteAction | PointOfInterestDeleteSuccessAction | PointOfInterestDeleteFailAction |
 PointOfInterestEditAction | PointOfInterestEditSuccessAction | PointOfInterestEditFailAction |
+
 PointOfInterestTypeListLoadingAction | PointOfInterestTypeListFailAction | PointOfInterestTypeListSuccessAction |
 PointOfInterestTypeAddAction | PointOfInterestTypeAddSuccessAction | PointOfInterestTypeAddFailAction |
 PointOfInterestTypeDeleteAction | PointOfInterestTypeDeleteSuccessAction | PointOfInterestTypeDeleteFailAction |
-PointOfInterestTypeEditAction | PointOfInterestTypeEditSuccessAction | PointOfInterestTypeEditFailAction;
+PointOfInterestTypeEditAction | PointOfInterestTypeEditSuccessAction | PointOfInterestTypeEditFailAction |
+
+PointOfInterestIconListLoadingAction | PointOfInterestIconListFailAction | PointOfInterestIconListSuccessAction |
+PointOfInterestIconAddAction | PointOfInterestIconAddSuccessAction | PointOfInterestIconAddFailAction |
+PointOfInterestIconDeleteAction | PointOfInterestIconDeleteSuccessAction | PointOfInterestIconDeleteFailAction;

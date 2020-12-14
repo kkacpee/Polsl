@@ -40,12 +40,11 @@ const PresentationDetails = () => {
     const ShowData = () => {
         if (!_.isEmpty(Presentation.details)){
                 return(
-                    <Container>
+                    <Container style={{marginTop: 10, marginBottom: 20}}>
                     <Grid container direction="column" justify='center' alignItems='stretch' >
                         
-                        <Details details={Presentation.details!}></Details>
-                        <Divider />
-                        <Accordion>
+                        <Details details={Presentation.details!} fetch={() => {FetchData()}}></Details>
+                        <Accordion style={{marginTop: 10}}>
                         <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"

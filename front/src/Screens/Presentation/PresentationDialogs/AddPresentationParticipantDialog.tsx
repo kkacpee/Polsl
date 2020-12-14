@@ -12,7 +12,6 @@ import { RootState } from '../../../Reducers/rootReducer';
 import { GetParticipantsForPresentationList } from '../../../Actions/ParticipantActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
-import { RowData } from '@material-ui/data-grid';
 import { AddToPresentation } from '../../../Actions/PresentationActions';
 import { setAlert } from '../../../Actions/AlertActions';
 

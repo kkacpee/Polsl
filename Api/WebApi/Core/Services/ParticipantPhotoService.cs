@@ -6,6 +6,7 @@ using Core.Models;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,16 +30,46 @@ namespace Core.Services
             return _mapper.Map<List<ParticipantPhotoModel>>(result);
         }
 
+        public async Task<string> GetParticipantPhotoAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _participantPhotoRepository.GetByIdAsync(id, cancellationToken);
+
+            return result.Path;
+        }
+
         public async Task<int> AddParticipantPhotoAsync(AddParticipantPhotoRequest request, CancellationToken cancellationToken)
         {
             if (await _participantPhotoRepository.AnyAsync(x =>
-                        x.Path == request.Path &&
                         x.ParticipantID == request.ParticipantID, cancellationToken))
             {
-                throw new InvalidOperationException("Participant Photo with given parameters exists");
+                throw new InvalidOperationException("Photo for this participant exists");
+            }
+            var dbPath = "";
+            if ( request.File != null)
+            {
+                var folderName = Path.Combine("Resources", "Participants");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                Directory.CreateDirectory(pathToSave);
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(request.File.FileName);
+                var filePath = Path.Combine(pathToSave, fileName);
+
+                using (var strem = new FileStream(filePath, FileMode.Create))
+                {
+                    request.File.CopyTo(strem);
+                }
+
+                dbPath = Path.Combine(folderName, fileName);
+            }
+            else
+            {
+                var folderName = Path.Combine("Resources", "Participants");
+
+                dbPath = Path.Combine(folderName, "placeholderPhoto.png");
             }
 
-            var mapped = _mapper.Map<ParticipantPhoto>(request);
+            var mapped = new ParticipantPhoto { Path = dbPath, ParticipantID = request.ParticipantID };
             await _participantPhotoRepository.AddAsync(mapped, cancellationToken);
 
             return mapped.ID;
@@ -46,12 +77,29 @@ namespace Core.Services
 
         public async Task DeleteParticipantPhotoPermanentlyAsync(int id, CancellationToken cancellationToken)
         {
-            if (!await _participantPhotoRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            var result = await _participantPhotoRepository.GetSingleOrDefaultAsync(x => x.ParticipantID == id, x =>new {x.ID, x.Path }, cancellationToken);
+
+            if (result.ID == 0)
             {
-                throw new InvalidOperationException("There is no ParticipantPhoto with given ID");
+                throw new InvalidOperationException("There is no ParticipantPhoto for participant with this ID");
+            }
+            if (!result.Path.Contains("placeholderPhoto"))
+            {
+                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), result.Path);
+                File.Delete(fullPath);
             }
 
-            await _participantPhotoRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+            await _participantPhotoRepository.DeletePermanentlyByIdAsync(result.ID, cancellationToken);
+        }
+
+        public async Task EditParticipantPhotoAsync(AddParticipantPhotoRequest request, CancellationToken cancellationToken)
+        {
+            try
+            {
+               await DeleteParticipantPhotoPermanentlyAsync(request.ParticipantID, cancellationToken);
+            }
+            catch { }
+            await AddParticipantPhotoAsync(request, cancellationToken);
         }
     }
 }

@@ -6,41 +6,43 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { AddConferenceRequest } from '../../Types/ConferenceTypes';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
-import { setAlert } from '../../Actions/AlertActions';
-import { AddPresentationRequest } from '../../Types/PresentationTypes';
-import { AddPresentation } from '../../Actions/PresentationActions';
+import { setAlert } from '../../../Actions/AlertActions';
+import { AddPresentationRequest, Presentation, PresentationDetails, PresentationState } from '../../../Types/PresentationTypes';
+import { AddPresentation, EditPresentation, GetPresentationTypes } from '../../../Actions/PresentationActions';
+import { MenuItem } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../Reducers/rootReducer';
 
 interface DialogProps {
   dialogTitle: string,
-  id: number,
+  details: PresentationDetails,
   fetch: () => void
 }
 
-const initial:AddConferenceRequest = {
-  address: "",
-  country: "",
-  description:"",
-  startDate: new Date(),
-  endDate: new Date(),
-  title: "",
-  socialMedia: ""
-}
-
-const FormDialog = (props:DialogProps) => {
-    const {dialogTitle, id, fetch} = props;
+const EditPresentationDialog = (props:DialogProps) => {
+    const {dialogTitle, details, fetch} = props;
   const [open, setOpen] = React.useState(false);
-  const [authors, setAuthors] = React.useState(initial.address);
-  const [title, setTitle] = React.useState(initial.title);
-  const [place, setPlace] = React.useState(initial.country);
-  const [description, setDescription] = React.useState(initial.description);
+  const [authors, setAuthors] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [place, setPlace] = React.useState('');
+  const [description, setDescription] = React.useState('');
   const [startDate, setStartDate] = React.useState<Date | null>(new Date());
   const [endDate, setEndDate] = React.useState<Date | null>(new Date());
+  const [presentationTypeID, setPresetnationTypeID] = React.useState(0);
+  const [presentationTypeName, setPresentationTypeName] = React.useState('');
 
   const dispatch = useDispatch();
-
+  const presentationState:PresentationState = useSelector((state: RootState ) => state.Presentation);
   const handleClickOpen = () => {
+    setAuthors(details.authors);
+    setTitle(details.title);
+    setPlace(details.place);
+    setDescription(details.description);
+    setPresentationTypeName(details.presentationTypeName);
+    setPresetnationTypeID(details.presentationTypeID);
+    setStartDate(details.startDate);
+    setEndDate(details.endDate);
     setOpen(true);
   };
 
@@ -48,25 +50,40 @@ const FormDialog = (props:DialogProps) => {
     setOpen(false);
   };
 
+  React.useEffect( () => {
+    FetchData()
+  }, []);
+
+  async function FetchData () {
+    await dispatch(GetPresentationTypes())
+  }
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    let PoIType = presentationState.types?.find(e => e.name === event.target.value);
+    setPresetnationTypeID(PoIType!.id);
+    setPresentationTypeName(PoIType!.name);
+  };
+
   async function handleSubmit(){
-    const request:AddPresentationRequest = {
+    const request:Presentation = {
+        id: details.id,
       authors: authors,
       place: place,
       description: description,
       startDate: startDate!,
       endDate: endDate!,
       title: title,
-      ConferenceID: id,
-      presentationTypeID: 0
+      conferenceID: Number(details.conferenceID),
+      presentationTypeID: presentationTypeID
     }
-    await dispatch(AddPresentation(request));  
+    await dispatch(EditPresentation(request));  
     dispatch(setAlert(true, "success", "Added presentation successfully"));
     setOpen(false);
   }
   return (
     <div>
         <Button onClick={handleClickOpen} color='secondary'>
-              Add      
+              Edit      
         </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
@@ -113,17 +130,32 @@ const FormDialog = (props:DialogProps) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)}
             />
+            <div>
             <TextField
             required
-            fullWidth
-            multiline
-            style={{ marginBottom: 8 }}
-            id="select"
-            label="TU BĘDZIE SELECT"
+            style={{ marginBottom: 8, width: '20%'}}
+            id="pointOfInterestTypeID"
+            label="TypeID"
             variant="outlined"
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)}
+            value={presentationTypeID} 
+            disabled
             />
+            <TextField
+            required
+            select
+            style={{ marginBottom: 8 , width: '80%'}}
+            id="pointOfInterestTypeName"
+            label="TypeName"
+            variant="outlined"
+            value={presentationTypeName} 
+            onChange={handleChange}
+            >
+                {presentationState.types!.map((data) => {
+                    return (
+                        <MenuItem key={data.id} value={data.name}>{data.name}</MenuItem>
+                    )})}
+            </TextField>
+            </div>
             <div>
             <KeyboardDateTimePicker
               id="startdate"
@@ -162,4 +194,4 @@ const FormDialog = (props:DialogProps) => {
     );
 }
 
-export default FormDialog;
+export default EditPresentationDialog;

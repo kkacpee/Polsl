@@ -12,6 +12,10 @@ import PointOfInterestList from './PointOfInterest/PointOfInterestList';
 import PointOfInterestTypeList from './PointOfInterest/PointOfInterestTypeList';
 import BuildingPlanList from './BuildingPlan/BuildingPlan';
 import ParticipantList from './Participant/ParticipantList';
+import PresentationTypeList from './Presentation/PresentatonTypeList';
+import RateList from './Rate/RateList';
+import RateCriterionList from './Rate/RateCriterionList';
+import RateCriterionTypeList from './Rate/RateCriterionTypeList';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,15 +68,23 @@ export default function Misc() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example" centered> 
+        <Tabs value={value} 
+        onChange={handleChange} 
+        variant="scrollable"
+        scrollButtons="auto"
+        aria-label="tables" > 
           <Tab value="one" label="Accommodations" {...a11yProps('one')} />
           <Tab value="two" label="Sponsors" {...a11yProps('two')} />
           <Tab value="three" label="Emergency Numbers" {...a11yProps('three')} />
           <Tab value="four" label="Organizers" {...a11yProps('four')} />
           <Tab value="five" label="Building Plans" {...a11yProps('five')} />
           <Tab value="six" label="Points of Interest" {...a11yProps('six')} />
-          <Tab value="seven" label="PoI Types" {...a11yProps('seven')} />
+          <Tab value="seven" label="Point of Interest Types" {...a11yProps('seven')} />
           <Tab value="eight" label="Participants" {...a11yProps('eight')} />
+          <Tab value="nine" label="Presentation Types" {...a11yProps('nine')} />
+          <Tab value="ten" label="Rates" {...a11yProps('ten')} />
+          <Tab value="eleven" label="Rate Criteria" {...a11yProps('eleven')} />
+          <Tab value="twelve" label="Rate Criterion Types" {...a11yProps('twelve')} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index="one">
@@ -98,6 +110,18 @@ export default function Misc() {
       </TabPanel>
       <TabPanel value={value} index="eight">
         {ParticipantList}
+      </TabPanel>
+      <TabPanel value={value} index="nine">
+        {PresentationTypeList}
+      </TabPanel>
+      <TabPanel value={value} index="ten">
+        {RateList}
+      </TabPanel>
+      <TabPanel value={value} index="eleven">
+        {RateCriterionList}
+      </TabPanel>
+      <TabPanel value={value} index="twelve">
+        {RateCriterionTypeList}
       </TabPanel>
     </div>
   );

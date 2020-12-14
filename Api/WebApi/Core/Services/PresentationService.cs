@@ -103,6 +103,8 @@ namespace Core.Services
 
             var mapped = new PresentationDetailsResponse
             {
+                ID = result.ID,
+                ConferenceID = result.ConferenceID,
                 Authors = result.Authors,
                 Description = result.Description,
                 EndDate = result.EndDate,
@@ -110,7 +112,8 @@ namespace Core.Services
                 Place = result.Place,
                 Title = result.Title,
                 PresentationTypeID = result.PresentationTypeID,
-                PresentationTypeName = result.PresentationType.Name
+                PresentationTypeName = result.PresentationType.Name,
+                Photos = _mapper.Map<List<PresentationPhotoResponse>>(result.PresentationPhotos)
             };
 
             if (result.PresentationParticipants != null)
@@ -130,7 +133,8 @@ namespace Core.Services
         {
             return x => x.Include(x => x.PresentationParticipants)
                             .ThenInclude(x => x.Participant)
-                          .Include(x => x.PresentationType);          
+                          .Include(x => x.PresentationType)
+                          .Include(x => x.PresentationPhotos);
         }
     }
 }

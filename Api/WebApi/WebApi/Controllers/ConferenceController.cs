@@ -23,6 +23,7 @@ namespace WebApi.Controllers
         private readonly IConferencePointOfInterestService _conferencePointOfInterestService;
         private readonly IConferenceSponsorService _conferenceSponsorService;
         private readonly IBuildingPlanService _buildingPlanService;
+        private readonly IConferencePhotoService _conferencePhotoService;
 
         public ConferenceController(IConferenceService conferenceService,
             IConferenceAccommodationService conferenceAccommodationService,
@@ -30,7 +31,8 @@ namespace WebApi.Controllers
             IConferenceOrganizerService conferenceOrganizerService,
             IConferencePointOfInterestService conferencePointOfInterestService,
             IConferenceSponsorService conferenceSponsorService,
-            IBuildingPlanService buildingPlanService)
+            IBuildingPlanService buildingPlanService,
+            IConferencePhotoService conferencePhotoService)
         {
             _conferenceService = conferenceService;
             _conferenceAccommodationService = conferenceAccommodationService;
@@ -39,6 +41,7 @@ namespace WebApi.Controllers
             _conferencePointOfInterestService = conferencePointOfInterestService;
             _conferenceSponsorService = conferenceSponsorService;
             _buildingPlanService = buildingPlanService;
+            _conferencePhotoService = conferencePhotoService;
         }
 
         #region Conference
@@ -209,6 +212,32 @@ namespace WebApi.Controllers
         public async Task<IActionResult> DeleteConferenceSponsor([FromBody] ConferenceSponsorRequest request, CancellationToken cancellationToken)
         {
             await _conferenceSponsorService.DeleteSponsorFromConferencePermanentlyAsync(request, cancellationToken);
+
+            return NoContent();
+        }
+        #endregion
+
+        #region ConferencePhoto
+        [HttpPost("ConferencePhoto/add")]
+        public async Task<IActionResult> AddConferencePhoto([FromForm] AddConferencePhotoRequest request, CancellationToken cancellationToken)
+        {
+            await _conferencePhotoService.AddConferencePhoto(request, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpPost("ConferencePhoto/change")]
+        public async Task<IActionResult> ChangeConferenceMainPhoto([FromBody] ChangeConferenceMainPhotoRequest request, CancellationToken cancellationToken)
+        {
+            await _conferencePhotoService.ChangeMainPhoto(request, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpDelete("ConferencePhoto/delete/{id}")]
+        public async Task<IActionResult> DeleteConferencePhoto(int id, CancellationToken cancellationToken)
+        {
+            await _conferencePhotoService.DeleteConferencePhotoPermanentlyAsync(id, cancellationToken);
 
             return NoContent();
         }

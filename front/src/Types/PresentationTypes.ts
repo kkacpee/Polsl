@@ -34,13 +34,29 @@ export interface Presentation{
     authors: string,
     description: string,
     title: string,
-    presentationTypeID: number,
-    presentationTypeName: string
+    conferenceID: number,
+    presentationTypeID: number
 }
 
 export interface PresentationType{
     id: number,
-    name: number
+    name: string
+}
+
+export interface PresentationPhoto {
+    id: number,
+    path: string,
+    isMain: boolean
+}
+
+export interface AddPresentationPhotoRequest {
+    file: File,
+    presentationId: number
+}
+
+export interface ChangePresentationMainPhotoRequest {
+    photoId: number,
+    presentationId: number
 }
 
 export interface AddPresentationRequest{
@@ -59,6 +75,10 @@ export interface AddToPresentationRequest {
     arrayOfIDs: number[]
 }
 
+export interface AddPresentationTypeRequest {
+    name: string
+}
+
 export interface DeleteFromPresentationRequest {
     presentationID: number,
     arrayOfIDs: number[]
@@ -74,17 +94,18 @@ export interface PresentationDetails{
     authors: string,
     description: string,
     title: string,
-    PresentationID: number,
+    conferenceID: number,
     presentationTypeID: number,
     presentationTypeName: string,
-    participants: Participant[]
+    participants: Participant[],
+    photos: PresentationPhoto[]
 }
 
 export interface PresentationState {
     loading: boolean,
     errorMsg: string,
     details: PresentationDetails | undefined,
-    types: PresentationType | undefined
+    types: PresentationType[]
 }
 
 export interface PresentationDetailsLoadingAction {

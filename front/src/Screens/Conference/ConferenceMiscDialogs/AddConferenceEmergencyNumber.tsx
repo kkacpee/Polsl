@@ -12,7 +12,6 @@ import { RootState } from '../../../Reducers/rootReducer';
 import { GetEmergencyNumbersForConfereceList } from '../../../Actions/EmergencyNumberActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
-import { RowData } from '@material-ui/data-grid';
 import { AddToConference } from '../../../Actions/ConferenceActions';
 import { setAlert } from '../../../Actions/AlertActions';
 

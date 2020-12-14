@@ -31,9 +31,19 @@ export const AddBuildingPlan = (values:AddBuildingPlanRequest): ThunkAction<void
         dispatch({
             type: BUILDINGPLAN_ADD
         });
-        const response = await apiClient.post(`/api/BuildingPlan/add`, {
-            ...values
-            })
+
+        const formData = new FormData();
+        formData.append("file", values.file);
+        formData.append("description", values.description);
+        formData.append("name", values.name);
+        formData.append("conferenceId", values.conferenceId.toString());
+        const config = {
+            headers: {
+              'content-type': 'multipart/form-data',
+            },
+          };
+
+        const response = await apiClient.post(`/api/BuildingPlan/add`, formData, config)
         
         dispatch({
             type: BUILDINGPLAN_ADD_SUCCESS,

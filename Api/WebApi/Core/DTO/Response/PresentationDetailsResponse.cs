@@ -18,5 +18,6 @@ namespace Core.DTO.Response
         public string PresentationTypeName { get; set; }
 
         public virtual ICollection<ParticipantModel> Participants { get; set; }
+        public List<PresentationPhotoResponse> Photos { get; set; }
     }
 }

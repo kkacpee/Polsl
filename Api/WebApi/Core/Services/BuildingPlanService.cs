@@ -6,6 +6,7 @@ using Core.Models;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -59,13 +60,32 @@ namespace Core.Services
             if (await _buildingPlanRepository.AnyAsync(x =>
              x.Name == request.Name &&
              x.Description == request.Description &&
-             x.Path == request.Path &&
              x.ConferenceID == request.ConferenceID, cancellationToken))
             {
                 throw new InvalidOperationException("Building plan with given parameters already exists");
             }
 
-            var mapped = _mapper.Map<BuildingPlan>(request);
+            var folderName = Path.Combine("Resources", "Plans");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            Directory.CreateDirectory(pathToSave);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(request.File.FileName);
+            var filePath = Path.Combine(pathToSave, fileName);
+
+            using (var strem = new FileStream(filePath, FileMode.Create))
+            {
+                request.File.CopyTo(strem);
+            }
+
+            var dbPath = Path.Combine(folderName, fileName);
+
+            var mapped = new BuildingPlan {
+                Name = request.Name,
+                Description = request.Description,
+                ConferenceID = request.ConferenceID,
+                Path = dbPath };
+
             await _buildingPlanRepository.AddAsync(mapped, cancellationToken);
 
             return mapped.ID;

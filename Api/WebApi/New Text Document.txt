@@ -1,0 +1,36 @@
+version: '3.4'
+
+networks:
+    webapi-prod:
+        driver: bridge
+
+services:
+    webapi:
+        image: webapiimage:latest
+        depends_on:
+            "posgres_image"
+        build:
+            context: .
+            docerfile: Dockerfile
+        ports:
+            "8000:80"
+        networks:
+            webapi-prod
+    
+    posgres_image:
+        image: postgres:latest
+        ports:
+            "5432"
+        restart: always
+        volumes:
+            db_volume:/var/lib/posgresql/data
+            ./dbscripts/seed.sql :/docker-entrypoint-initdb.d/seed.sql
+        environment:
+            POSTGRES_USER: "postgres"
+            POSTGRESS_PASSWORD: "admin"
+            POSTGRES_DB: "apidb"
+        networks:
+            webapi-prod
+volumes:
+    db_volume:
+        

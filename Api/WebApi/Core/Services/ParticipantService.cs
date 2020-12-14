@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Core.DTO.Requests;
+using Core.DTO.Response;
 using Core.Interfaces.Repositories.Presentation;
 using Core.Interfaces.Services;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Persistence.Models;
 using System;
 using System.Collections.Generic;
@@ -25,19 +28,21 @@ namespace Core.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ParticipantModel>> GetAllParticipantsAsync(CancellationToken cancellationToken)
+        public async Task<List<ParticipantResponse>> GetAllParticipantsAsync(CancellationToken cancellationToken)
         {
-            var result = await _participantRepository.GetAllAsync(cancellationToken);
+            var include = CreateInclude();
 
-            return _mapper.Map<List<ParticipantModel>>(result);
+            var result = await _participantRepository.GetAllAsync(cancellationToken, include);
+
+            return _mapper.Map<List<ParticipantResponse>>(result);
         }
 
-        public async Task<List<ParticipantModel>> GetParticipantsForPresentationAsync(int id, CancellationToken cancellationToken)
+        public async Task<List<ParticipantResponse>> GetParticipantsForPresentationAsync(int id, CancellationToken cancellationToken)
         {
             var presentationParticipantsIds = await _presentationParticipantRepository.SelectAsync(x => x.PresentationID == id, x => x.ParticipantID, cancellationToken);
             var result = await _participantRepository.GetAsync(x => !presentationParticipantsIds.ToList().Contains(x.ID), cancellationToken);
 
-            return _mapper.Map<List<ParticipantModel>>(result);
+            return _mapper.Map<List<ParticipantResponse>>(result);
         }
 
         public async Task<int> AddParticipantAsync(AddParticipantRequest request, CancellationToken cancellationToken)
@@ -92,6 +97,11 @@ namespace Core.Services
             }
 
             await _participantRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
+        }
+
+        private Func<IQueryable<Participant>, IIncludableQueryable<Participant, object>> CreateInclude()
+        {
+            return x => x.Include(x => x.ParticipantPhoto);
         }
     }
 }

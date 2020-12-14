@@ -17,12 +17,13 @@ import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
 import PresentationDataGrid from '../../Components/DataGrids/PresentationDataGrid';
 import Details from '../../Components/Details';
 import AddConferenceAccommodationDialog from './ConferenceMiscDialogs/AddConferenceAccommodationDialog';
-import { RowData } from '@material-ui/data-grid';
 import { setAlert } from '../../Actions/AlertActions';
 import AddConferenceSponsorDialog from './ConferenceMiscDialogs/AddConferenceSponsorDialog';
 import AddConferenceEmergencyNumberDialog from './ConferenceMiscDialogs/AddConferenceEmergencyNumber';
 import AddConferenceOrganizerDialog from './ConferenceMiscDialogs/AddConferenceOrganizer';
 import AddConferencePointOfInterestDialog from './ConferenceMiscDialogs/AddConferencePointOfInterest';
+import AddBuildingPlanDialog from './ConferenceMiscDialogs/AddBuildingPlanDialog';
+import AddPresentationDialog from '../Presentation/PresentationDialogs/AddPresentationDialog';
 
 //import { Details } from '@material-ui/icons';
 
@@ -70,10 +71,10 @@ const ConferenceDetails = () => {
     const ShowData = () => {
         if (!_.isEmpty(Conference.details)){
                 return(
-                    <Container>
+                    <Container style={{marginTop: 10, marginBottom: 20}}>
                     <Grid container direction="column" justify='center' alignItems='stretch' >
                         <Details details={Conference.details!} fetch={() => {FetchData()}}></Details>
-                        <Accordion>
+                        <Accordion style={{marginTop: 10}}>
                         <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
@@ -87,9 +88,7 @@ const ConferenceDetails = () => {
                         <Divider />
                         <AccordionActions>
                             <Button size="small" >Delete selected</Button>
-                            <Button size="small" color="primary">
-                                Add
-                            </Button>
+                            <AddPresentationDialog id={id} dialogTitle="Add Presentation" fetch={() => {FetchData()}} />
                         </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -118,14 +117,12 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Building Plans</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <BuildingPlanDataGrid type='noId' dataNoConferenceId={Conference.details!.buildingPlans} />
+                                <BuildingPlanDataGrid type='noId' dataNoConferenceId={Conference.details!.buildingPlans} id={id} fetch={() => {FetchData()}} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>
                                 <Button size="small">Delete selected</Button>
-                                <Button size="small" color="secondary">
-                                    Add
-                                </Button>
+                                <AddBuildingPlanDialog id={id} dialogTitle="Add Emergency Number" fetch={() => {FetchData()}} />
                             </AccordionActions>
                         </Accordion>
                         <Accordion>
@@ -171,7 +168,7 @@ const ConferenceDetails = () => {
                                 <Typography className={classes.heading}>Points Of Interest</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <PointOfInterestDataGrid data={Conference.details!.pointsOfInterest} setSelection={setPointOfInterestRows} />
+                                <PointOfInterestDataGrid data={Conference.details!.pointsOfInterest} fetch={() => {FetchData()}} setSelection={setPointOfInterestRows} />
                             </AccordionDetails>
                             <Divider />
                             <AccordionActions>

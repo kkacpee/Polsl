@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-namespace Core.Interfaces.Repositories
+﻿namespace Core.Interfaces.Repositories
 {
     using Microsoft.EntityFrameworkCore.Query;
-    using Core.Interfaces.Collections;
-    using Core.Models.Operations;
     using System;
     using System.Collections.Generic;
     using System.Linq;

@@ -7,10 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
-import { AddPointOfInterest } from '../../Actions/PointOfInterestActions';
-import { AddPointOfInterestRequest } from '../../Types/PointOfInterestTypes';
+import { setAlert } from '../../../Actions/AlertActions';
+import { AddPointOfInterest, GetPointOfInterestTypeList } from '../../../Actions/PointOfInterestActions';
+import { AddPointOfInterestRequest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
 import { Add } from '@material-ui/icons';
+import { MenuItem } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../Reducers/rootReducer';
+import _ from 'lodash';
 
 interface DialogProps {
   dialogTitle: string,
@@ -33,11 +37,16 @@ const FormDialog = (props:DialogProps) => {
   const [description, setDescription] = React.useState(initial.description);
   const [contact, setContact] = React.useState(initial.contact);
   const [pointOfInterestTypeID, setPointOfInterestTypeID] = React.useState(initial.pointOfInterestTypeID);
+  const [pointOfInterestTypeName, setPointOfInterestTypeName] = React.useState('');
 
+  const pointOfInterestState:PointOfInterestState = useSelector((state: RootState ) => state.PointOfInterest);
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    if(_.isEmpty(pointOfInterestState.types)){
+      FetchTypes();
+    }
     setOpen(true);
   };
 
@@ -45,9 +54,15 @@ const FormDialog = (props:DialogProps) => {
     setOpen(false);
   };
 
-  const handleSetType = (text:string) => {
-      setPointOfInterestTypeID(1);
+  async function FetchTypes () {
+    await dispatch(GetPointOfInterestTypeList())
   }
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    let PoIType = pointOfInterestState.types?.find(e => e.name === event.target.value);
+    setPointOfInterestTypeID(PoIType!.id);
+    setPointOfInterestTypeName(PoIType!.name);
+  };
 
   async function handleSubmit(){
     const request:AddPointOfInterestRequest = {
@@ -102,16 +117,32 @@ const FormDialog = (props:DialogProps) => {
             value={contact} 
             onChange={(e) => setContact(e.target.value)}
             />
+           <div>
             <TextField
             required
-            fullWidth
-            style={{ marginBottom: 8 }}
+            style={{ marginBottom: 8, width: '20%'}}
             id="pointOfInterestTypeID"
-            label="Type"
+            label="TypeID"
             variant="outlined"
             value={pointOfInterestTypeID} 
-            onChange={(e) => handleSetType(e.target.value)}
+            disabled
             />
+            <TextField
+            required
+            select
+            style={{ marginBottom: 8 , width: '80%'}}
+            id="pointOfInterestTypeName"
+            label="TypeName"
+            variant="outlined"
+            value={pointOfInterestTypeName} 
+            onChange={handleChange}
+            >
+                {pointOfInterestState.types!.map((data) => {
+                    return (
+                        <MenuItem key={data.id} value={data.name}>{data.name}</MenuItem>
+                    )})}
+            </TextField>
+            </div>
             <TextField
             required
             fullWidth

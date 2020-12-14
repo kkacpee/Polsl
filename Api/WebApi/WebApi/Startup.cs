@@ -19,7 +19,9 @@ namespace WebApi
 {
     using Core.Helpers;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Persistence.Models;
+    using System;
     using System.Threading.Tasks;
 
     public class Startup
@@ -37,8 +39,7 @@ namespace WebApi
             services.RegisterAssemblyPublicNonGenericClasses(typeof(PresentationService).Assembly).Where(x => x.Name.EndsWith("Service")).AsPublicImplementedInterfaces();
             services.RegisterAssemblyPublicNonGenericClasses(typeof(PresentationRepository).Assembly).Where(x => x.Name.EndsWith("Repository")).AsPublicImplementedInterfaces();
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-
-            services.AddDbContext<ApiDbContext>();
+            services.AddDbContext<ApiDbContext>(options => options.UseNpgsql(Configuration.GetSection("DatabaseConfig")["PostgresSQL"]));
             services.AddControllers().AddAndConfigureFluentValidation();
             var mappingConfiguration = new MapperConfiguration(mc =>
             {

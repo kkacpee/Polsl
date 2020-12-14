@@ -18,18 +18,26 @@ namespace Core.Services
     public class ConferenceService : IConferenceService
     {
         private readonly IConferenceRepository _conferenceRepository;
+        private readonly IConferencePhotoRepository _conferencePhotoRepository;
         private readonly IMapper _mapper;
 
-        public ConferenceService(IConferenceRepository conferenceRepository, IMapper mapper)
+        public ConferenceService(IConferenceRepository conferenceRepository, IConferencePhotoRepository conferencePhotoRepository, IMapper mapper)
         {
             _conferenceRepository = conferenceRepository;
+            _conferencePhotoRepository = conferencePhotoRepository;
             _mapper = mapper;
         }
 
-        public async Task<List<ConferenceModel>> GetConferencesAsync(CancellationToken cancellationToken)
+        public async Task<List<ConferenceResponse>> GetConferencesAsync(CancellationToken cancellationToken)
         {
             var result = await _conferenceRepository.GetAllAsync(cancellationToken);
-            return _mapper.Map<List<ConferenceModel>>(result);
+            var mapped = _mapper.Map<List<ConferenceResponse>>(result);
+            var mainPaths = await _conferencePhotoRepository.GetAsync(x => x.IsMain == true, cancellationToken);
+            foreach( var conference in mapped)
+            {
+                conference.Photo = mainPaths.FirstOrDefault(x => x.ConferenceID == conference.ID)?.Path;
+            }
+            return mapped;
         }
 
         public async Task<int> AddConferenceAsync(AddConferenceRequest request, CancellationToken cancellationToken)
@@ -63,7 +71,8 @@ namespace Core.Services
               x.Country == model.Country &&
               x.EndDate == model.EndDate &&
               x.StartDate == model.StartDate &&
-              x.Title == model.Title, cancellationToken))
+              x.Title == model.Title &&
+              x.SocialMedia == model.SocialMedia, cancellationToken))
             {
                 throw new InvalidOperationException("Conference with given parameters exists");
             }
@@ -73,6 +82,7 @@ namespace Core.Services
             conferenceToUpdate.EndDate = model.EndDate;
             conferenceToUpdate.StartDate = model.StartDate;
             conferenceToUpdate.Title = model.Title;
+            conferenceToUpdate.SocialMedia = model.SocialMedia;
 
             await _conferenceRepository.UpdateAsync(conferenceToUpdate, cancellationToken);
         }
@@ -110,7 +120,8 @@ namespace Core.Services
                 EndDate = result.EndDate,
                 BuildingPlans = _mapper.Map<ICollection<BuildingPlanResponse>>(result.BuildingPlans),
                 Presentations = _mapper.Map<ICollection<PresentationResponse>>(result.Presentations),
-                Rates = _mapper.Map<ICollection<RateResponse>>(result.Rates)
+                Rates = _mapper.Map<ICollection<RateResponse>>(result.Rates),
+                Photos = _mapper.Map<ICollection<ConferencePhotoResponse>>(result.ConferencePhotos)
             };
 
             if(result.ConferenceAccommodations != null)
@@ -181,7 +192,8 @@ namespace Core.Services
                         .Include(x => x.ConferenceSponsors)
                             .ThenInclude(x => x.Sponsor)
                         .Include(x => x.Presentations)
-                            .ThenInclude(x => x.PresentationType);
+                            .ThenInclude(x => x.PresentationType)
+                        .Include(x => x.ConferencePhotos);
         }
     }
 }

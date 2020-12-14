@@ -10,6 +10,6 @@ namespace Core.DTO.Requests
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Title { get; set; }
-        public string YouTubeLink { get; set; }
+        public string SocialMedia { get; set; }
     }
 }

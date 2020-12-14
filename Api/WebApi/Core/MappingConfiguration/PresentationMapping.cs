@@ -15,6 +15,9 @@ namespace Core.MappingConfiguration
 
             CreateMap<Participant, ParticipantModel>().ReverseMap();
             CreateMap<Participant, AddParticipantRequest>().ReverseMap();
+            CreateMap<Participant, ParticipantResponse>()
+                .ForMember(dest => dest.Photo,
+                opt => opt.MapFrom(src => src.ParticipantPhoto.Path)).ReverseMap();
 
             CreateMap<PresentationParticipant, PresentationParticipantModel>().ReverseMap();
             CreateMap<PresentationParticipant, PresentationParticipantRequest>().ReverseMap();
@@ -28,6 +31,9 @@ namespace Core.MappingConfiguration
 
             CreateMap<PresentationType, PresentationTypeModel>().ReverseMap();
             CreateMap<PresentationType, AddPresentationTypeRequest>().ReverseMap();
+
+            CreateMap<PresentationPhoto, PresentationPhotoModel>().ReverseMap();
+            CreateMap<PresentationPhoto, PresentationPhotoResponse>().ReverseMap();
         }
     }
 }

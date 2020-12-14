@@ -9,13 +9,17 @@ import {PointOfInterestState,
     POINTOFINTEREST_ADD_FAIL,
     POINTOFINTEREST_TYPE_LIST,
     POINTOFINTEREST_TYPE_LIST_FAIL,
-    POINTOFINTEREST_TYPE_LIST_SUCCESS} from '../Types/PointOfInterestTypes'
+    POINTOFINTEREST_TYPE_LIST_SUCCESS,
+    POINTOFINTEREST_ICON_LIST,
+    POINTOFINTEREST_ICON_LIST_FAIL,
+    POINTOFINTEREST_ICON_LIST_SUCCESS} from '../Types/PointOfInterestTypes'
     
 const DefaultState: PointOfInterestState  = {
     loading: false,
     data: [],
     errorMsg: "",
-    types: []
+    types: [],
+    icons: []
 };
 
 const PointOfInterestReducer = (state = DefaultState, action: PointOfInterestAction) => {
@@ -75,7 +79,26 @@ const PointOfInterestReducer = (state = DefaultState, action: PointOfInterestAct
             loading: false,
             types: action.payload,
             errorMsg: ""
-        };
+            };
+        case POINTOFINTEREST_ICON_LIST:
+        return {
+            ...state,
+            loading: true,
+            errorMsg: ""
+            };
+        case POINTOFINTEREST_ICON_LIST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                errorMsg: action.payload
+            };
+        case POINTOFINTEREST_ICON_LIST_SUCCESS:
+        return {
+            ...state,
+            loading: false,
+            icons: action.payload,
+            errorMsg: ""
+            };
         default:
             return state
     }

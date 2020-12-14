@@ -18,7 +18,8 @@ export interface Participant {
     affiliation: string,
     company: string,
     country: string,
-    description: string
+    description: string,
+    photo: string
 }
 
 export interface AddParticipantRequest {
@@ -27,7 +28,13 @@ export interface AddParticipantRequest {
     affiliation: string,
     company: string,
     country: string,
-    description: string
+    description: string,
+    file: File | undefined
+}
+
+export interface EditParticipantPhotoRequest{
+    id: number,
+    file: File
 }
 
 export interface ParticipantState {

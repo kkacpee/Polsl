@@ -25,23 +25,9 @@ namespace Core.Services
 
         public async Task<List<PointOfInterestTypeModel>> GetAllPointOfInterestTypesAsync(CancellationToken cancellationToken)
         {
-            var result = await _pointOfInterestTypeRepository.SelectAsync(x => x.ID != 0, x=> new { x.ID, x.Name, x.PointOfInterestIcon.Path}, cancellationToken);
+            var result = await _pointOfInterestTypeRepository.GetAllAsync(cancellationToken);
 
-            var folderName = Path.Combine("Resources", "Icons");
-            var path = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-            var mapped =new List<PointOfInterestTypeModel>();
-            foreach(var element in result)
-            {
-                byte[] b = System.IO.File.ReadAllBytes(Path.Combine(path,element.Path));
-                mapped.Add(new PointOfInterestTypeModel
-                {
-                    Path = "data:;base64," + Convert.ToBase64String(b),
-                    Name = element.Name,
-                    ID = element.ID
-                });
-            }
-            return mapped;
+            return _mapper.Map<List<PointOfInterestTypeModel>>(result);
         }
 
         public async Task EditPointOfInterestTypeAsync(PointOfInterestTypeModel model, CancellationToken cancellationToken)
@@ -53,12 +39,13 @@ namespace Core.Services
             }
 
             if (await _pointOfInterestTypeRepository.AnyAsync(x =>
-             x.Name == model.Name, cancellationToken))
+             x.Name == model.Name && x.ID != model.ID, cancellationToken))
             {
                 throw new InvalidOperationException("PointOfInterestType with given parameters exists");
             }
 
             pointOfInterestTypeToUpdate.Name = model.Name;
+            pointOfInterestTypeToUpdate.PointOfInterestIconID = model.PointOfInterestIconID;
 
             await _pointOfInterestTypeRepository.UpdateAsync(pointOfInterestTypeToUpdate, cancellationToken);
         }

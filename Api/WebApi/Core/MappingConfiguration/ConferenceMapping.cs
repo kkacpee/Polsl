@@ -24,12 +24,16 @@ namespace Core.MappingConfiguration
 
             CreateMap<Conference, ConferenceModel>().ReverseMap();
             CreateMap<Conference, AddConferenceRequest>().ReverseMap();
+            CreateMap<Conference, ConferenceResponse>().ReverseMap();
 
             CreateMap<ConferenceOrganizer, ConferenceOrganizerModel>().ReverseMap();
             CreateMap<ConferenceOrganizer, ConferenceOrganizerRequest>().ReverseMap();
 
             CreateMap<ConferencePointOfInterest, ConferencePointOfInterestModel>().ReverseMap();
             CreateMap<ConferencePointOfInterest, ConferencePointOfInterestRequest>().ReverseMap();
+
+            CreateMap<ConferencePhoto, ConferencePhotoModel>().ReverseMap();
+            CreateMap<ConferencePhoto, ConferencePhotoResponse>().ReverseMap();
 
             CreateMap<ConferenceSponsor, ConferenceSponsorModel>().ReverseMap();
             CreateMap<ConferenceSponsor, ConferenceSponsorRequest>().ReverseMap();

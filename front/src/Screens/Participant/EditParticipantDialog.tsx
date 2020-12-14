@@ -5,12 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
-import { AddParticipant, EditParticipant } from '../../Actions/ParticipantActions';
-import { AddParticipantRequest, Participant } from '../../Types/ParticipantTypes';
-import { Add } from '@material-ui/icons';
+import { EditParticipant } from '../../Actions/ParticipantActions';
+import { Participant } from '../../Types/ParticipantTypes';
 
 interface DialogProps {
   dialogTitle: string,
@@ -52,7 +50,8 @@ const EditParticipantDialog = (props:DialogProps) => {
         affiliation: affiliation,
         company: company,
         country: country,
-        description: description
+        description: description,
+        photo: data.photo
     }
     await dispatch(EditParticipant(request));  
     dispatch(setAlert(true, "success", "Edited participant successfully"));

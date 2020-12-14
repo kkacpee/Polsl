@@ -61,7 +61,7 @@ namespace Core.Services
                 file.CopyTo(strem);
             }
 
-            var dbPath = fileName;
+            var dbPath = Path.Combine(folderName, fileName);
 
             var mapped = new PointOfInterestIcon { Path = dbPath };
             await _pointOfInterestIconRepository.AddAsync(mapped, cancellationToken);
@@ -69,9 +69,19 @@ namespace Core.Services
             return mapped.ID;
         }
 
-        public Task DeletePointOfInterestIconPermanentlyAsync(int id, CancellationToken cancellationToken)
+        public async Task DeletePointOfInterestIconPermanentlyAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (!await _pointOfInterestIconRepository.AnyAsync(x => x.ID == id, cancellationToken))
+            {
+                throw new InvalidOperationException("There is no PointOfInterestType with given ID");
+            }
+
+            var result = await _pointOfInterestIconRepository.GetByIdAsync(id, cancellationToken);
+
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), result.Path);
+            File.Delete(fullPath);
+
+            await _pointOfInterestIconRepository.DeletePermanentlyByIdAsync(id, cancellationToken);
         }
 
         public Task EditPointOfInterestIconAsync(PointOfInterestIconModel model, CancellationToken cancellationToken)

@@ -9,7 +9,7 @@ namespace Core.Interfaces.Services
 {
     public interface IConferenceService
     {
-        Task<List<ConferenceModel>> GetConferencesAsync(CancellationToken cancellationToken);
+        Task<List<ConferenceResponse>> GetConferencesAsync(CancellationToken cancellationToken);
         Task<int> AddConferenceAsync(AddConferenceRequest request, CancellationToken cancellationToken);
         Task DeleteConferencePermanentlyAsync(int id, CancellationToken cancellationToken);
         Task<ConferenceDetailsResponse> GetConferenceDetailsAsync(int id, CancellationToken cancellationToken);

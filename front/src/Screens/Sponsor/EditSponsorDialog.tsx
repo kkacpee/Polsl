@@ -5,12 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
-import { AddSponsor, EditSponsor } from '../../Actions/SponsorActions';
-import { AddSponsorRequest, Sponsor } from '../../Types/SponsorTypes';
-import { Add } from '@material-ui/icons';
+import { EditSponsor } from '../../Actions/SponsorActions';
+import { Sponsor } from '../../Types/SponsorTypes';
 
 interface DialogProps {
   dialogTitle: string,

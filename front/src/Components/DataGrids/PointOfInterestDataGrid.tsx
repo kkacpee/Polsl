@@ -1,48 +1,48 @@
 import React from 'react'
-import { DataGrid, RowData } from '@material-ui/data-grid';
+import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { PointOfInterest } from '../../Types/PointOfInterestTypes';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import _ from 'lodash';
-import { apiClient } from '../../Actions/ApiClient';
-
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Name', width: 130 },
-    { field: 'address', headerName: 'Address', width: 130 },
-    { field: 'contact', headerName: 'Contact', width: 130 },
-    { field: 'description', headerName: 'Description', width: 130 },
-    { field: 'pointOfInterestTypeName', headerName: 'Type', width: 130 }
-  ];
+import EditPointOfInterestDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/EditPointOfInterestDialog';
+import DeletePointOfInterestDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/DeletePointOfInterestDialog';
 
   interface GridProps {
       data: PointOfInterest[],
+      fetch: () => void,
       setSelection?: React.Dispatch<React.SetStateAction<(string | number)[] | undefined>>
   }
 
-const PointOfInterestDataGrid = ({data, setSelection}:GridProps) => {
+const PointOfInterestDataGrid = ({data, fetch, setSelection}:GridProps) => {
     const classes = useStyles();
 
-    const [place, setPlace] = React.useState("");
-
-    function photo(){
-        apiClient
-            .get(
-                '/api/PointOfInterest/PointOfInterestIcon/get/2',
-                { responseType: 'arraybuffer' },
-            )
-            .then(response => {
-                const base64 = btoa(
-                  new Uint8Array(response.data).reduce(
-                    (data, byte) => data + String.fromCharCode(byte),
-                    '',
-                  ),
-                );
-                setPlace( "data:;base64," + base64 );
-              });
-    }
-
-
     if(_.isUndefined(setSelection)){
+        const columns = [
+            { field: 'id', headerName: 'ID', width: 70 },
+            { field: 'name', headerName: 'Name', flex: 1 },
+            { field: 'address', headerName: 'Address', flex: 1 },
+            { field: 'contact', headerName: 'Contact', flex: 1 },
+            { field: 'description', headerName: 'Description', flex: 1 },
+            { field: 'pointOfInterestTypeName', headerName: 'Type', flex: 1 },
+            { field: 'id', headerName: 'Edit', width: 100,
+            renderCell: (params: ValueFormatterParams) => {
+                const data:PointOfInterest = {
+                    id: Number(params.row.id),
+                    name: params.row.name,
+                    address: params.row.address,
+                    description: params.row.description,
+                    contact: params.row.contact,
+                    pointOfInterestTypeID: params.row.pointOfInterestTypeID,
+                    pointOfInterestTypeName: params.row.pointOfInterestTypeName
+                }
+                return(
+                    <EditPointOfInterestDialog dialogTitle="Edit point of interest" fetch={fetch} data={data}/>
+                )}},
+            { field: 'id', headerName: 'Delete', width: 80,
+            renderCell: (params:ValueFormatterParams) => (
+                <DeletePointOfInterestDialog fetch={fetch} id={Number(params.row.id)} />
+            )}
+          ];
+
         return (
             <div style={{ height: 400, width: '100%' }}>
             <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick
@@ -51,6 +51,15 @@ const PointOfInterestDataGrid = ({data, setSelection}:GridProps) => {
         )
     }
     else{
+        const columns = [
+            { field: 'id', headerName: 'ID', width: 70 },
+            { field: 'name', headerName: 'Name', flex: 1 },
+            { field: 'address', headerName: 'Address', flex: 1 },
+            { field: 'contact', headerName: 'Contact', flex: 1 },
+            { field: 'description', headerName: 'Description', flex: 1},
+            { field: 'pointOfInterestTypeName', headerName: 'Type', flex: 1 }
+          ];
+
         return (
             <div style={{ height: 400, width: '100%' }}>
             <DataGrid className={classes.root} rowsPerPageOptions={[5, 10, 20, 40]} disableSelectionOnClick

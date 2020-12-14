@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
-import { GetPointOfInterestList, GetPointOfInterestTypeList } from '../../Actions/PointOfInterestActions';
+import { GetPointOfInterestIconList, GetPointOfInterestTypeList } from '../../Actions/PointOfInterestActions';
 import { Container, Grid } from '@material-ui/core';
-import Dialog from './AddPointOfInterestDialog';
+import Dialog from './PointOfInterestDialogs/AddPointOfInterestIconDialog';
+import AddPointOfInterestTypeDialog from './PointOfInterestDialogs/AddPointOfInterestTypeDialog'
 import PointOfInterestTypeDataGrid from '../../Components/DataGrids/PointOfInterestTypeDataGrid';
-import { apiClient } from '../../Actions/ApiClient';
+import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
+import More from '@material-ui/icons/MoreVert'
+import PointOfInterestIconsGrid from './PointOfInterestDialogs/PointOfInterestIconsGridDialog';
 
 const PointOfInterestTypeList = () => {
     const dispatch = useDispatch();
@@ -18,7 +21,8 @@ const PointOfInterestTypeList = () => {
     }, []);
 
     async function FetchData () {
-       await dispatch(GetPointOfInterestTypeList())
+       await dispatch(GetPointOfInterestTypeList());
+       await dispatch(GetPointOfInterestIconList());
     }
 
     const ShowData = () => {
@@ -34,31 +38,32 @@ const PointOfInterestTypeList = () => {
         return (
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <PointOfInterestTypeDataGrid data={pointOfInterestState.types!} />
+                <PointOfInterestTypeDataGrid data={pointOfInterestState.types!} icons={pointOfInterestState.icons} fetch={() => {FetchData()}}/>
                 </Grid>
-                <Grid container direction="row" justify='center' alignItems='flex-end' >
-                    <div>
-                    <Dialog dialogTitle="Add new Point Of Interest" fetch={() => {FetchData()}}></Dialog>
-                    </div>
+                <Grid container direction="row" justify='space-between' alignItems='flex-end' >
+                    <FloatingContainer>
+                    <FloatingButton>
+                        <PointOfInterestIconsGrid dialogTitle="Icons" fetch={() => {FetchData()}} photos={pointOfInterestState.icons}/>
+                    </FloatingButton>
+
+                    <FloatingButton tooltip="Icon">
+                        <Dialog dialogTitle="Add new Point Of Interest icon" fetch={() => {FetchData()}} />
+                    </FloatingButton>
+                    
+                    <FloatingButton tooltip="Type">                    
+                        <AddPointOfInterestTypeDialog dialogTitle="Add new Point Of Interest type" fetch={() => {FetchData()}} />
+                    </FloatingButton>
+                    
+                    
+                    <FloatingButton> <More /></FloatingButton>
+                    </FloatingContainer>
                 </Grid>
             </Container>
         )
     }
-    
-    const ShowPhotos = () => {
-        if (pointOfInterestState.types){
-            return (
-                <>
-                {pointOfInterestState.types.map((type) => {
-                    <img src={type.path}/>
-                })}
-                </>
-            )
-        }
-    }
 
     return(
-    <div> {ShowData()} <div>{ShowPhotos()}</div></div>
+    <div> {ShowData()} </div>
     )
 };
 

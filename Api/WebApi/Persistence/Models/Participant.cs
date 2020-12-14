@@ -12,7 +12,7 @@ namespace Persistence.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public virtual ICollection<ParticipantPhoto> ParticipantPhotos { get; set; }
+        public virtual ParticipantPhoto ParticipantPhoto { get; set; }
         public virtual ICollection<PresentationParticipant> PresentationParticipants { get; set; }
     }
 }

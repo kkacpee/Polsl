@@ -1,5 +1,5 @@
 import React from 'react'
-import { DataGrid, RowData, ValueFormatterParams } from '@material-ui/data-grid';
+import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { Sponsor } from '../../Types/SponsorTypes';
 import { useStyles, CustomPagination } from './GridStyles';
 import _ from 'lodash';
@@ -25,19 +25,19 @@ const SponsorDataGrid = ({data, fetch, setSelection}:GridProps) => {
             { field: 'id', headerName: 'Edit', width: 100,
             renderCell: (params: ValueFormatterParams) => {
                 const data:Sponsor = {
-                    id:Number(params.data.id),
-                    name:params.data.name,
-                    country:params.data.country,
-                    description:params.data.description,
-                    logoPath:params.data.logoPath,
-                    website:params.data.website
+                    id:Number(params.row.id),
+                    name:params.row.name,
+                    country:params.row.country,
+                    description:params.row.description,
+                    logoPath:params.row.logoPath,
+                    website:params.row.website
                 }
                 return(
                     <EditSponsorDialog dialogTitle="Edit sponsor" fetch={fetch} data={data}/>
                 )}},
             { field: 'id', headerName: 'Delete', width: 80,
             renderCell: (params:ValueFormatterParams) => (
-                <DeleteSponsorDialog fetch={fetch} id={Number(params.data.id)} />
+                <DeleteSponsorDialog fetch={fetch} id={Number(params.row.id)} />
             )}
           ];
 

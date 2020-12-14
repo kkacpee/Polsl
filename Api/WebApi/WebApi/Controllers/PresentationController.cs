@@ -19,14 +19,17 @@ namespace WebApi.Controllers
         private readonly IPresentationService _presentationService;
         private readonly IPresentationTypeService _presentationTypeService;
         private readonly IPresentationParticipantService _presentationParticipantService;
+        private readonly IPresentationPhotoService _presentationPhotoService;
 
         public PresentationController(IPresentationService presentationService,
             IPresentationTypeService presentationTypeService,
-            IPresentationParticipantService presentationParticipantService)
+            IPresentationParticipantService presentationParticipantService,
+            IPresentationPhotoService presentationPhotoService)
         {
             _presentationService = presentationService;
             _presentationTypeService = presentationTypeService;
             _presentationParticipantService = presentationParticipantService;
+            _presentationPhotoService = presentationPhotoService;
         }
 
         #region Presentation
@@ -89,6 +92,14 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
+        [HttpPost("PresentationType/edit")]
+        public async Task<IActionResult> EditPresentationType([FromBody] PresentationTypeModel model, CancellationToken cancellationToken)
+        {
+            await _presentationTypeService.EditPresentationTypeAsync(model, cancellationToken);
+
+            return Ok();
+        }
+
         [HttpDelete("PresentationType/delete/{id}")]
         public async Task<IActionResult> DeletePresentationType(int id, CancellationToken cancellationToken)
         {
@@ -119,6 +130,32 @@ namespace WebApi.Controllers
         public async Task<IActionResult> DeletePresentationParticipant([FromBody] PresentationParticipantRequest request, CancellationToken cancellationToken)
         {
             await _presentationParticipantService.DeleteParticipantFromPresentationPermanentlyAsync(request, cancellationToken);
+
+            return NoContent();
+        }
+        #endregion
+
+        #region PresentationPhoto
+        [HttpPost("PresentationPhoto/add")]
+        public async Task<IActionResult> AddPresentationPhoto([FromForm] AddPresentationPhotoRequest request, CancellationToken cancellationToken)
+        {
+            await _presentationPhotoService.AddPresentationPhoto(request, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpPost("PresentationPhoto/change")]
+        public async Task<IActionResult> ChangePresentationMainPhoto([FromBody] ChangePresentationMainPhotoRequest request, CancellationToken cancellationToken)
+        {
+            await _presentationPhotoService.ChangeMainPhoto(request, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpDelete("PresentationPhoto/delete/{id}")]
+        public async Task<IActionResult> DeletePresentationPhoto(int id, CancellationToken cancellationToken)
+        {
+            await _presentationPhotoService.DeletePresentationPhotoPermanentlyAsync(id, cancellationToken);
 
             return NoContent();
         }

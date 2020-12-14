@@ -5,6 +5,7 @@ import { useStyles } from './GridStyles';
 import _ from 'lodash';
 import EditParticipantDialog from '../../Screens/Participant/EditParticipantDialog';
 import DeleteParticipantDialog from '../../Screens/Participant/DeleteParticipantDialog';
+import ShowParticipantPhotoDialog from '../../Screens/Participant/ShowParticipantPhotoDialog';
 
   interface GridProps {
       data: Participant[],
@@ -26,20 +27,25 @@ const ParticipantDataGrid = ({data, fetch, setSelection}:GridProps) => {
             { field: 'id', headerName: 'Edit', width: 100,
             renderCell: (params: ValueFormatterParams) => {
                 const data:Participant = {
-                    id:Number(params.data.id),
-                    firstName: params.data.firstName,
-                    lastName: params.data.lastName,
-                    affiliation: params.data.affiliation,
-                    company: params.data.company,
-                    country: params.data.country,
-                    description: params.data.description
+                    id:Number(params.row.id),
+                    firstName: params.row.firstName,
+                    lastName: params.row.lastName,
+                    affiliation: params.row.affiliation,
+                    company: params.row.company,
+                    country: params.row.country,
+                    description: params.row.description,
+                    photo: params.row.photo
                 }
                 return(
                     <EditParticipantDialog dialogTitle="Edit accommodation" fetch={fetch} data={data}/>
                 )}},
             { field: 'id', headerName: 'Delete', width: 80,
             renderCell: (params:ValueFormatterParams) => (
-                <DeleteParticipantDialog fetch={fetch} id={Number(params.data.id)} />
+                <DeleteParticipantDialog fetch={fetch} id={Number(params.row.id)} />
+            )},
+            { field: 'id', headerName: 'Photo', width: 100,
+            renderCell: (params:ValueFormatterParams) => (
+                <ShowParticipantPhotoDialog fetch={fetch} dialogTitle="" photo={String(params.row.photo)} />
             )}
           ];
 
