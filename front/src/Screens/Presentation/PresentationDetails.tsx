@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Container, createStyles, Divider, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -11,6 +11,8 @@ import _ from 'lodash';
 import Details from '../../Components/PresentationDetails';
 import ParticipantDataGrid from '../../Components/DataGrids/ParticipantDataGrid';
 import AddPresentationParticipantDialog from './PresentationDialogs/AddPresentationParticipantDialog';
+import AddRateDialog from '../Rate/RateDialogs/AddRateDialog';
+import RateDataGrid from '../../Components/DataGrids/RateDataGrid';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +31,8 @@ const PresentationDetails = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const Presentation:PresentationState = useSelector((state: RootState ) => state.Presentation);
-
+    const [rateRows, setRateRows] = useState<(string | number)[]>();
+    
     React.useEffect( () => {
         FetchData()
     },[]);
@@ -61,6 +64,22 @@ const PresentationDetails = () => {
                             <AddPresentationParticipantDialog id={id} dialogTitle="Add Participant" fetch={() => {FetchData()}} />
                         </AccordionActions>
                         </Accordion>
+                        <Accordion>
+                        <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel2a-content"
+                        id="sponsor-header"
+                        >
+                            <Typography className={classes.heading}>Rates</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <RateDataGrid data={Presentation.details!.rates} fetch={() => {FetchData()}} setSelection={setRateRows} />
+                        </AccordionDetails>
+                        <Divider />
+                            <AccordionActions>
+                                <AddRateDialog id={id} dialogTitle="Add Sponsor" fetch={() => {FetchData()}} isConferenceRate={false} />
+                            </AccordionActions>
+                    </Accordion>
                     </Grid>
                     </Container>
             )

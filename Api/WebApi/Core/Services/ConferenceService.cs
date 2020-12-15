@@ -193,7 +193,9 @@ namespace Core.Services
                             .ThenInclude(x => x.Sponsor)
                         .Include(x => x.Presentations)
                             .ThenInclude(x => x.PresentationType)
-                        .Include(x => x.ConferencePhotos);
+                        .Include(x => x.ConferencePhotos)
+                        .Include(x => x.Rates)
+                            .ThenInclude(x => x.RateCriterion);
         }
     }
 }

@@ -75,7 +75,7 @@ export interface ConferenceDetails {
         id: number,
         description: string,
         value: number,
-        userID: number,
+        mobileUserID: number,
         rateCriterionID: number
       }
     ],

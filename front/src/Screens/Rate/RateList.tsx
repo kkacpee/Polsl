@@ -35,11 +35,6 @@ const RateList = () => {
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <RateDataGrid data={rateState.data} fetch={() => {FetchData()}} />
                 </Grid>
-                <Grid container direction="row" justify='center' alignItems='flex-end' >
-                    <div>
-                    <Dialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></Dialog>
-                    </div>
-                </Grid>
             </Container>
         )
     }

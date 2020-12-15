@@ -113,7 +113,8 @@ namespace Core.Services
                 Title = result.Title,
                 PresentationTypeID = result.PresentationTypeID,
                 PresentationTypeName = result.PresentationType.Name,
-                Photos = _mapper.Map<List<PresentationPhotoResponse>>(result.PresentationPhotos)
+                Photos = _mapper.Map<List<PresentationPhotoResponse>>(result.PresentationPhotos),
+                Rates = _mapper.Map<List<RateResponse>>(result.Rates)
             };
 
             if (result.PresentationParticipants != null)
@@ -134,7 +135,9 @@ namespace Core.Services
             return x => x.Include(x => x.PresentationParticipants)
                             .ThenInclude(x => x.Participant)
                           .Include(x => x.PresentationType)
-                          .Include(x => x.PresentationPhotos);
+                          .Include(x => x.PresentationPhotos)
+                          .Include(x => x.Rates)
+                            .ThenInclude(x => x.RateCriterion);
         }
     }
 }

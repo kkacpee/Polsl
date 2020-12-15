@@ -8,38 +8,46 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { AddRate } from '../../../Actions/RateActions';
+import { AddRate, GetRateCriterionList } from '../../../Actions/RateActions';
 import { AddRateRequest, RateState } from '../../../Types/RateTypes';
 import { Add } from '@material-ui/icons';
 import Rating from '@material-ui/lab/Rating/Rating';
 import { Box, MenuItem, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
+import { ConferenceState } from '../../../Types/ConferenceTypes';
+import { PresentationState } from '../../../Types/PresentationTypes';
+import _ from 'lodash';
 
 interface DialogProps {
   dialogTitle: string,
-  fetch: () => void
+  fetch: () => void,
+  id: number,
+  isConferenceRate: boolean
 }
 
-const FormDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const AddRateDialog = (props:DialogProps) => {
+    const {dialogTitle, id, fetch, isConferenceRate} = props;
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [description, setDescription] = React.useState('');
   const [mobileUserID, setMobileUserID] = React.useState(0);
   const [rateCriterionID, setRateCriterionID] = React.useState(0);
   const [rateCriterionName, setRateCriterionName] = React.useState('');
-  const [conferenceID, setConferenceID] = React.useState(0);
-  const [conferenceName, setConferenceName] = React.useState('');
-  const [presentationID, setPresentationID] = React.useState(0);
-  const [presentationName, setPresentationName] = React.useState('');
 
   const dispatch = useDispatch();
   const rateState:RateState = useSelector((state: RootState ) => state.Rate);
 
   const handleClickOpen = () => {
+    if(_.isEmpty(rateState.criterions)){
+      FetchTypes();
+    }
     setOpen(true);
   };
+
+  async function FetchTypes () {
+    await dispatch(GetRateCriterionList())
+  }
 
   const handleChangeCriterion = (event: React.ChangeEvent<{ value: unknown }>) => {
     let RateCriterion = rateState.criterions?.find(e => e.name === event.target.value);
@@ -57,8 +65,8 @@ const FormDialog = (props:DialogProps) => {
         value: value,
         mobileUserID: mobileUserID,
         rateCriterionID: rateCriterionID,
-        conferenceID: conferenceID,
-        presentationID: presentationID
+        conferenceID: isConferenceRate ? Number(id) : null,
+        presentationID: isConferenceRate ? null : Number(id)
     }
     await dispatch(AddRate(request));  
     dispatch(setAlert(true, "success", "Added sponsor successfully"));
@@ -66,12 +74,10 @@ const FormDialog = (props:DialogProps) => {
   }
   return (
     <div>
-        <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new sponsor"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
-        <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
+        <Button onClick={handleClickOpen}>
+            Add
+        </Button>
+        <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title" fullWidth={true}>
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
         <DialogContent>
@@ -79,14 +85,14 @@ const FormDialog = (props:DialogProps) => {
             required
             fullWidth
             type="number"
-            style={{ marginBottom: 8 }}
             id="mobileUserID"
             label="Mobile User ID"
             variant="outlined"
             value={mobileUserID} 
             onChange={(e) => setMobileUserID(Number(e.target.value))}
-            />
-            <Box component="fieldset" mb={3} borderColor="#fff">
+            />    
+            <div>
+            <Box component="fieldset" mb={1} ml={0} mr={0} mt={0} borderRadius="100">
             <Typography component="legend"> Value </Typography>
             <Rating
             name="simple-controlled"
@@ -95,6 +101,7 @@ const FormDialog = (props:DialogProps) => {
                 setValue(Number(newValue));
             }} />
             </Box>
+            </div>
             <TextField
             required
             fullWidth
@@ -121,7 +128,7 @@ const FormDialog = (props:DialogProps) => {
             select
             style={{ marginBottom: 8 , width: '80%'}}
             id="rateCriterionName"
-            label="TypeName"
+            label="Criterion Name"
             variant="outlined"
             value={rateCriterionName} 
             onChange={handleChangeCriterion}
@@ -147,4 +154,4 @@ const FormDialog = (props:DialogProps) => {
     );
 }
 
-export default FormDialog;
+export default AddRateDialog;

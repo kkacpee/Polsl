@@ -8,6 +8,7 @@ import { Container, Grid } from '@material-ui/core';
 import Dialog from './RateDialogs/AddRateDialog';
 import RateDataGrid from '../../Components/DataGrids/RateDataGrid';
 import RateCriterionTypeDataGrid from '../../Components/DataGrids/RateCriterionTypeDataGrid';
+import AddRateCriterionTypeDialog from './RateDialogs/AddRateCriterionTypeDialog';
 
 const RateCriterionTypeList = () => {
     const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const RateCriterionTypeList = () => {
                 </Grid>
                 <Grid container direction="row" justify='center' alignItems='flex-end' >
                     <div>
-                    <Dialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></Dialog>
+                    <AddRateCriterionTypeDialog dialogTitle="Add new Emergency Number" fetch={() => {FetchData()}}></AddRateCriterionTypeDialog>
                     </div>
                 </Grid>
             </Container>

@@ -8,7 +8,11 @@ import DeletePointOfInterestDialog from '../../Screens/PointOfInterest/PointOfIn
 import { Rate } from '../../Types/RateTypes';
 
   interface GridProps {
-      data: Rate[],
+      data: Rate[] | {id: number,
+        description: string,
+        value: number,
+        mobileUserID: number,
+        rateCriterionID: number}[],
       fetch: () => void,
       setSelection?: React.Dispatch<React.SetStateAction<(string | number)[] | undefined>>
   }
@@ -68,14 +72,7 @@ const RateDataGrid = ({data, fetch, setSelection}:GridProps) => {
             { field: 'mobileUserID', headerName: 'Mobile User ID', flex: 1 },
             { field: 'value', headerName: 'Value', flex: 1 },
             { field: 'rateCriterionName', headerName: 'Criterion', flex: 1 },
-            { field: 'description', headerName: 'Description', flex: 1},
-            { field: 'conferenceName', headerName: 'Conference', flex: 1 },
-            { field: 'presentationName', headerName: 'Presentation', flex: 1,
-            renderCell: (params: ValueFormatterParams) => (
-                <>
-                {(params.row.presentationID !== null ? params.value : '--')}
-                </>
-            ) },
+            { field: 'description', headerName: 'Description', flex: 1}
           ];
 
         return (

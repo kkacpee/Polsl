@@ -98,7 +98,16 @@ export interface PresentationDetails{
     presentationTypeID: number,
     presentationTypeName: string,
     participants: Participant[],
-    photos: PresentationPhoto[]
+    photos: PresentationPhoto[],
+    rates: [
+        {
+          id: number,
+          description: string,
+          value: number,
+          mobileUserID: number,
+          rateCriterionID: number
+        }
+      ]
 }
 
 export interface PresentationState {
