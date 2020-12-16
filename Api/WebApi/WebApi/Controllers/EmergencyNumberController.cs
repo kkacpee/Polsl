@@ -22,6 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmergencyNumbers(CancellationToken cancellationToken)
         {
             var result = await _emergencyNumberService.GetAllEmergencyNumbers(cancellationToken);
@@ -30,6 +31,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmergencyNumbersForConference(int id, CancellationToken cancellationToken)
         {
             var result = await _emergencyNumberService.GetEmergencyNumbersForConference(id, cancellationToken);

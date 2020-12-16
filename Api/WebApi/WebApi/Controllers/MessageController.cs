@@ -24,6 +24,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetMessages(CancellationToken cancellationToken)
         {
             var result = await _messageService.GetAllMessagesAsync(cancellationToken);
@@ -32,6 +33,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
+        [AllowAnonymous]
         public async Task<IActionResult> AddMessage([FromBody] AddMessageRequest request, CancellationToken cancellationToken)
         {
             var result = await _messageService.AddMessageAsync(request, cancellationToken);
@@ -40,6 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteMessage(int id, CancellationToken cancellationToken)
         {
             await _messageService.DeleteMessagePermanentlyAsync(id, cancellationToken);

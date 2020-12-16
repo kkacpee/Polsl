@@ -12,12 +12,12 @@ services:
         env_file:
             - database.env
         ports:
-            - "8000:80"
+            - "3000:3000"
         networks:
             - webapi-prod
     
     db:
-        image: postgres:latest
+        image: postgres:9.4
         ports:
             - "5432:5432"
         restart: always
@@ -29,6 +29,17 @@ services:
             - POSTGRES_DB=apidb
         networks:
             - webapi-prod
+
+    react:
+        image: reactimage:latest
+        volumes:
+            - '.:/app'
+            - '/app/node_modules'
+        environment:
+            - REACT_APP_API_URI=http://localhost:8000
+            - REACT_APP_SERVER_RESOURCE_URI=http://localhost:8000/
+        ports:
+            - "1337:80"
 volumes:
     db_volume:
         

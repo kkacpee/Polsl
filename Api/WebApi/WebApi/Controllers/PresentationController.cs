@@ -34,6 +34,7 @@ namespace WebApi.Controllers
 
         #region Presentation
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPresentations(CancellationToken cancellationToken)
         {
             var result = await _presentationService.GetPresentationsAsync(cancellationToken);
@@ -66,6 +67,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(PresentationDetailsResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPresentationDetails(int id, CancellationToken cancellationToken)
         {
@@ -77,6 +79,7 @@ namespace WebApi.Controllers
 
         #region PresentationType
         [HttpGet("PresentationType/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPresentationTypes(CancellationToken cancellationToken)
         {
             var result = await _presentationTypeService.GetAllPresentationTypesAsync(cancellationToken);
@@ -111,6 +114,7 @@ namespace WebApi.Controllers
 
         #region PresentationParticipant
         [HttpGet("PresentationParticipant/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPresentationParticipants(CancellationToken cancellationToken)
         {
             var result = await _presentationParticipantService.GetAllPresentationParticipantsAsync(cancellationToken);

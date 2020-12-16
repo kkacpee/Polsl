@@ -22,6 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetOrganizers(CancellationToken cancellationToken)
         {
             var result = await _organizerService.GetAllOrganizersAsync(cancellationToken);
@@ -30,6 +31,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetOrganizersForConference(int id, CancellationToken cancellationToken)
         {
             var result = await _organizerService.GetOrganizersForConference(id, cancellationToken);

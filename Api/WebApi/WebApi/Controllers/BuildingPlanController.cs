@@ -24,6 +24,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBuildingPlans(CancellationToken cancellationToken)
         {
             var result = await _buildingPlanService.GetAllBuildingPlansAsync(cancellationToken);

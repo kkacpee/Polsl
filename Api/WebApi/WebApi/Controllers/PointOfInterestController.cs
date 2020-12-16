@@ -34,6 +34,7 @@ namespace WebApi.Controllers
 
         #region PointOfInterest
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPointsOfInterest(CancellationToken cancellationToken)
         {
             var result = await _pointOfInterestService.GetAllPointsOfInterestAsync(cancellationToken);
@@ -42,6 +43,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPointsOfInterestForConference(int id, CancellationToken cancellationToken)
         {
             var result = await _pointOfInterestService.GetPointsOfInterestForConference(id, cancellationToken);
@@ -76,6 +78,7 @@ namespace WebApi.Controllers
 
         #region PointOfInterestType
         [HttpGet("PointOfInterestType/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPointOfInterestTypes(CancellationToken cancellationToken)
         {
             var result = await _pointOfInterestTypeService.GetAllPointOfInterestTypesAsync(cancellationToken);
@@ -110,6 +113,7 @@ namespace WebApi.Controllers
 
         #region PointOfInterestIcon
         [HttpGet("PointOfInterestIcon/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPointOfInterestIcons(CancellationToken cancellationToken)
         {
             var result = await _pointOfInterestIconService.GetAllPointOfInterestIconsAsync(cancellationToken);
@@ -118,6 +122,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("PointOfInterestIcon/get/{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(FileResult), (int)HttpStatusCode.OK)]
         public async Task<FileResult> GetPointOfInterestIcon(int id, CancellationToken cancellationToken)
         {

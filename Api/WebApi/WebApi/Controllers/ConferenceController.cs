@@ -46,6 +46,7 @@ namespace WebApi.Controllers
 
         #region Conference
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferences(CancellationToken cancellationToken)
         {
             var result = await _conferenceService.GetConferencesAsync(cancellationToken);
@@ -78,6 +79,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(ConferenceDetailsResponse), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetConferenceDetails(int id, CancellationToken cancellationToken)
         {
@@ -89,6 +91,7 @@ namespace WebApi.Controllers
 
         #region ConferenceAccommodation
         [HttpGet("ConferenceAccommodation/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferenceAccommodations(CancellationToken cancellationToken)
         {
             var result = await _conferenceAccommodationService.GetAllConferenceAccommodationsAsync(cancellationToken);
@@ -115,6 +118,7 @@ namespace WebApi.Controllers
 
         #region ConferenceEmergencyNumber
         [HttpGet("ConferenceEmergencyNumber/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferenceEmergencyNumbers(CancellationToken cancellationToken)
         {
             var result = await _conferenceEmergencyNumberService.GetAllConferenceEmergencyNumbersAsync(cancellationToken);
@@ -141,6 +145,7 @@ namespace WebApi.Controllers
 
         #region ConferenceOrganizer
         [HttpGet("ConferenceOrganizer/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferenceOrganizers(CancellationToken cancellationToken)
         {
             var result = await _conferenceOrganizerService.GetAllConferenceOrganizersAsync(cancellationToken);
@@ -167,6 +172,7 @@ namespace WebApi.Controllers
 
         #region ConferencePointOfInterest
         [HttpGet("ConferencePointOfInterest/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferencePointsOfInterest(CancellationToken cancellationToken)
         {
             var result = await _conferencePointOfInterestService.GetAllConferencePointsOfInterestAsync(cancellationToken);
@@ -193,6 +199,7 @@ namespace WebApi.Controllers
 
         #region ConferenceSponsor
         [HttpGet("ConferenceSponsor/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllConferenceSponsors(CancellationToken cancellationToken)
         {
             var result = await _conferenceSponsorService.GetAllConferenceSponsorsAsync(cancellationToken);
@@ -245,6 +252,7 @@ namespace WebApi.Controllers
 
         #region BuildingPlan
         [HttpGet("BuildingPlan/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllBuildingPlans(CancellationToken cancellationToken)
         {
             var result = await _buildingPlanService.GetAllBuildingPlansAsync(cancellationToken);

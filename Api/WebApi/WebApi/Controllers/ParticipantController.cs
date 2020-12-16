@@ -26,6 +26,7 @@ namespace WebApi.Controllers
 
         #region Presentation
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetParticipants(CancellationToken cancellationToken)
         {
             var result = await _participantService.GetAllParticipantsAsync(cancellationToken);
@@ -34,6 +35,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetParticipantsForPresentation(int id, CancellationToken cancellationToken)
         {
             var result = await _participantService.GetParticipantsForPresentationAsync(id, cancellationToken);
@@ -88,6 +90,7 @@ namespace WebApi.Controllers
 
         #region ParticipantPhoto
         [HttpGet("ParticipantPhoto/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetParticipantPhotos(CancellationToken cancellationToken)
         {
             var result = await _participantPhotoService.GetAllParticipantPhotosAsync(cancellationToken);

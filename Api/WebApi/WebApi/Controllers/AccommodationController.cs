@@ -22,6 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAccommodations(CancellationToken cancellationToken)
         {
             var result = await _accommodationService.GetAllAccommodations(cancellationToken);
@@ -30,6 +31,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAccommodationsForConference(int id, CancellationToken cancellationToken)
         {
             var result = await _accommodationService.GetAccommodationsForConference(id, cancellationToken);

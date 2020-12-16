@@ -29,6 +29,7 @@ namespace WebApi.Controllers
 
         #region Rate
         [HttpGet("get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRates(CancellationToken cancellationToken)
         {
             var result = await _rateService.GetAllRatesAsync(cancellationToken);
@@ -37,6 +38,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}/conference")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRatesForConference(int id, CancellationToken cancellationToken)
         {
             var result = await _rateService.GetRatesForConference(id, cancellationToken);
@@ -45,6 +47,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("get/{id}/presentation")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRatesForPresentation(int id, CancellationToken cancellationToken)
         {
             var result = await _rateService.GetRatesForPresentation(id, cancellationToken);
@@ -79,6 +82,7 @@ namespace WebApi.Controllers
 
         #region RateCriterion
         [HttpGet("RateCriterion/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRateCriterions(CancellationToken cancellationToken)
         {
             var result = await _rateCriterionService.GetAllRateCrtiterionsAsync(cancellationToken);
@@ -113,6 +117,7 @@ namespace WebApi.Controllers
 
         #region RateCriterionType
         [HttpGet("RateCriterionType/get")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetRateCriterionTypes(CancellationToken cancellationToken)
         {
             var result = await _rateCriterionTypeService.GetAlRateCriterionTypesAsync(cancellationToken);
