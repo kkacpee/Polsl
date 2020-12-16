@@ -7,10 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { AddPointOfInterestType } from '../../../Actions/PointOfInterestActions';
-import { AddPointOfInterestTypeRequest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../Reducers/rootReducer';
 import { AddBuildingPlanRequest } from '../../../Types/BuildingPlanTypes';
 import { AddBuildingPlan } from '../../../Actions/BuildingPlanActions';
 

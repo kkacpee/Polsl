@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Paper } from "@material-ui/core"
+import { Box, Divider, Grid } from "@material-ui/core"
 import React from "react"
 import { PresentationDetails } from "../Types/PresentationTypes"
 import Image from 'material-ui-image';

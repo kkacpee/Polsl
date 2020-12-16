@@ -5,16 +5,16 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { DeletePointOfInterestType } from '../../../Actions/PointOfInterestActions';
 import { IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
+import { DeleteRate } from '../../../Actions/RateActions';
 
 interface DialogProps {
   fetch: () => void,
   id: number
 }
 
-const DeletePointOfInterestTypeDialog = (props:DialogProps) => {
+const DeleteRateDialog = (props:DialogProps) => {
     const {id, fetch} = props;
   const [open, setOpen] = React.useState(false);
 
@@ -29,8 +29,8 @@ const DeletePointOfInterestTypeDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    await dispatch(DeletePointOfInterestType(id));  
-    dispatch(setAlert(true, "success", "Deleted point of interest type successfully"));
+    await dispatch(DeleteRate(id));  
+    dispatch(setAlert(true, "success", "Deleted accommodation successfully"));
     setOpen(false);
   }
   return (
@@ -39,7 +39,7 @@ const DeletePointOfInterestTypeDialog = (props:DialogProps) => {
             <Delete />
         </IconButton>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Do you want to delete this point of interest?</DialogTitle>
+        <DialogTitle id="form-dialog-title">Do you want to delete this rate?</DialogTitle>
         <DialogActions>
            <Button onClick={handleClose} >
             Cancel
@@ -53,4 +53,4 @@ const DeletePointOfInterestTypeDialog = (props:DialogProps) => {
     );
 }
 
-export default DeletePointOfInterestTypeDialog;
+export default DeleteRateDialog;

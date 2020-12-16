@@ -5,12 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../Actions/AlertActions';
 import { EditOrganizer } from '../../Actions/OrganizerActions';
 import { Organizer } from '../../Types/OrganizerTypes';
-import { Add } from '@material-ui/icons';
 
 interface DialogProps {
   dialogTitle: string,

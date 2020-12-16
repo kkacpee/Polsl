@@ -78,9 +78,9 @@ const EditPointOfInterestTypeDialog = (props:DialogProps) => {
             />
             <div>
             <ShowPointOfInterestPhotoDialog dialogTitle="test" photos={pointOfInterestState.icons} setPhotoId={setPhotoId}/>
-            {(photoId != 0) ?
+            {(photoId !== 0) ?
               <Image
-            src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${pointOfInterestState.icons.find(x => x.id == photoId)?.path}`}
+            src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${pointOfInterestState.icons.find(x => x.id === photoId)?.path}`}
              />
              :
              null

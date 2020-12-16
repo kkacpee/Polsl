@@ -5,16 +5,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
 import { AddPointOfInterestType, GetPointOfInterestIconList } from '../../../Actions/PointOfInterestActions';
-import { AddPointOfInterestRequest, AddPointOfInterestTypeRequest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
+import { AddPointOfInterestTypeRequest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
 import { Add } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
 import { IconButton } from '@material-ui/core';
-import ShowPresentationPhotoDialog from '../../Presentation/PresentationDialogs/ShowPresentationPhotosDialog';
 import _ from 'lodash';
 import ShowPointOfInterestPhotoDialog from './ShowPointOfInterestIconsDialog';
 import Image from 'material-ui-image';
@@ -81,9 +79,9 @@ const FormDialog = (props:DialogProps) => {
             />
             <div>
             <ShowPointOfInterestPhotoDialog dialogTitle="test" photos={pointOfInterestState.icons} setPhotoId={setPhotoId}/>
-            {(photoId != 0) ?
+            {(photoId !== 0) ?
               <Image
-            src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${pointOfInterestState.icons.find(x => x.id == photoId)?.path}`}
+            src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${pointOfInterestState.icons.find(x => x.id === photoId)?.path}`}
              />
              :
              null

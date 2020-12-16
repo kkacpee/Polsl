@@ -1,11 +1,10 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
-import { PointOfInterest } from '../../Types/PointOfInterestTypes';
 import { useStyles } from './GridStyles';
 import _ from 'lodash';
-import EditPointOfInterestDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/EditPointOfInterestDialog';
-import DeletePointOfInterestDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/DeletePointOfInterestDialog';
 import { Rate } from '../../Types/RateTypes';
+import EditRateDialog from '../../Screens/Rate/RateDialogs/EditRateDialog';
+import DeleteRateDialog from '../../Screens/Rate/RateDialogs/DeleteRateDialog';
 
   interface GridProps {
       data: Rate[] | {id: number,
@@ -39,24 +38,27 @@ const RateDataGrid = ({data, fetch, setSelection}:GridProps) => {
                 {(params.value !== null ? params.value : '-')}
                 </>
             ) },
-            // { field: 'id', headerName: 'Edit', width: 100,
-            // renderCell: (params: ValueFormatterParams) => {
-            //     const data:PointOfInterest = {
-            //         id: Number(params.row.id),
-            //         name: params.row.name,
-            //         address: params.row.address,
-            //         description: params.row.description,
-            //         contact: params.row.contact,
-            //         pointOfInterestTypeID: params.row.pointOfInterestTypeID,
-            //         pointOfInterestTypeName: params.row.pointOfInterestTypeName
-            //     }
-            //     return(
-            //         <EditPointOfInterestDialog dialogTitle="Edit point of interest" fetch={fetch} data={data}/>
-            //     )}},
-            // { field: 'id', headerName: 'Delete', width: 80,
-            // renderCell: (params:ValueFormatterParams) => (
-            //     <DeletePointOfInterestDialog fetch={fetch} id={Number(params.row.id)} />
-            // )}
+            { field: 'id', headerName: 'Edit', width: 100,
+            renderCell: (params: ValueFormatterParams) => {
+                const data:Rate = {
+                    id: Number(params.row.id),
+                    value: params.row.value,
+                    mobileUserID: params.row.mobileUserID,
+                    description: params.row.description,
+                    rateCriterionID: params.row.rateCriterionID,
+                    rateCriterionName: params.row.rateCriterionName,
+                    conferenceID: params.row.conferenceID,
+                    conferenceName: params.row.conferenceName,
+                    presentationID: params.row.presentationID,
+                    presentationName: params.row.presentationName,
+                }
+                return(
+                    <EditRateDialog dialogTitle="Edit point of interest" fetch={fetch} data={data}/>
+                )}},
+            { field: 'id', headerName: 'Delete', width: 80,
+            renderCell: (params:ValueFormatterParams) => (
+                <DeleteRateDialog fetch={fetch} id={Number(params.row.id)} />
+            )}
           ];
 
         return (
@@ -72,7 +74,11 @@ const RateDataGrid = ({data, fetch, setSelection}:GridProps) => {
             { field: 'mobileUserID', headerName: 'Mobile User ID', flex: 1 },
             { field: 'value', headerName: 'Value', flex: 1 },
             { field: 'rateCriterionName', headerName: 'Criterion', flex: 1 },
-            { field: 'description', headerName: 'Description', flex: 1}
+            { field: 'description', headerName: 'Description', flex: 1},
+            { field: 'id', headerName: 'Delete', width: 80,
+            renderCell: (params:ValueFormatterParams) => (
+                <DeleteRateDialog fetch={fetch} id={Number(params.row.id)} />
+            )}
           ];
 
         return (

@@ -5,28 +5,27 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { AddRateCriterionType } from '../../../Actions/RateActions';
-import { AddRateCriterionTypeRequest } from '../../../Types/RateTypes';
-import { Add } from '@material-ui/icons';
+import { EditRateCriterionType } from '../../../Actions/RateActions';
+import { RateCriterionType } from '../../../Types/RateTypes';
 import _ from 'lodash';
 
 interface DialogProps {
   dialogTitle: string,
-  fetch: () => void
+  fetch: () => void,
+  data: RateCriterionType
 }
 
-const AddRateCriterionTypeDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const EditRateCriterionTypeDialog = (props:DialogProps) => {
+    const {dialogTitle, fetch, data} = props;
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
-    setName('');
+    setName(data.name);
     setOpen(true);
   };
 
@@ -36,20 +35,19 @@ const AddRateCriterionTypeDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddRateCriterionTypeRequest = {
+    const request:RateCriterionType = {
+        id: data.id,
         name: name
     }
-    await dispatch(AddRateCriterionType(request));  
-    dispatch(setAlert(true, "success", "Added point of interesty type successfully"));
+    await dispatch(EditRateCriterionType(request));  
+    dispatch(setAlert(true, "success", "Edited rate type successfully"));
     setOpen(false);
   }
   return (
     <div>
-       <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new sponsor"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
+       <Button onClick={handleClickOpen}>
+            Edit
+        </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title" fullWidth={true}>
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
@@ -79,4 +77,4 @@ const AddRateCriterionTypeDialog = (props:DialogProps) => {
     );
 }
 
-export default AddRateCriterionTypeDialog;
+export default EditRateCriterionTypeDialog;

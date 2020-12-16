@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
@@ -7,8 +7,6 @@ import { GetOrganizerList } from '../../Actions/OrganizerActions';
 import Dialog from './AddOrganizerDialog';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
 import { CircularProgress, Container, Grid } from '@material-ui/core';
-import axios from 'axios';
-import { apiClient } from '../../Actions/ApiClient';
 
 const OrganizerList = () => {
     const dispatch = useDispatch();

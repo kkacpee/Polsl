@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { BuildingPlan, ConferenceBuildngPlan } from '../../Types/BuildingPlanTypes';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import EditBuildingPlanDialog from '../../Screens/BuildingPlan/EditBuildingPlanDialog';
 import DeleteBuildingPlanDialog from '../../Screens/BuildingPlan/DeleteBuildingPlanDialog';
 import { Button } from '@material-ui/core';

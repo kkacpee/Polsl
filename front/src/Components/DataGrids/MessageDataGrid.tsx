@@ -2,7 +2,7 @@ import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { useStyles } from './GridStyles';
 import _ from 'lodash';
-import { RateCriterion, RateCriterionType } from '../../Types/RateTypes';
+import { RateCriterionType } from '../../Types/RateTypes';
 
   interface GridProps {
       data: RateCriterionType[],

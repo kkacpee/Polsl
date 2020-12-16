@@ -9,7 +9,7 @@ import { AddConferencePhotoRequest, ChangeConferenceMainPhotoRequest, Conference
 import { AddConferencePhoto, ChangeConferencePhoto, DeleteConferencePhoto } from '../../../Actions/ConferenceActions';
 import { setAlert } from '../../../Actions/AlertActions';
 import { useDispatch } from 'react-redux';
-import { Divider, Grid, GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
+import { GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
 import StarBorderOutlined from '@material-ui/icons/StarBorderOutlined'
 import Star from '@material-ui/icons/Star'
 import DeleteOutline from '@material-ui/icons/DeleteOutline'

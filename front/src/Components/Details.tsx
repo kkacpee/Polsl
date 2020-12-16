@@ -16,7 +16,7 @@ const options = {
   };
 const Details = ({details, fetch}:Props) => {
     const getMain = () => {
-       return details.photos.find(x => x.isMain == true);
+       return details.photos.find(x => x.isMain === true);
     }
     return (
         <Grid container direction="row" justify='center' alignItems='center'> 

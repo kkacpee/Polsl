@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { RateState } from '../../Types/RateTypes';
-import { GetRateCriterionList, GetRateList } from '../../Actions/RateActions';
+import { GetRateCriterionList } from '../../Actions/RateActions';
 import { Container, Grid } from '@material-ui/core';
-import Dialog from './RateDialogs/AddRateDialog';
-import RateDataGrid from '../../Components/DataGrids/RateDataGrid';
 import RateCriterionDataGrid from '../../Components/DataGrids/RateCriterionDataGrid';
 import AddRateCriterionDialog from './RateDialogs/AddRateCriterionDialog';
 

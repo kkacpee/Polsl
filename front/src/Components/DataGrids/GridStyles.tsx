@@ -1,6 +1,5 @@
 import React from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-import PaginationItem from '@material-ui/lab/PaginationItem';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import { ComponentProps} from '@material-ui/data-grid';
 

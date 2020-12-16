@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { Organizer } from '../../Types/OrganizerTypes';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import _ from 'lodash';
 import EditOrganizerDialog from '../../Screens/Organizer/EditOrganizerDialog';
 import DeleteOrganizerDialog from '../../Screens/Organizer/DeleteOrganizerDialog';

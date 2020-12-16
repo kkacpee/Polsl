@@ -1,11 +1,10 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { PointOfInterestIcon, PointOfInterestType } from '../../Types/PointOfInterestTypes';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import _ from 'lodash';
 import { Box } from '@material-ui/core';
 import EditPointOfInterestTypeDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/EditPoinOfInterestTypeDialog';
-import { DeletePointOfInterestType } from '../../Actions/PointOfInterestActions';
 import DeletePointOfInterestTypeDialog from '../../Screens/PointOfInterest/PointOfInterestDialogs/DeletePointOfInterestTypeDialog';
 
 
@@ -20,14 +19,12 @@ import DeletePointOfInterestTypeDialog from '../../Screens/PointOfInterest/Point
 const PointOfInterestTypeDataGrid = ({data, icons, fetch, setSelection}:GridProps) => {
     const classes = useStyles();
 
-
-
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Name', flex: 1 },
         { field: 'pointOfInterestIconID', headerName: 'Image', width: 100,  renderCell: (params: ValueFormatterParams) => (
             <Box>
-                <img src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${icons.find(x => x.id == params.value)?.path}`} style={{maxWidth:'100%', maxHeight:'100%', marginTop: 10}}/>
+                <img src={`${process.env.REACT_APP_SERVER_RESOURCE_URI as string}${icons.find(x => x.id === params.value)?.path}`} style={{maxWidth:'100%', maxHeight:'100%', marginTop: 10}}/>
             </Box>
             )},
             { field: 'id', headerName: 'Edit', width: 100,

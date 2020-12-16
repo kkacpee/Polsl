@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { Sponsor } from '../../Types/SponsorTypes';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import _ from 'lodash';
 import EditSponsorDialog from '../../Screens/Sponsor/EditSponsorDialog';
 import DeleteSponsorDialog from '../../Screens/Sponsor/DeleteSponsorDialog';

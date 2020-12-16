@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
 import Store, { persistor } from './Store';
-import {BrowserRouter} from 'react-router-dom';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { ThemeProvider } from '@material-ui/core';

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
-import { useStyles, CustomPagination } from './GridStyles';
+import { useStyles } from './GridStyles';
 import { Presentation } from '../../Types/PresentationTypes';
 import { IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';

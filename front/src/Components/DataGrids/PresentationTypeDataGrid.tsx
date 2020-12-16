@@ -3,7 +3,6 @@ import { DataGrid, ValueFormatterParams } from '@material-ui/data-grid';
 import { PresentationType } from '../../Types/PresentationTypes';
 import { useStyles, CustomPagination } from './GridStyles';
 import _ from 'lodash';
-import { EditPresentationType } from '../../Actions/PresentationActions';
 import EditPresentationTypeDialog from '../../Screens/Presentation/PresentationDialogs/EditPresentationTypeDialog';
 import DeletePresentationTypeDialog from '../../Screens/Presentation/PresentationDialogs/DeletePresentationTypeDialog';
 

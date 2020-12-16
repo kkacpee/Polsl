@@ -7,8 +7,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { AddRate, GetRateCriterionList } from '../../../Actions/RateActions';
-import { AddRateRequest, RateState } from '../../../Types/RateTypes';
+import { EditRate, GetRateCriterionList } from '../../../Actions/RateActions';
+import { EditRateRequest, Rate, RateState } from '../../../Types/RateTypes';
 import Rating from '@material-ui/lab/Rating/Rating';
 import { Box, MenuItem, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -18,12 +18,11 @@ import _ from 'lodash';
 interface DialogProps {
   dialogTitle: string,
   fetch: () => void,
-  id: number,
-  isConferenceRate: boolean
+  data: Rate
 }
 
-const AddRateDialog = (props:DialogProps) => {
-    const {dialogTitle, id, fetch, isConferenceRate} = props;
+const EditRateDialog = (props:DialogProps) => {
+    const {dialogTitle, fetch, data} = props;
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [description, setDescription] = React.useState('');
@@ -38,6 +37,11 @@ const AddRateDialog = (props:DialogProps) => {
     if(_.isEmpty(rateState.criterions)){
       FetchTypes();
     }
+    setValue(data.value);
+    setDescription(data.description);
+    setMobileUserID(data.mobileUserID);
+    setRateCriterionID(data.rateCriterionID);
+    setRateCriterionName(data.rateCriterionName);
     setOpen(true);
   };
 
@@ -56,22 +60,23 @@ const AddRateDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddRateRequest = {
+    const request:EditRateRequest = {
+        id: data.id,
         description: description,
         value: value,
         mobileUserID: mobileUserID,
         rateCriterionID: rateCriterionID,
-        conferenceID: isConferenceRate ? Number(id) : null,
-        presentationID: isConferenceRate ? null : Number(id)
+        conferenceID: data.conferenceID,
+        presentationID: data.presentationID
     }
-    await dispatch(AddRate(request));  
-    dispatch(setAlert(true, "success", "Added sponsor successfully"));
+    await dispatch(EditRate(request));  
+    dispatch(setAlert(true, "success", "Edited sponsor successfully"));
     setOpen(false);
   }
   return (
     <div>
         <Button onClick={handleClickOpen}>
-            Add
+            Edit
         </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title" fullWidth={true}>
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
@@ -150,4 +155,4 @@ const AddRateDialog = (props:DialogProps) => {
     );
 }
 
-export default AddRateDialog;
+export default EditRateDialog;

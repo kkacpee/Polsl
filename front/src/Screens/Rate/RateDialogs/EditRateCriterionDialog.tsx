@@ -5,12 +5,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '../../../Actions/AlertActions';
-import { AddRateCriterion, GetRateCriterionTypeList } from '../../../Actions/RateActions';
-import { AddRateCriterionRequest, RateState } from '../../../Types/RateTypes';
-import { Add } from '@material-ui/icons';
+import { EditRateCriterion, GetRateCriterionTypeList } from '../../../Actions/RateActions';
+import { EditRateCriterionRequest, RateCriterion, RateState } from '../../../Types/RateTypes';
 import { MenuItem } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Reducers/rootReducer';
@@ -18,11 +16,12 @@ import _ from 'lodash';
 
 interface DialogProps {
   dialogTitle: string,
-  fetch: () => void
+  fetch: () => void,
+  data: RateCriterion
 }
 
-const AddRateCriterionDialog = (props:DialogProps) => {
-    const {dialogTitle, fetch} = props;
+const EditRateCriterionDialog = (props:DialogProps) => {
+    const {dialogTitle, fetch, data} = props;
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
   const [rateCriterionTypeID, setRateCriterionTypeID] = React.useState(0);
@@ -36,6 +35,9 @@ const AddRateCriterionDialog = (props:DialogProps) => {
     if(_.isEmpty(rateState.types)){
       FetchTypes();
     }
+    setName(data.name);
+    setRateCriterionTypeID(data.rateCriterionTypeID);
+    setRateCriterionTypeName(data.rateCriterionTypeName);
     setOpen(true);
   };
 
@@ -54,21 +56,20 @@ const AddRateCriterionDialog = (props:DialogProps) => {
   };
 
   async function handleSubmit(){
-    const request:AddRateCriterionRequest = {
+    const request:EditRateCriterionRequest = {
+        id: data.id,
         name: name,
         rateCriterionTypeID: rateCriterionTypeID
     }
-    await dispatch(AddRateCriterion(request));  
+    await dispatch(EditRateCriterion(request));  
     dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (
     <div>
-        <FloatingContainer>
-        <FloatingButton
-                tooltip="Add new point of interest"
-                onClick={handleClickOpen}> <Add /> </FloatingButton>
-        </FloatingContainer>
+        <Button onClick={handleClickOpen}>
+            Edit
+        </Button>
         <Dialog open={open} onClose={handleClose} onExit={fetch} aria-labelledby="form-dialog-title" fullWidth={true}>
         <DialogTitle id="form-dialog-title">{dialogTitle}</DialogTitle>
         <form>
@@ -124,4 +125,4 @@ const AddRateCriterionDialog = (props:DialogProps) => {
     );
 }
 
-export default AddRateCriterionDialog;
+export default EditRateCriterionDialog;

@@ -50,6 +50,16 @@ export interface Rate {
     presentationName: string,
 }
 
+export interface EditRateRequest {
+    id: number,
+    description: string,
+    value: number,
+    mobileUserID: number,
+    rateCriterionID: number,
+    conferenceID: number | null,
+    presentationID: number | null
+}
+
 export interface AddRateRequest {
     description: string,
     value: number,
@@ -64,6 +74,12 @@ export interface RateCriterion {
     name: string,
     rateCriterionTypeID: number,
     rateCriterionTypeName: string,
+}
+
+export interface EditRateCriterionRequest {
+    id: number,
+    name: string,
+    rateCriterionTypeID: number
 }
 
 export interface AddRateCriterionRequest {

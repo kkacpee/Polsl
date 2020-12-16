@@ -5,7 +5,6 @@ import { RootState } from '../../Reducers/rootReducer'
 import { RateState } from '../../Types/RateTypes';
 import { GetRateList } from '../../Actions/RateActions';
 import { Container, Grid } from '@material-ui/core';
-import Dialog from './RateDialogs/AddRateDialog';
 import RateDataGrid from '../../Components/DataGrids/RateDataGrid';
 
 const RateList = () => {

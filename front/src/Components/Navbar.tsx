@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import { default as Tab } from '@material-ui/core/Tab';
-import HomeIcon from '@material-ui/icons/Home';
 import CodeIcon from '@material-ui/icons/Code';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import { Button, createStyles, makeStyles, Theme, Toolbar } from "@material-ui/core";
