@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Core.Helpers;
 using Persistence.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApi.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AuthController : ControllerBase
     {
 
@@ -31,9 +34,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [AllowAnonymous]
         public async Task<IActionResult> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(loginRequest.Email);

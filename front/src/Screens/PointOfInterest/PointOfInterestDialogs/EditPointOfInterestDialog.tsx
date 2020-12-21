@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { EditPointOfInterest } from '../../../Actions/PointOfInterestActions';
 import { PointOfInterest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -65,7 +64,6 @@ const pointOfInterestState:PointOfInterestState = useSelector((state: RootState 
         pointOfInterestTypeName: pointOfInterestTypeName
     }
     await dispatch(EditPointOfInterest(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

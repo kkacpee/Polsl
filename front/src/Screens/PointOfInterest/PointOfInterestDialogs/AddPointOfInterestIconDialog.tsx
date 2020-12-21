@@ -5,7 +5,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { AddPointOfInterestIcon } from '../../../Actions/PointOfInterestActions';
 import { AddPointOfInterestIconRequest } from '../../../Types/PointOfInterestTypes';
 import Add from '@material-ui/icons/AddPhotoAlternateOutlined';
@@ -38,7 +37,6 @@ const AddPointOfInterestIconDialog = (props:DialogProps) => {
         photo: file!
     }
     await dispatch(AddPointOfInterestIcon(request));  
-    dispatch(setAlert(true, "success", "Added point of interesty type successfully"));
     setOpen(false);
   }
   return (

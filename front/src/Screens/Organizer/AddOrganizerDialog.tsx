@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { AddOrganizer } from '../../Actions/OrganizerActions';
 import { AddOrganizerRequest } from '../../Types/OrganizerTypes';
 import { Add } from '@material-ui/icons';
@@ -53,7 +52,6 @@ const FormDialog = (props:DialogProps) => {
     contact: contact
     }
     await dispatch(AddOrganizer(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

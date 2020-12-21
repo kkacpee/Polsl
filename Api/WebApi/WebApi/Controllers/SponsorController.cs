@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditSponsor([FromBody] SponsorModel model, CancellationToken cancellationToken)
         {
             await _sponsorService.EditSponsorAsync(model, cancellationToken);

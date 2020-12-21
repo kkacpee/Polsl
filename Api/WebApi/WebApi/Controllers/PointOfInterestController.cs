@@ -59,7 +59,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditPointOfInterest([FromBody] PointOfInterestModel model, CancellationToken cancellationToken)
         {
             await _pointOfInterestService.EditPointOfInterestAsync(model, cancellationToken);
@@ -94,7 +94,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("PointOfInterestType/edit")]
+        [HttpPut("PointOfInterestType/edit")]
         public async Task<IActionResult> EditPointOfInterestType([FromBody] PointOfInterestTypeModel model, CancellationToken cancellationToken)
         {
             await _pointOfInterestTypeService.EditPointOfInterestTypeAsync(model, cancellationToken);

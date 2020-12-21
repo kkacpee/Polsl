@@ -6,7 +6,7 @@ import { ParticipantState } from '../../Types/ParticipantTypes';
 import { GetParticipantList } from '../../Actions/ParticipantActions';
 import Dialog from './AddParticipantDialog';
 import ParticipantDataGrid from '../../Components/DataGrids/ParticipantDataGrid';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const ParticipantList = () => {
     const dispatch = useDispatch();
@@ -20,16 +20,21 @@ const ParticipantList = () => {
        await dispatch(GetParticipantList())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        if (participantState.errorMsg !== "" && participantState.errorMsg !== "Created"){
-            return <p>{participantState.errorMsg}</p>
-        }
-
-        if (participantState.loading){
-            return <CircularProgress />
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={participantState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <ParticipantDataGrid data={participantState.data} fetch={() => {FetchData()}}/>
@@ -40,6 +45,7 @@ const ParticipantList = () => {
                     </div>
                 </Grid>
             </Container>
+            </>
         )
     }
     

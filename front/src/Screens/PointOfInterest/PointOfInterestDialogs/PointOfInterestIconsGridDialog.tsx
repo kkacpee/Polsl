@@ -5,7 +5,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Image from 'material-ui-image';
-import { setAlert } from '../../../Actions/AlertActions';
 import { useDispatch } from 'react-redux';
 import { GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
@@ -34,7 +33,6 @@ const PointOfInterestIconsGrid = (props:DialogProps) => {
 
   async function handleDelete(id:number){
     await dispatch(DeletePointOfInterestIcon(id));
-    dispatch(setAlert(true, "success", "Deleted icon successfully"));
     setOpen(false);
   }
 

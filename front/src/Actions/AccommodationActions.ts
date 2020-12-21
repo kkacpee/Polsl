@@ -97,7 +97,7 @@ export const EditAccommodation = (values:Accommodation): ThunkAction<void, RootS
         dispatch({
             type: ACCOMMODATION_EDIT
         });
-        const response = await apiClient.post(`/api/Accommodation/edit`, {
+        const response = await apiClient.put(`/api/Accommodation/edit`, {
             ...values
             })
         

@@ -6,7 +6,7 @@ import { AccommodationState } from '../../Types/AccommodationTypes';
 import { GetAccommodationList } from '../../Actions/AccommodationActions';
 import Dialog from './AddAccommodationDialog';
 import AccommodationDataGrid from '../../Components/DataGrids/AccommodationDataGrid';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const AccommodationList = () => {
     const dispatch = useDispatch();
@@ -20,18 +20,22 @@ const AccommodationList = () => {
       await dispatch(GetAccommodationList())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+    
     const ShowData = () => {
-
-        if (accommodationList.errorMsg !== "" && accommodationList.errorMsg !== "Created"){
-            return <p>{accommodationList.errorMsg}</p>
-        }
-
-        if (accommodationList.loading){
-            return <CircularProgress />
-        }
-
         return (
-            <Container style={{padding: 20}}>
+            <>
+            <Backdrop className={useStyles().backdrop} open={accommodationList.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Container style={{padding: 20}} key="accommodation.key">
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <AccommodationDataGrid data={accommodationList.data} fetch={() => {FetchData()}} />
                 </Grid>
@@ -41,6 +45,7 @@ const AccommodationList = () => {
                     </div>
                 </Grid>
             </Container>
+            </>
         )
     }
     

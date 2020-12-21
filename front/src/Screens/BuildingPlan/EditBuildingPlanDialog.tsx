@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { BuildingPlan } from '../../Types/BuildingPlanTypes';
 import { EditBuildingPlan } from '../../Actions/BuildingPlanActions';
 
@@ -43,7 +42,6 @@ const EditBuildingPlanDialog = (props:DialogProps) => {
       conferenceId: data.conferenceId
     }
     await dispatch(EditBuildingPlan(request));  
-    dispatch(setAlert(true, "success", "Edited building plan successfully"));
     setOpen(false);
   }
   return (

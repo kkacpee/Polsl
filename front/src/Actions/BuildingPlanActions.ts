@@ -86,7 +86,7 @@ export const EditBuildingPlan = (values:BuildingPlan): ThunkAction<void, RootSta
         dispatch({
             type: BUILDINGPLAN_EDIT
         });
-        const response = await apiClient.post(`/api/BuildingPlan/edit`, {
+        const response = await apiClient.put(`/api/BuildingPlan/edit`, {
             ...values
             })
         

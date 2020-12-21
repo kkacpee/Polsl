@@ -70,7 +70,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditParticipant([FromBody] ParticipantModel model, CancellationToken cancellationToken)
         {
             await _participantService.EditParticipantAsync(model, cancellationToken);

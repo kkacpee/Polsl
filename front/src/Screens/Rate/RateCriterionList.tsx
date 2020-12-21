@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { RateState } from '../../Types/RateTypes';
 import { GetRateCriterionList } from '../../Actions/RateActions';
-import { Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import RateCriterionDataGrid from '../../Components/DataGrids/RateCriterionDataGrid';
 import AddRateCriterionDialog from './RateDialogs/AddRateCriterionDialog';
 
@@ -20,16 +20,21 @@ const RateCriterionList = () => {
        await dispatch(GetRateCriterionList())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        if (rateState.errorMsg !== "" && rateState.errorMsg !== "Created"){
-            return <p>{rateState.errorMsg}</p>
-        }
-
-        if (rateState.loading){
-            return <p> loading... </p>
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={rateState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <RateCriterionDataGrid data={rateState.criterions} fetch={() => {FetchData()}} />
@@ -40,6 +45,7 @@ const RateCriterionList = () => {
                     </div>
                 </Grid>
             </Container>
+            </>
         )
     }
     

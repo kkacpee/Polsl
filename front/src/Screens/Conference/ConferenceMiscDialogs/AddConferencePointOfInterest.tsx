@@ -13,7 +13,6 @@ import { GetPointsOfInterestForConferenceList } from '../../../Actions/PointOfIn
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToConference } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddConferencePointOfInterestDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "PointOfInterest"))
-    dispatch(setAlert(true, "success", "Added PointOfInterest to conference successfully"));
     setOpen(false);
     }
 

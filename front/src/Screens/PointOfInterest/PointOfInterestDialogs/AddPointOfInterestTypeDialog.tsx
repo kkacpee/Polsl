@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { AddPointOfInterestType, GetPointOfInterestIconList } from '../../../Actions/PointOfInterestActions';
 import { AddPointOfInterestTypeRequest, PointOfInterestState } from '../../../Types/PointOfInterestTypes';
 import { Add } from '@material-ui/icons';
@@ -55,7 +54,6 @@ const FormDialog = (props:DialogProps) => {
         pointOfInterestIconID: photoId
     }
     await dispatch(AddPointOfInterestType(request));  
-    dispatch(setAlert(true, "success", "Added point of interesty type successfully"));
     setOpen(false);
   }
   return (

@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { EditPointOfInterestType, GetPointOfInterestIconList } from '../../../Actions/PointOfInterestActions';
 import { PointOfInterestState, PointOfInterestType } from '../../../Types/PointOfInterestTypes';
 import { useSelector } from 'react-redux';
@@ -54,7 +53,6 @@ const EditPointOfInterestTypeDialog = (props:DialogProps) => {
         pointOfInterestIconID: photoId
     }
     await dispatch(EditPointOfInterestType(request));  
-    dispatch(setAlert(true, "success", "Edited point of interest type successfully"));
     setOpen(false);
   }
   return (

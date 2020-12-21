@@ -13,7 +13,6 @@ import { GetAccommodationsForConferenceList } from '../../../Actions/Accommodati
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToConference } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddConferenceAccommodationDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Accommodation"))
-    dispatch(setAlert(true, "success", "Added accommodation to conference successfully"));
     setOpen(false);
     }
 

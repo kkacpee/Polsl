@@ -18,6 +18,8 @@ using System.Linq;
 namespace WebApi
 {
     using Core.Helpers;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Persistence.Models;
@@ -113,19 +115,31 @@ namespace WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-                app.UseSwagger();
+            app.UseExceptionHandler(a => a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature.Error;
+
+                await context.Response.WriteAsJsonAsync(new { error = exception.Message });
+            }));
+
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Polsl Conference API");
                 c.RoutePrefix = string.Empty;
             });
+
             app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
             app.UseAuthentication();
+            app.UseRouting();
             app.UseAuthorization();
+
+
 
             app.UseEndpoints(endpoints =>
             {

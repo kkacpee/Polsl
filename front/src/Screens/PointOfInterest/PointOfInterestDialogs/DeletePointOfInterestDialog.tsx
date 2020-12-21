@@ -4,7 +4,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { DeletePointOfInterest } from '../../../Actions/PointOfInterestActions';
 import { IconButton } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
@@ -30,7 +29,6 @@ const DeletePointOfInterestDialog = (props:DialogProps) => {
 
   async function handleSubmit(){
     await dispatch(DeletePointOfInterest(id));  
-    dispatch(setAlert(true, "success", "Deleted point of interest successfully"));
     setOpen(false);
   }
   return (

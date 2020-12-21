@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditAccommodation([FromBody] AccommodationModel model, CancellationToken cancellationToken)
         {
             await _accommodationService.EditAccommodationAsync(model, cancellationToken);

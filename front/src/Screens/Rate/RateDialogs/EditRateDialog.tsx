@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { EditRate, GetRateCriterionList } from '../../../Actions/RateActions';
 import { EditRateRequest, Rate, RateState } from '../../../Types/RateTypes';
 import Rating from '@material-ui/lab/Rating/Rating';
@@ -70,7 +69,6 @@ const EditRateDialog = (props:DialogProps) => {
         presentationID: data.presentationID
     }
     await dispatch(EditRate(request));  
-    dispatch(setAlert(true, "success", "Edited sponsor successfully"));
     setOpen(false);
   }
   return (

@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
-import { setAlert } from '../../../Actions/AlertActions';
 import { Presentation, PresentationDetails, PresentationState } from '../../../Types/PresentationTypes';
 import { EditPresentation, GetPresentationTypes } from '../../../Actions/PresentationActions';
 import { MenuItem } from '@material-ui/core';
@@ -77,7 +76,6 @@ const EditPresentationDialog = (props:DialogProps) => {
       presentationTypeID: presentationTypeID
     }
     await dispatch(EditPresentation(request));  
-    dispatch(setAlert(true, "success", "Added presentation successfully"));
     setOpen(false);
   }
   return (

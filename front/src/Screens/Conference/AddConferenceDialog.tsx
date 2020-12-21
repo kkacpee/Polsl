@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 import { AddConferenceRequest } from '../../Types/ConferenceTypes';
 import { AddConference} from '../../Actions/ConferenceActions';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
-import { setAlert } from '../../Actions/AlertActions';
 import { Add } from '@material-ui/icons';
 
 interface DialogProps {
@@ -60,7 +59,6 @@ const FormDialog = (props:DialogProps) => {
       socialMedia: socialMedia
     }
     await dispatch(AddConference(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

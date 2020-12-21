@@ -40,7 +40,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditBuildingPlan([FromBody] BuildingPlanModel model, CancellationToken cancellationToken)
         {
             await _buildingPlanService.EditBuildingPlanAsync(model, cancellationToken);

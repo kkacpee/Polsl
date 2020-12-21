@@ -233,7 +233,7 @@ export const EditPointOfInterest = (values:PointOfInterest): ThunkAction<void, R
         dispatch({
             type: POINTOFINTEREST_EDIT
         });
-        const response = await apiClient.post(`/api/PointOfInterest/edit`, {
+        const response = await apiClient.put(`/api/PointOfInterest/edit`, {
             ...values
             })
         
@@ -256,7 +256,7 @@ export const EditPointOfInterestType = (values:PointOfInterestType): ThunkAction
         dispatch({
             type: POINTOFINTEREST_TYPE_EDIT
         });
-        const response = await apiClient.post(`/api/PointOfInterest/PointOfInterestType/edit`, {
+        const response = await apiClient.put(`/api/PointOfInterest/PointOfInterestType/edit`, {
             ...values
             })
         

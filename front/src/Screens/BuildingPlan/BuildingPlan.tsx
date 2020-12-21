@@ -5,7 +5,7 @@ import { RootState } from '../../Reducers/rootReducer'
 import { BuildingPlanState } from '../../Types/BuildingPlanTypes';
 import { GetBuildingPlanList } from '../../Actions/BuildingPlanActions';
 import BuildingPlanDataGrid from '../../Components/DataGrids/BuildingPlanDataGrid';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const BuildingPlanList = () => {
     const dispatch = useDispatch();
@@ -18,22 +18,27 @@ const BuildingPlanList = () => {
     async function FetchData () {
       await dispatch(GetBuildingPlanList())
     }
+    const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#000',
+        },
+    }),
+);
 
-    const ShowData = () => {
-        if (buildingPlanState.errorMsg !== ""){
-            return <p>{buildingPlanState.errorMsg}</p>
-        }
-
-        if (buildingPlanState.loading){
-            return <CircularProgress />
-        }
-
-        return (
+const ShowData = () => {
+    return (
+        <>
+        <Backdrop className={useStyles().backdrop} open={buildingPlanState.loading}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <BuildingPlanDataGrid type='id' data={buildingPlanState.data} fetch={() => {FetchData()}}/>
                 </Grid>
             </Container>
+            </>
         )
     }
     

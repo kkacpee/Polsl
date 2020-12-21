@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { EditOrganizer } from '../../Actions/OrganizerActions';
 import { Organizer } from '../../Types/OrganizerTypes';
 
@@ -50,7 +49,6 @@ const EditOrganizerDialog = (props:DialogProps) => {
     contact: contact
     }
     await dispatch(EditOrganizer(request));  
-    dispatch(setAlert(true, "success", "Edited organizer successfully"));
     setOpen(false);
   }
   return (

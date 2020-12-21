@@ -50,7 +50,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditPresentation([FromBody] PresentationModel model, CancellationToken cancellationToken)
         {
             await _presentationService.EditPresentationAsync(model, cancellationToken);
@@ -95,7 +95,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("PresentationType/edit")]
+        [HttpPut("PresentationType/edit")]
         public async Task<IActionResult> EditPresentationType([FromBody] PresentationTypeModel model, CancellationToken cancellationToken)
         {
             await _presentationTypeService.EditPresentationTypeAsync(model, cancellationToken);
@@ -148,7 +148,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [HttpPost("PresentationPhoto/change")]
+        [HttpPut("PresentationPhoto/change")]
         public async Task<IActionResult> ChangePresentationMainPhoto([FromBody] ChangePresentationMainPhotoRequest request, CancellationToken cancellationToken)
         {
             await _presentationPhotoService.ChangeMainPhoto(request, cancellationToken);

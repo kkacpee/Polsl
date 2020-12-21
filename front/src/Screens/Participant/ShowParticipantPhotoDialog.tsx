@@ -34,10 +34,6 @@ const ShowParticipantPhotoDialog = (props:DialogProps) => {
   }
 
   async function handleSubmit(){
-    // const request:AddParticipantRequest = {
-    // }
-    // await dispatch(AddParticipant(request));  
-   // dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

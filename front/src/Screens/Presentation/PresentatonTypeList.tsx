@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { PresentationState } from '../../Types/PresentationTypes';
 import { GetPresentationTypes } from '../../Actions/PresentationActions';
-import { Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import Dialog from './PresentationDialogs/AddPresentationTypeDialog';
 import PresentationTypeDataGrid from '../../Components/DataGrids/PresentationTypeDataGrid';
 
@@ -20,17 +20,21 @@ const PresentationTypeList = () => {
        await dispatch(GetPresentationTypes())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        
-        if (presentationState.errorMsg !== ""){
-            return <p>{presentationState.errorMsg}</p>
-        }
-
-        if (presentationState.loading){
-            return <p> loading... </p>
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={presentationState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <PresentationTypeDataGrid data={presentationState.types} fetch={() => {FetchData()}} />
@@ -41,6 +45,7 @@ const PresentationTypeList = () => {
                     </div>
                 </Grid>
             </Container>
+            </>
         )
     }
 

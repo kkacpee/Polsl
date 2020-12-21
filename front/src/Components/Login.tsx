@@ -1,7 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardHeader, createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setAlert } from "../Actions/AlertActions";
 import { SignIn } from "../Actions/AuthActions";
 import { AuthRequest } from "../Types/AuthTypes";
 import {default as MyTheme } from "../Styles/ThemeProvider";
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
             password: password
         }
         await dispatch(SignIn(request));  
-        dispatch(setAlert(true, "success", "Logged in successfully"));
       }
         return (
             <form className={classes.container} noValidate autoComplete="off">

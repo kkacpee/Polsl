@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { PointOfInterestState } from '../../Types/PointOfInterestTypes';
 import { GetPointOfInterestIconList, GetPointOfInterestTypeList } from '../../Actions/PointOfInterestActions';
-import { Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import Dialog from './PointOfInterestDialogs/AddPointOfInterestIconDialog';
 import AddPointOfInterestTypeDialog from './PointOfInterestDialogs/AddPointOfInterestTypeDialog'
 import PointOfInterestTypeDataGrid from '../../Components/DataGrids/PointOfInterestTypeDataGrid';
@@ -25,17 +25,21 @@ const PointOfInterestTypeList = () => {
        await dispatch(GetPointOfInterestIconList());
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        
-        if (pointOfInterestState.errorMsg !== ""){
-            return <p>{pointOfInterestState.errorMsg}</p>
-        }
-
-        if (pointOfInterestState.loading){
-            return <p> loading... </p>
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={pointOfInterestState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <PointOfInterestTypeDataGrid data={pointOfInterestState.types!} icons={pointOfInterestState.icons} fetch={() => {FetchData()}}/>
@@ -59,6 +63,7 @@ const PointOfInterestTypeList = () => {
                     </FloatingContainer>
                 </Grid>
             </Container>
+            </>
         )
     }
 

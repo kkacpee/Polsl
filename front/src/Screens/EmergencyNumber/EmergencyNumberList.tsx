@@ -6,7 +6,7 @@ import { EmergencyNumberState } from '../../Types/EmergencyNumberTypes';
 import { GetEmergencyNumberList } from '../../Actions/EmergencyNumberActions';
 import Dialog from './AddEmergencyNumberDialog';
 import EmergencyNumberDataGrid from '../../Components/DataGrids/EmergencyNumberDataGrid';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const EmergencyNumberList = () => {
     const dispatch = useDispatch();
@@ -19,17 +19,21 @@ const EmergencyNumberList = () => {
     async function FetchData () {
        await dispatch(GetEmergencyNumberList())
     }
+    const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#000',
+        },
+    }),
+);
 
-    const ShowData = () => {
-        if (emergencyNumberState.errorMsg !== "" && emergencyNumberState.errorMsg !== "Created"){
-            return <p>{emergencyNumberState.errorMsg}</p>
-        }
-
-        if (emergencyNumberState.loading){
-            return <CircularProgress />
-        }
-
-        return (
+const ShowData = () => {
+    return (
+        <>
+        <Backdrop className={useStyles().backdrop} open={emergencyNumberState.loading}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <EmergencyNumberDataGrid data={emergencyNumberState.data} fetch={() => {FetchData()}} />
@@ -40,6 +44,7 @@ const EmergencyNumberList = () => {
                     </div>
                 </Grid>
             </Container>
+        </>
         )
     }
     

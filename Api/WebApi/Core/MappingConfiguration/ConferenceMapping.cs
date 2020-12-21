@@ -54,7 +54,6 @@ namespace Core.MappingConfiguration
                       opt => opt.MapFrom(src => src.PointOfInterestType.Name))
                     .ReverseMap();
 
-            CreateMap<PointOfInterestIcon, AddPointOfInterestIconRequest>().ReverseMap();
             CreateMap<PointOfInterestIcon, PointOfInterestIconModel>().ReverseMap();
             CreateMap<PointOfInterestIcon, PointOfInterestIconResponse>().ReverseMap();
 

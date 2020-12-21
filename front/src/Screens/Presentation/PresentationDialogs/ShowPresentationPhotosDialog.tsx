@@ -7,7 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Image from 'material-ui-image';
 import { AddPresentationPhotoRequest, ChangePresentationMainPhotoRequest, PresentationPhoto } from '../../../Types/PresentationTypes';
 import { AddPresentationPhoto, ChangePresentationPhoto, DeletePresentationPhoto } from '../../../Actions/PresentationActions';
-import { setAlert } from '../../../Actions/AlertActions';
 import { useDispatch } from 'react-redux';
 import { GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
 import StarBorderOutlined from '@material-ui/icons/StarBorderOutlined'
@@ -44,7 +43,6 @@ const ShowPresentationPhotoDialog = (props:DialogProps) => {
 
   async function handleDelete(id:number){
     await dispatch(DeletePresentationPhoto(id));
-    dispatch(setAlert(true, "success", "Deleted photo successfully"));
     setOpen(false);
   }
 
@@ -54,7 +52,6 @@ const ShowPresentationPhotoDialog = (props:DialogProps) => {
       presentationId: id
     }
     await dispatch(ChangePresentationPhoto(request));
-    dispatch(setAlert(true, "success", "Changed main photo successfully"));
     setOpen(false);
   }
 
@@ -64,7 +61,6 @@ const ShowPresentationPhotoDialog = (props:DialogProps) => {
         file: file!
     }
     await dispatch(AddPresentationPhoto(request));  
-    dispatch(setAlert(true, "success", "Added photo successfully"));
     setOpen(false);
   }
   return (

@@ -97,7 +97,7 @@ export const EditEmergencyNumber = (values:EmergencyNumber): ThunkAction<void, R
         dispatch({
             type: EMERGENCYNUMBER_EDIT
         });
-        const response = await apiClient.post(`/api/EmergencyNumber/edit`, {
+        const response = await apiClient.put(`/api/EmergencyNumber/edit`, {
             ...values
             })
         

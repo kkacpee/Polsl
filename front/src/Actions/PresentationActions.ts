@@ -105,7 +105,7 @@ export const ChangePresentationPhoto = (values:ChangePresentationMainPhotoReques
         dispatch({
             type: PRESENTATION_EDIT
         });
-        const response = await apiClient.post(`/api/Presentation/PresentationPhoto/change`, {
+        const response = await apiClient.put(`/api/Presentation/PresentationPhoto/change`, {
             ...values
             })
         
@@ -281,7 +281,7 @@ export const EditPresentation = (values:Presentation): ThunkAction<void, RootSta
         dispatch({
             type: PRESENTATION_EDIT
         });
-        const response = await apiClient.post(`/api/Presentation/edit`, {
+        const response = await apiClient.put(`/api/Presentation/edit`, {
             ...values
             })
         
@@ -304,7 +304,7 @@ export const EditPresentationType = (values:PresentationType): ThunkAction<void,
         dispatch({
             type: PRESENTATION_TYPE_EDIT
         });
-        const response = await apiClient.post(`/api/Presentation/PresentationType/edit`, {
+        const response = await apiClient.put(`/api/Presentation/PresentationType/edit`, {
             ...values
             })
         

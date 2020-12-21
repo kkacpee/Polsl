@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { Conference, ConferenceDetails } from '../../Types/ConferenceTypes';
 import { EditConference} from '../../Actions/ConferenceActions';
 import { KeyboardDateTimePicker } from '@material-ui/pickers';
-import { setAlert } from '../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -57,7 +56,6 @@ const EditDialog = (props:DialogProps) => {
       socialMedia: socialMedia
     }
     await dispatch(EditConference(request));  
-    dispatch(setAlert(true, "success", "Edited conference successfully"));
     setOpen(false);
   }
   return (

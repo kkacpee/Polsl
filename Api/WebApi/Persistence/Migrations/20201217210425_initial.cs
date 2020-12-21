@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,21 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SentDate = table.Column<DateTime>(nullable: false),
+                    MobileUserID = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(maxLength: 512, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Organizer",
                 columns: table => new
                 {
@@ -93,16 +108,16 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PointOfInterestTypes",
+                name: "PointOfInterestIcon",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<int>(maxLength: 32, nullable: false)
+                    Path = table.Column<string>(maxLength: 512, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PointOfInterestTypes", x => x.ID);
+                    table.PrimaryKey("PK_PointOfInterestIcon", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,21 +145,6 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RateCriterionTypes", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true),
-                    NormalizedName = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,6 +233,27 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConferencePhoto",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Path = table.Column<string>(maxLength: 128, nullable: false),
+                    ConferenceID = table.Column<int>(nullable: false),
+                    IsMain = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConferencePhoto", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ConferencePhoto_Conferences_ConferenceID",
+                        column: x => x.ConferenceID,
+                        principalTable: "Conferences",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ConferenceEmergencyNumbers",
                 columns: table => new
                 {
@@ -305,24 +326,21 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PointsOfInterest",
+                name: "PointOfInterestTypes",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(maxLength: 32, nullable: true),
-                    Address = table.Column<string>(maxLength: 128, nullable: true),
-                    Contact = table.Column<string>(maxLength: 32, nullable: true),
-                    Description = table.Column<string>(maxLength: 512, nullable: true),
-                    PointOfInterestTypeID = table.Column<int>(nullable: false)
+                    PointOfInterestIconID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PointsOfInterest", x => x.ID);
+                    table.PrimaryKey("PK_PointOfInterestTypes", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_PointsOfInterest_PointOfInterestTypes_PointOfInterestTypeID",
-                        column: x => x.PointOfInterestTypeID,
-                        principalTable: "PointOfInterestTypes",
+                        name: "FK_PointOfInterestTypes_PointOfInterestIcon_PointOfInterestIco~",
+                        column: x => x.PointOfInterestIconID,
+                        principalTable: "PointOfInterestIcon",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -406,26 +424,110 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRoles",
+                name: "PointsOfInterest",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(nullable: false),
-                    RoleID = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(maxLength: 32, nullable: true),
+                    Address = table.Column<string>(maxLength: 128, nullable: true),
+                    Contact = table.Column<string>(maxLength: 32, nullable: true),
+                    Description = table.Column<string>(maxLength: 512, nullable: true),
+                    PointOfInterestTypeID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRoles", x => new { x.RoleID, x.UserID });
+                    table.PrimaryKey("PK_PointsOfInterest", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_UserRoles_Roles_RoleID",
-                        column: x => x.RoleID,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
+                        name: "FK_PointsOfInterest_PointOfInterestTypes_PointOfInterestTypeID",
+                        column: x => x.PointOfInterestTypeID,
+                        principalTable: "PointOfInterestTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PresentationParticipants",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PresentationID = table.Column<int>(nullable: false),
+                    ParticipantID = table.Column<int>(nullable: false),
+                    IsAuthor = table.Column<bool>(nullable: false),
+                    IsSpeaker = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PresentationParticipants", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PresentationParticipants_Participants_ParticipantID",
+                        column: x => x.ParticipantID,
+                        principalTable: "Participants",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "Id",
+                        name: "FK_PresentationParticipants_Presentations_PresentationID",
+                        column: x => x.PresentationID,
+                        principalTable: "Presentations",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PresentationPhoto",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Path = table.Column<string>(maxLength: 128, nullable: false),
+                    PresentationID = table.Column<int>(nullable: false),
+                    IsMain = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PresentationPhoto", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_PresentationPhoto_Presentations_PresentationID",
+                        column: x => x.PresentationID,
+                        principalTable: "Presentations",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rates",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Description = table.Column<string>(maxLength: 512, nullable: true),
+                    Value = table.Column<int>(nullable: false),
+                    ConferenceID = table.Column<int>(nullable: true),
+                    PresentationID = table.Column<int>(nullable: true),
+                    MobileUserID = table.Column<int>(nullable: false),
+                    RateCriterionID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rates", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Rates_Conferences_ConferenceID",
+                        column: x => x.ConferenceID,
+                        principalTable: "Conferences",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rates_Presentations_PresentationID",
+                        column: x => x.PresentationID,
+                        principalTable: "Presentations",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rates_RateCriteria_RateCriterionID",
+                        column: x => x.RateCriterionID,
+                        principalTable: "RateCriteria",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -455,73 +557,10 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PresentationParticipants",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PresentationID = table.Column<int>(nullable: false),
-                    ParticipantID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PresentationParticipants", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_PresentationParticipants_Participants_ParticipantID",
-                        column: x => x.ParticipantID,
-                        principalTable: "Participants",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PresentationParticipants_Presentations_PresentationID",
-                        column: x => x.PresentationID,
-                        principalTable: "Presentations",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rates",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(maxLength: 512, nullable: true),
-                    Value = table.Column<int>(nullable: false),
-                    ConferenceID = table.Column<int>(nullable: true),
-                    PresentationID = table.Column<int>(nullable: true),
-                    UserID = table.Column<int>(nullable: false),
-                    RateCriterionID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rates", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Rates_Conferences_ConferenceID",
-                        column: x => x.ConferenceID,
-                        principalTable: "Conferences",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Rates_Presentations_PresentationID",
-                        column: x => x.PresentationID,
-                        principalTable: "Presentations",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Rates_RateCriteria_RateCriterionID",
-                        column: x => x.RateCriterionID,
-                        principalTable: "RateCriteria",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Rates_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "ConcurrencyStamp", "Email", "EmailConfirmed", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "SecurityStamp", "UserName" },
+                values: new object[] { 1, "0d24fcfe-5db9-4d78-a22d-1eb82f99ef6a", "admin@admin.com", false, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAEAACcQAAAAEFs5slr7ymXVepRXgRq4A1FpLmp3pngPtZ6qvV4QAlyVlHsy6iWs4IX9MpGP2G0drw==", "3d9b1c93-0e98-4a47-9e71-869bfd8d730a", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BuildingPlans_ConferenceID",
@@ -559,6 +598,11 @@ namespace Persistence.Migrations
                 column: "OrganizerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConferencePhoto_ConferenceID",
+                table: "ConferencePhoto",
+                column: "ConferenceID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ConferencePointsOfInterest_ConferenceID",
                 table: "ConferencePointsOfInterest",
                 column: "ConferenceID");
@@ -581,7 +625,13 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ParticipantPhotos_ParticipantID",
                 table: "ParticipantPhotos",
-                column: "ParticipantID");
+                column: "ParticipantID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PointOfInterestTypes_PointOfInterestIconID",
+                table: "PointOfInterestTypes",
+                column: "PointOfInterestIconID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PointsOfInterest_PointOfInterestTypeID",
@@ -596,6 +646,11 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PresentationParticipants_PresentationID",
                 table: "PresentationParticipants",
+                column: "PresentationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PresentationPhoto_PresentationID",
+                table: "PresentationPhoto",
                 column: "PresentationID");
 
             migrationBuilder.CreateIndex(
@@ -627,16 +682,6 @@ namespace Persistence.Migrations
                 name: "IX_Rates_RateCriterionID",
                 table: "Rates",
                 column: "RateCriterionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rates_UserID",
-                table: "Rates",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_UserID",
-                table: "UserRoles",
-                column: "UserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -654,10 +699,16 @@ namespace Persistence.Migrations
                 name: "ConferenceOrganizer");
 
             migrationBuilder.DropTable(
+                name: "ConferencePhoto");
+
+            migrationBuilder.DropTable(
                 name: "ConferencePointsOfInterest");
 
             migrationBuilder.DropTable(
                 name: "ConferenceSponsors");
+
+            migrationBuilder.DropTable(
+                name: "Message");
 
             migrationBuilder.DropTable(
                 name: "ParticipantPhotos");
@@ -666,10 +717,13 @@ namespace Persistence.Migrations
                 name: "PresentationParticipants");
 
             migrationBuilder.DropTable(
+                name: "PresentationPhoto");
+
+            migrationBuilder.DropTable(
                 name: "Rates");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Accommodations");
@@ -696,12 +750,6 @@ namespace Persistence.Migrations
                 name: "RateCriteria");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "PointOfInterestTypes");
 
             migrationBuilder.DropTable(
@@ -712,6 +760,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "RateCriterionTypes");
+
+            migrationBuilder.DropTable(
+                name: "PointOfInterestIcon");
         }
     }
 }

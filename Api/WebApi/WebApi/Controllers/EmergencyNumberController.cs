@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditEmergencyNumber([FromBody] EmergencyNumberModel model, CancellationToken cancellationToken)
         {
             await _emergencyNumberService.EditEmergencyNumberAsync(model, cancellationToken);

@@ -70,7 +70,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditConference([FromBody] ConferenceModel model, CancellationToken cancellationToken)
         {
             await _conferenceService.EditConferenceAsync(model, cancellationToken);

@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { PresentationType } from '../../../Types/PresentationTypes';
 import { EditPresentationType } from '../../../Actions/PresentationActions';
 
@@ -38,7 +37,6 @@ const EditPresentationTypeDialog = (props:DialogProps) => {
         name: name
     }
     await dispatch(EditPresentationType(request));  
-    dispatch(setAlert(true, "success", "Edited presentation type successfully"));
     setOpen(false);
   }
   return (

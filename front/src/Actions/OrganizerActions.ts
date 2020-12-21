@@ -97,7 +97,7 @@ export const EditOrganizer = (values:Organizer): ThunkAction<void, RootState, nu
         dispatch({
             type: ORGANIZER_EDIT
         });
-        const response = await apiClient.post(`/api/Organizer/edit`, {
+        const response = await apiClient.put(`/api/Organizer/edit`, {
             ...values
             })
         

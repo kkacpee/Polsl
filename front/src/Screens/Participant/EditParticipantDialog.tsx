@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { EditParticipant } from '../../Actions/ParticipantActions';
 import { Participant } from '../../Types/ParticipantTypes';
 
@@ -54,7 +53,6 @@ const EditParticipantDialog = (props:DialogProps) => {
         photo: data.photo
     }
     await dispatch(EditParticipant(request));  
-    dispatch(setAlert(true, "success", "Edited participant successfully"));
     setOpen(false);
   }
   return (

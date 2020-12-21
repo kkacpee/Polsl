@@ -13,7 +13,6 @@ import { GetEmergencyNumbersForConfereceList } from '../../../Actions/EmergencyN
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToConference } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddConferenceEmergencyNumberDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "EmergencyNumber"))
-    dispatch(setAlert(true, "success", "Added EmergencyNumber to conference successfully"));
     setOpen(false);
     }
 

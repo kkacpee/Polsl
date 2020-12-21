@@ -107,7 +107,7 @@ export const ChangeConferencePhoto = (values:ChangeConferenceMainPhotoRequest): 
         dispatch({
             type: CONFERENCE_EDIT
         });
-        const response = await apiClient.post(`/api/Conference/ConferencePhoto/change`, {
+        const response = await apiClient.put(`/api/Conference/ConferencePhoto/change`, {
             ...values
             })
         
@@ -288,7 +288,7 @@ export const EditConference = (values:Conference): ThunkAction<void, RootState, 
         dispatch({
             type: CONFERENCE_EDIT
         });
-        const response = await apiClient.post(`/api/Conference/edit`, {
+        const response = await apiClient.put(`/api/Conference/edit`, {
             ...values
             })
         

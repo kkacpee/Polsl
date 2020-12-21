@@ -6,7 +6,7 @@ import { OrganizerState } from '../../Types/OrganizerTypes';
 import { GetOrganizerList } from '../../Actions/OrganizerActions';
 import Dialog from './AddOrganizerDialog';
 import OrganizerDataGrid from '../../Components/DataGrids/OrganizerDataGrid';
-import { CircularProgress, Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const OrganizerList = () => {
     const dispatch = useDispatch();
@@ -22,26 +22,32 @@ const OrganizerList = () => {
        await dispatch(GetOrganizerList())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        if (organizerState.errorMsg !== "" && organizerState.errorMsg !== "Created"){
-            return <p>{organizerState.errorMsg}</p>
-        }
-
-        if (organizerState.loading){
-            return <CircularProgress />
-        }
-
         return (
-            <Container style={{padding: 20}}>
-                <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
-                <OrganizerDataGrid data={organizerState.data} fetch={() => {FetchData()}}/> 
-                </Grid>
-                <Grid container direction="row" justify='center' alignItems='flex-end' >
-                    <div>
-                    <Dialog dialogTitle="Add new Organizer" fetch={() => {FetchData()}}></Dialog>
-                    </div>
-                </Grid>
-            </Container>
+            <>
+            <Backdrop className={useStyles().backdrop} open={organizerState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
+                <Container style={{padding: 20}}>
+                    <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
+                    <OrganizerDataGrid data={organizerState.data} fetch={() => {FetchData()}}/> 
+                    </Grid>
+                    <Grid container direction="row" justify='center' alignItems='flex-end' >
+                        <div>
+                        <Dialog dialogTitle="Add new Organizer" fetch={() => {FetchData()}}></Dialog>
+                        </div>
+                    </Grid>
+                </Container>
+            </>
         )
     }
     

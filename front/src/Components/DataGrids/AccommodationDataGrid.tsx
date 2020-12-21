@@ -22,9 +22,7 @@ const AccommodationDataGrid = ({data, fetch, setSelection}:GridProps) => {
 
     if(_.isUndefined(setSelection)){
         const columns:Columns = [
-            { field: 'id', headerName: 'Key', width: 70, valueFormatter: (params: CellParams) => {
-                return params.value + "accommodation";
-            }},
+            { field: 'id', headerName: 'ID', width: 70},
             { field: 'name', headerName: 'Name', flex: 1},
             { field: 'address', headerName: 'Address', flex: 1},
             { field: 'number', headerName: 'Number', width: 150},

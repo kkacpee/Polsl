@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { RateState } from '../../Types/RateTypes';
 import { GetRateList } from '../../Actions/RateActions';
-import { Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import RateDataGrid from '../../Components/DataGrids/RateDataGrid';
 
 const RateList = () => {
@@ -20,21 +20,27 @@ const RateList = () => {
        console.log(rateState.data)
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        if (rateState.errorMsg !== "" && rateState.errorMsg !== "Created"){
-            return <p>{rateState.errorMsg}</p>
-        }
-
-        if (rateState.loading){
-            return <p> loading... </p>
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={rateState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <RateDataGrid data={rateState.data} fetch={() => {FetchData()}} />
                 </Grid>
             </Container>
+            </>
         )
     }
     

@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { AddEmergencyNumber } from '../../Actions/EmergencyNumberActions';
 import { AddEmergencyNumberRequest } from '../../Types/EmergencyNumberTypes';
 import { Add } from '@material-ui/icons';
@@ -44,7 +43,6 @@ const FormDialog = (props:DialogProps) => {
         number: number
     }
     await dispatch(AddEmergencyNumber(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

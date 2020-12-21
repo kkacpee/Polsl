@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { EditSponsor } from '../../Actions/SponsorActions';
 import { Sponsor } from '../../Types/SponsorTypes';
 
@@ -50,7 +49,6 @@ const EditSponsorDialog = (props:DialogProps) => {
         website: website
     }
     await dispatch(EditSponsor(request));  
-    dispatch(setAlert(true, "success", "Edited sponsor successfully"));
     setOpen(false);
   }
   return (

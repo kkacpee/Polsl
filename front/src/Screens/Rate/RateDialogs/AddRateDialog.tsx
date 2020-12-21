@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { AddRate, GetRateCriterionList } from '../../../Actions/RateActions';
 import { AddRateRequest, RateState } from '../../../Types/RateTypes';
 import Rating from '@material-ui/lab/Rating/Rating';
@@ -65,7 +64,6 @@ const AddRateDialog = (props:DialogProps) => {
         presentationID: isConferenceRate ? null : Number(id)
     }
     await dispatch(AddRate(request));  
-    dispatch(setAlert(true, "success", "Added sponsor successfully"));
     setOpen(false);
   }
   return (

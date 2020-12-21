@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { AddRateCriterion, GetRateCriterionTypeList } from '../../../Actions/RateActions';
 import { AddRateCriterionRequest, RateState } from '../../../Types/RateTypes';
 import { Add } from '@material-ui/icons';
@@ -59,7 +58,6 @@ const AddRateCriterionDialog = (props:DialogProps) => {
         rateCriterionTypeID: rateCriterionTypeID
     }
     await dispatch(AddRateCriterion(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

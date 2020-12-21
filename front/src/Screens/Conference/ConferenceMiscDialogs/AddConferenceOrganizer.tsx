@@ -13,7 +13,6 @@ import { GetOrganizersForConferenceList } from '../../../Actions/OrganizerAction
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToConference } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddConferenceOrganizerDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Organizer"))
-    dispatch(setAlert(true, "success", "Added Organizer to conference successfully"));
     setOpen(false);
     }
 

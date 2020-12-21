@@ -13,7 +13,6 @@ import { GetParticipantsForPresentationList } from '../../../Actions/Participant
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToPresentation } from '../../../Actions/PresentationActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddPresentationParticipantDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToPresentation({presentationID: id, arrayOfIDs: array}, "Participant"))
-    dispatch(setAlert(true, "success", "Added Participant to Presentation successfully"));
     setOpen(false);
     }
 

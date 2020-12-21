@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { Add } from '@material-ui/icons';
 import { AddPresentationTypeRequest } from '../../../Types/PresentationTypes';
 import { AddPresentationType } from '../../../Actions/PresentationActions';
@@ -37,7 +36,6 @@ const AddPresentationTypeDialog = (props:DialogProps) => {
         name: name
     }
     await dispatch(AddPresentationType(request));  
-    dispatch(setAlert(true, "success", "Added presentation type successfully"));
     setOpen(false);
   }
   return (

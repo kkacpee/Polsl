@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../../Actions/AlertActions';
 import { AddRateCriterionType } from '../../../Actions/RateActions';
 import { AddRateCriterionTypeRequest } from '../../../Types/RateTypes';
 import { Add } from '@material-ui/icons';
@@ -40,7 +39,6 @@ const AddRateCriterionTypeDialog = (props:DialogProps) => {
         name: name
     }
     await dispatch(AddRateCriterionType(request));  
-    dispatch(setAlert(true, "success", "Added point of interesty type successfully"));
     setOpen(false);
   }
   return (

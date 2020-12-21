@@ -249,7 +249,7 @@ export const EditRate = (values:EditRateRequest): ThunkAction<void, RootState, n
         dispatch({
             type: RATE_EDIT
         });
-        const response = await apiClient.post(`/api/Rate/edit`, {
+        const response = await apiClient.put(`/api/Rate/edit`, {
             ...values
             })
         
@@ -272,7 +272,7 @@ export const EditRateCriterion = (values:EditRateCriterionRequest): ThunkAction<
         dispatch({
             type: RATE_CRITERION_EDIT
         });
-        const response = await apiClient.post(`/api/Rate/RateCriterion/edit`, {
+        const response = await apiClient.put(`/api/Rate/RateCriterion/edit`, {
             ...values
             })
         
@@ -295,7 +295,7 @@ export const EditRateCriterionType = (values:RateCriterionType): ThunkAction<voi
         dispatch({
             type: RATE_CRITERION_TYPE_EDIT
         });
-        const response = await apiClient.post(`/api/Rate/RateCriterionType/edit`, {
+        const response = await apiClient.put(`/api/Rate/RateCriterionType/edit`, {
             ...values
             })
         

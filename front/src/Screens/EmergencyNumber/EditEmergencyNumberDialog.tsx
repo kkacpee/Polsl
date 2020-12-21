@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { EditEmergencyNumber } from '../../Actions/EmergencyNumberActions';
 import { EmergencyNumber} from '../../Types/EmergencyNumberTypes';
 
@@ -41,7 +40,6 @@ const EditEmergencyNumberDialog = (props:DialogProps) => {
         number: number
     }
     await dispatch(EditEmergencyNumber(request));  
-    dispatch(setAlert(true, "success", "Edited emergency number successfully"));
     setOpen(false);
   }
   return (

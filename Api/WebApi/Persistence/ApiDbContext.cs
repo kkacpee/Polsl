@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Persistence.Models;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace Persistence
 {
@@ -44,6 +46,21 @@ namespace Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            var hasher = new PasswordHasher<User>();
+
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    Email = "admin@admin.com",
+                    NormalizedEmail = "ADMIN@ADMIN.COM",
+                    SecurityStamp = Guid.NewGuid().ToString("D"),
+                    PasswordHash = hasher.HashPassword(null, "admin")
+                }
+            );
         }
     }
 }

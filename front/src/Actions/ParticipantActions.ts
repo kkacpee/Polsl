@@ -111,7 +111,7 @@ export const EditParticipant = (values:Participant): ThunkAction<void, RootState
         dispatch({
             type: PARTICIPANT_EDIT
         });
-        const response = await apiClient.post(`/api/Participant/edit`, {
+        const response = await apiClient.put(`/api/Participant/edit`, {
             ...values
             })
         

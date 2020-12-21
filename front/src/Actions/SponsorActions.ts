@@ -97,7 +97,7 @@ export const EditSponsor = (values:Sponsor): ThunkAction<void, RootState, null, 
         dispatch({
             type: SPONSOR_EDIT
         });
-        const response = await apiClient.post(`/api/Sponsor/edit`, {
+        const response = await apiClient.put(`/api/Sponsor/edit`, {
             ...values
             })
         

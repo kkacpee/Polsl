@@ -708,6 +708,20 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "0d24fcfe-5db9-4d78-a22d-1eb82f99ef6a",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFs5slr7ymXVepRXgRq4A1FpLmp3pngPtZ6qvV4QAlyVlHsy6iWs4IX9MpGP2G0drw==",
+                            SecurityStamp = "3d9b1c93-0e98-4a47-9e71-869bfd8d730a",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Persistence.Models.BuildingPlan", b =>

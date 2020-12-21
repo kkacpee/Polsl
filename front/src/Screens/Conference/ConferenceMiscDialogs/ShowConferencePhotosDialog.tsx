@@ -7,7 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Image from 'material-ui-image';
 import { AddConferencePhotoRequest, ChangeConferenceMainPhotoRequest, ConferencePhoto } from '../../../Types/ConferenceTypes';
 import { AddConferencePhoto, ChangeConferencePhoto, DeleteConferencePhoto } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 import { useDispatch } from 'react-redux';
 import { GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
 import StarBorderOutlined from '@material-ui/icons/StarBorderOutlined'
@@ -44,7 +43,6 @@ const ShowConferencePhotoDialog = (props:DialogProps) => {
 
   async function handleDelete(id:number){
     await dispatch(DeleteConferencePhoto(id));
-    dispatch(setAlert(true, "success", "Deleted photo successfully"));
     setOpen(false);
   }
 
@@ -54,7 +52,6 @@ const ShowConferencePhotoDialog = (props:DialogProps) => {
       conferenceId: id
     }
     await dispatch(ChangeConferencePhoto(request));
-    dispatch(setAlert(true, "success", "Changed main photo successfully"));
     setOpen(false);
   }
 
@@ -64,7 +61,6 @@ const ShowConferencePhotoDialog = (props:DialogProps) => {
         file: file!
     }
     await dispatch(AddConferencePhoto(request));  
-    dispatch(setAlert(true, "success", "Added photo successfully"));
     setOpen(false);
   }
   return (

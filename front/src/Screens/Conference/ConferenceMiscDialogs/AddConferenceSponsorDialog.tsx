@@ -13,7 +13,6 @@ import { GetSponsorsForConferenceList } from '../../../Actions/SponsorActions';
 import { CircularProgress} from '@material-ui/core';
 import _ from 'lodash';
 import { AddToConference } from '../../../Actions/ConferenceActions';
-import { setAlert } from '../../../Actions/AlertActions';
 
 interface DialogProps {
   dialogTitle: string,
@@ -35,7 +34,6 @@ const AddConferenceSponsorDialog = (props:DialogProps) => {
     });
 
     await dispatch(AddToConference({conferenceID: id, arrayOfIDs: array}, "Sponsor"))
-    dispatch(setAlert(true, "success", "Added Sponsor to conference successfully"));
     setOpen(false);
     }
 

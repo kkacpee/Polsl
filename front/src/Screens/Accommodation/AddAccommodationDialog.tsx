@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Container as FloatingContainer, Button as FloatingButton} from 'react-floating-action-button';
 import { useDispatch } from 'react-redux';
-import { setAlert } from '../../Actions/AlertActions';
 import { AddAccommodation } from '../../Actions/AccommodationActions';
 import { AddAccommodationRequest } from '../../Types/AccommodationTypes';
 import Add from '@material-ui/icons/Add';
@@ -50,7 +49,6 @@ const FormDialog = (props:DialogProps) => {
         website: website
     }
     await dispatch(AddAccommodation(request));  
-    dispatch(setAlert(true, "success", "Added conference successfully"));
     setOpen(false);
   }
   return (

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { RootState } from '../../Reducers/rootReducer'
 import { SponsorState } from '../../Types/SponsorTypes';
 import { GetSponsorList } from '../../Actions/SponsorActions';
-import { Container, Grid } from '@material-ui/core';
+import { Backdrop, CircularProgress, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import Dialog from './AddSponsorDialog';
 import SponsorDataGrid from '../../Components/DataGrids/SponsorDataGrid';
 
@@ -20,16 +20,21 @@ const SponsorList = () => {
        await dispatch(GetSponsorList())
     }
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#000',
+            },
+        }),
+    );
+
     const ShowData = () => {
-        if (sponsorState.errorMsg !== "" && sponsorState.errorMsg !== "Created"){
-            return <p>{sponsorState.errorMsg}</p>
-        }
-
-        if (sponsorState.loading){
-            return <p> loading... </p>
-        }
-
         return (
+            <>
+            <Backdrop className={useStyles().backdrop} open={sponsorState.loading}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container style={{padding: 20}}>
                 <Grid container direction="row" justify='space-evenly' alignItems='flex-start' >
                 <SponsorDataGrid data={sponsorState.data} fetch={() => {FetchData()}} />
@@ -40,6 +45,7 @@ const SponsorList = () => {
                     </div>
                 </Grid>
             </Container>
+            </>
         )
     }
     

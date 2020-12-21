@@ -63,7 +63,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditRate([FromBody] RateModel model, CancellationToken cancellationToken)
         {
             await _rateService.EditRateAsync(model, cancellationToken);
@@ -98,7 +98,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("RateCriterion/edit")]
+        [HttpPut("RateCriterion/edit")]
         public async Task<IActionResult> EditRateCriterion([FromBody] RateCriterionModel model, CancellationToken cancellationToken)
         {
             await _rateCriterionService.EditRateCriterionAsync(model, cancellationToken);
@@ -133,7 +133,7 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("RateCriterionType/edit")]
+        [HttpPut("RateCriterionType/edit")]
         public async Task<IActionResult> EditRateCriterionType([FromBody] RateCriterionTypeModel model, CancellationToken cancellationToken)
         {
             await _rateCriterionTypeService.EditRateCriterionTypeAsync(model, cancellationToken);

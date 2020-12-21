@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20201024150832_Initial")]
-    partial class Initial
+    [Migration("20201217210425_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,6 +182,31 @@ namespace Persistence.Migrations
                     b.ToTable("ConferenceOrganizer");
                 });
 
+            modelBuilder.Entity("Persistence.Models.ConferencePhoto", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ConferenceID")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ConferenceID");
+
+                    b.ToTable("ConferencePhoto");
+                });
+
             modelBuilder.Entity("Persistence.Models.ConferencePointOfInterest", b =>
                 {
                     b.Property<int>("ID")
@@ -244,6 +269,28 @@ namespace Persistence.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("EmergencyNumbers");
+                });
+
+            modelBuilder.Entity("Persistence.Models.Message", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("character varying(512)")
+                        .HasMaxLength(512);
+
+                    b.Property<int>("MobileUserID")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Message");
                 });
 
             modelBuilder.Entity("Persistence.Models.Organizer", b =>
@@ -330,7 +377,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ParticipantID");
+                    b.HasIndex("ParticipantID")
+                        .IsUnique();
 
                     b.ToTable("ParticipantPhotos");
                 });
@@ -368,6 +416,22 @@ namespace Persistence.Migrations
                     b.ToTable("PointsOfInterest");
                 });
 
+            modelBuilder.Entity("Persistence.Models.PointOfInterestIcon", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Path")
+                        .HasColumnType("character varying(512)")
+                        .HasMaxLength(512);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PointOfInterestIcon");
+                });
+
             modelBuilder.Entity("Persistence.Models.PointOfInterestType", b =>
                 {
                     b.Property<int>("ID")
@@ -375,11 +439,16 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("Name")
-                        .HasColumnType("integer")
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying(32)")
                         .HasMaxLength(32);
 
+                    b.Property<int>("PointOfInterestIconID")
+                        .HasColumnType("integer");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("PointOfInterestIconID");
 
                     b.ToTable("PointOfInterestTypes");
                 });
@@ -435,6 +504,12 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<bool>("IsAuthor")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsSpeaker")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("ParticipantID")
                         .HasColumnType("integer");
 
@@ -448,6 +523,31 @@ namespace Persistence.Migrations
                     b.HasIndex("PresentationID");
 
                     b.ToTable("PresentationParticipants");
+                });
+
+            modelBuilder.Entity("Persistence.Models.PresentationPhoto", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("character varying(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<int>("PresentationID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PresentationID");
+
+                    b.ToTable("PresentationPhoto");
                 });
 
             modelBuilder.Entity("Persistence.Models.PresentationType", b =>
@@ -484,13 +584,13 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
+                    b.Property<int>("MobileUserID")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("PresentationID")
                         .HasColumnType("integer");
 
                     b.Property<int>("RateCriterionID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserID")
                         .HasColumnType("integer");
 
                     b.Property<int>("Value")
@@ -503,8 +603,6 @@ namespace Persistence.Migrations
                     b.HasIndex("PresentationID");
 
                     b.HasIndex("RateCriterionID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Rates");
                 });
@@ -544,27 +642,6 @@ namespace Persistence.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("RateCriterionTypes");
-                });
-
-            modelBuilder.Entity("Persistence.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Persistence.Models.Sponsor", b =>
@@ -633,21 +710,20 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
 
-            modelBuilder.Entity("Persistence.Models.UserRole", b =>
-                {
-                    b.Property<int>("RoleID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RoleID", "UserID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UserRoles");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "0d24fcfe-5db9-4d78-a22d-1eb82f99ef6a",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFs5slr7ymXVepRXgRq4A1FpLmp3pngPtZ6qvV4QAlyVlHsy6iWs4IX9MpGP2G0drw==",
+                            SecurityStamp = "3d9b1c93-0e98-4a47-9e71-869bfd8d730a",
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Persistence.Models.BuildingPlan", b =>
@@ -704,6 +780,15 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Persistence.Models.ConferencePhoto", b =>
+                {
+                    b.HasOne("Persistence.Models.Conference", "Conference")
+                        .WithMany("ConferencePhotos")
+                        .HasForeignKey("ConferenceID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Persistence.Models.ConferencePointOfInterest", b =>
                 {
                     b.HasOne("Persistence.Models.Conference", "Conference")
@@ -737,8 +822,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Persistence.Models.ParticipantPhoto", b =>
                 {
                     b.HasOne("Persistence.Models.Participant", "Participant")
-                        .WithMany("ParticipantPhotos")
-                        .HasForeignKey("ParticipantID")
+                        .WithOne("ParticipantPhoto")
+                        .HasForeignKey("Persistence.Models.ParticipantPhoto", "ParticipantID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -748,6 +833,15 @@ namespace Persistence.Migrations
                     b.HasOne("Persistence.Models.PointOfInterestType", "PointOfInterestType")
                         .WithMany("PointsOfInterest")
                         .HasForeignKey("PointOfInterestTypeID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Persistence.Models.PointOfInterestType", b =>
+                {
+                    b.HasOne("Persistence.Models.PointOfInterestIcon", "PointOfInterestIcon")
+                        .WithMany("PointOfInterestTypes")
+                        .HasForeignKey("PointOfInterestIconID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -782,6 +876,15 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Persistence.Models.PresentationPhoto", b =>
+                {
+                    b.HasOne("Persistence.Models.Presentation", "Presentation")
+                        .WithMany("PresentationPhotos")
+                        .HasForeignKey("PresentationID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Persistence.Models.Rate", b =>
                 {
                     b.HasOne("Persistence.Models.Conference", "Conference")
@@ -799,12 +902,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("RateCriterionID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Persistence.Models.User", "User")
-                        .WithMany("Rates")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Persistence.Models.RateCriterion", b =>
@@ -812,21 +909,6 @@ namespace Persistence.Migrations
                     b.HasOne("Persistence.Models.RateCriterionType", "RateCriterionType")
                         .WithMany("RateCriterions")
                         .HasForeignKey("RateCriterionTypeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Persistence.Models.UserRole", b =>
-                {
-                    b.HasOne("Persistence.Models.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Persistence.Models.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

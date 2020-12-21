@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Container, createStyles, Divider, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Backdrop, Button, CircularProgress, Container, createStyles, Divider, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { PresentationState } from '../../Types/PresentationTypes';
@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
     },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#000',
+        },
   }),
 );
 
@@ -40,9 +44,13 @@ const PresentationDetails = () => {
     async function FetchData(){
        await dispatch(GetPresentationDetails(id))
     }
+
     const ShowData = () => {
-        if (!_.isEmpty(Presentation.details)){
-                return(
+                return( (!_.isEmpty(Presentation.details)) ? 
+                    <>
+                    <Backdrop className={classes.backdrop} open={Presentation.loading}>
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
                     <Container style={{marginTop: 10, marginBottom: 20}}>
                     <Grid container direction="column" justify='center' alignItems='stretch' >
                         
@@ -82,16 +90,14 @@ const PresentationDetails = () => {
                     </Accordion>
                     </Grid>
                     </Container>
-            )
-        }
-        if (Presentation.loading){
-            return <p> loading... </p>
-        }
-
-        if (Presentation.errorMsg !== ""){
-        console.log(Presentation.errorMsg)
-        }
-    }
+                    </>
+                    : 
+                    <Backdrop className={classes.backdrop} open={Presentation.loading}>
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
+                   
+                )
+            }
 
     return(
         <div>

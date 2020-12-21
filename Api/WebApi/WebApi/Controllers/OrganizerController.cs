@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             return Created($"details/{result}", result);
         }
 
-        [HttpPost("edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> EditOrganizer([FromBody] OrganizerModel model, CancellationToken cancellationToken)
         {
             await _organizerService.EditOrganizerAsync(model, cancellationToken);
